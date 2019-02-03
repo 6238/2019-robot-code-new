@@ -32,6 +32,7 @@ public class ElevatorControl implements RobotController
     @Override
     public boolean performAction(RobotProperties properties)
     {
+        
         boolean isDownElevatorButtonpressed;
         boolean isUpElevatorButtonPressed;
         isDownElevatorButtonpressed = properties.joystick.getButtonFour();
