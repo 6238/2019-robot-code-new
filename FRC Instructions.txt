@@ -23,16 +23,18 @@ Mac:
 
 
 Installing CTRE Phoenix libraries:
-Download CTRE Phoenix here:
+Download the latest version of the CTRE Phoenix Framework installer here:
 https://github.com/CrossTheRoadElec/Phoenix-Releases/releases/
 
 Download the correct zip file for your system and unzip.
+If using Windows, also download the latest version of the Phoenix Diagnostics Tuner.
 
 Windows:
-1) Run the installer
+1) Run the installer.
+2) Click "Finish" when the install is complete
 Mac:
-1) Place the "maven" and "vendordeps" folders inside the frc2019 folder in the home directory.
-2) Open VSCode
-3) Open the command palette (Cmd + Shift + P) & click on/search for "WPILib: Manage Vendor Libraries"
-4) Select "Install new library (online)"
-5) Check the box next to "CTRE Phoenix" and click "OK"
+1) Place the "maven" and "vendordeps" folders inside the frc2019 folder in the home directory..
+2) Open VSCode.
+3) Open the command palette (Cmd + Shift + P) & click on/search for "WPILib: Manage Vendor Libraries".
+4) Select "Install new library (online)".
+5) Check the box next to "CTRE Phoenix" and click "OK".
