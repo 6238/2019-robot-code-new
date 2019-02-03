@@ -1,12 +1,7 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.IterativeRobot;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.cameraserver.CameraServer;
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
@@ -32,6 +27,12 @@ public class VisionControl implements RobotController{
         //viewingCamera.setResolution(640, 480);
         //CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
     }
+
+    @Override
+    public String getName() {
+        return "VisionControl";
+    }
+
     public void tracingCameraControl()
     {
         //System.out.println("Setting camera 2\n");
