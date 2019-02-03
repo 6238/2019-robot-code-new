@@ -33,11 +33,11 @@ public class VisionController implements RobotController{
         if (properties.joystick.getButtonTwo()) {
             if (curCam == 1) {
                 curCam = 2;
-                //server.setSource(camera2);
+                server.setSource(camera1);
                 System.out.println(curCam);
             } else {
                 curCam = 1;
-                //server.setSource(camera1);
+                server.setSource(camera1);
                 System.out.println(curCam);
             }
         }
