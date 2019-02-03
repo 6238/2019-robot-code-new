@@ -51,4 +51,5 @@ public class VisionControl implements RobotController{
         outputStream.putFrame(image);
         return true;
     }
+
 }
