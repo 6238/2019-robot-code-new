@@ -32,7 +32,7 @@ public class ElevatorControl implements RobotController
     @Override
     public boolean performAction(RobotProperties properties)
     {
-        
+
         boolean isDownElevatorButtonpressed;
         boolean isUpElevatorButtonPressed;
         isDownElevatorButtonpressed = properties.joystick.getButtonFour();
@@ -89,36 +89,54 @@ public class ElevatorControl implements RobotController
             distance = sampleEncoder.getDistance();
         }
         //TODO: need to fill out the distance thresholds replacing the 0, 5, 10, and 15 values with measured values
-        if (level1 && distance<5)
+        if (level1 )
         {
-            m_elevator1.set(10);
-            m_elevator2.set(10);
+            while(distance<5)
+            {
+                m_elevator1.set(10);
+                m_elevator2.set(10);
+            }
         }
         else if (level2 && distance<10)
         {
+            while(distance<10)
+            {
             m_elevator1.set(10);
             m_elevator2.set(10);
+            }
         }
         else if (level3 && distance<15)
         {
+            while(distance<15)
+            {
             m_elevator1.set(10);
             m_elevator2.set(10);
+            }
 
         }
         else if (level4 && distance>10)
         {
+            while(distance>10)
+            {
             m_elevator1.set(-10);
             m_elevator2.set(-10);
+            }
         }
         else if (level5 && distance>5)
         {
+            while(distance>5)
+            {
             m_elevator1.set(-10);
             m_elevator2.set(-10);
+            }
         }
-        else if (level6 && distance>0)
+        else if (level6)
         {
+            while(distance>0)
+            {
             m_elevator1.set(-10);
             m_elevator2.set(-10);
+            }
         }
         else
         {
