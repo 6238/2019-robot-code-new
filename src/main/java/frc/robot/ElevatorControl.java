@@ -66,8 +66,7 @@ class ElevatorControl implements RobotController
             m_elevator1.set(0);
             m_elevator2.set(0);
         }
-        Encoder enc;
-        enc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+        Encoder enc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
         Encoder sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
         sampleEncoder.setMaxPeriod(.1);
         sampleEncoder.setMinRate(10);
@@ -77,7 +76,7 @@ class ElevatorControl implements RobotController
 
         int count = sampleEncoder.get();
         double distance = sampleEncoder.getDistance();
-//TODO: need to fill out the distance thresholds replacing the 0, 5, 10, and 15 values with measured values
+        //TODO: need to fill out the distance thresholds replacing the 0, 5, 10, and 15 values with measured values
         if (level1 && distance<5)
         {
             m_elevator1.set(10);
