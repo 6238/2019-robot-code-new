@@ -1,13 +1,12 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.TimedRobot;
 
 public class TestVision implements RobotController {
     
     public boolean performAction(RobotProperties properties) 
     {
-        CameraServer.getInstance().startAutomaticCapture();
         return true;
     }
     public String getName()
