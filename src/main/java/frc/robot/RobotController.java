@@ -12,4 +12,5 @@ public interface RobotController {
      */
     boolean performAction(RobotProperties properties);
 
+    String getName();
 }

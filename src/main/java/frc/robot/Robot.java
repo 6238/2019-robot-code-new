@@ -7,6 +7,9 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +26,15 @@ public class Robot extends IterativeRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
+  private final RobotProperties properties;
+  private final List<RobotController> controllers;
+
+  public Robot() {
+    properties = new RobotProperties();
+
+    controllers = new ArrayList<RobotController>();
+    controllers.add(new DriveTrainController());
+  }
 
   /**
    * This function is run when the robot is first started up and should be
@@ -87,7 +99,11 @@ public class Robot extends IterativeRobot {
    */
   @Override
   public void teleopPeriodic() {
-    System.out.println("Hi Ishan!");
+    System.out.println("Hi Ishan! We are going to run some controllers.");
+    for (RobotController controller : controllers) {
+      System.out.println("Hi Ishan! We are running this controller: " + controller.getName());
+      controller.performAction(properties);
+    }
   }
 
   /**

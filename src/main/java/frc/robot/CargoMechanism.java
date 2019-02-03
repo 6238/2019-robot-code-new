@@ -14,6 +14,11 @@ public class CargoMechanism implements RobotController
         cargoBay2 = properties.getCargoBay2();
         joystick = properties.joystick;
     }
+
+    public String getName() {
+        return "CargoMechanism";
+    }
+
     public boolean performAction(RobotProperties properties)
     {
         cargoTriggered = joystick.getButtonOne(); //arbitrary value. update later

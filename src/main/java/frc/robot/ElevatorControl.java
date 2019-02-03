@@ -17,11 +17,16 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 
-class ElevatorControl implements RobotController
+public class ElevatorControl implements RobotController
 {
     public ElevatorControl()
     {
 
+    }
+
+    @Override
+    public String getName() {
+        return "ElevatorControl";
     }
 
     @Override
@@ -66,16 +71,22 @@ class ElevatorControl implements RobotController
             m_elevator1.set(0);
             m_elevator2.set(0);
         }
-        Encoder enc = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-        Encoder sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-        sampleEncoder.setMaxPeriod(.1);
-        sampleEncoder.setMinRate(10);
-        sampleEncoder.setDistancePerPulse(5);
-        sampleEncoder.setReverseDirection(true);
-        sampleEncoder.setSamplesToAverage(7);
+        try (Encoder enc = new Encoder(0, 1, false, Encoder.EncodingType.k4X)) {
+            // when this block finishes, enc will auto close for you....
+        }
 
-        int count = sampleEncoder.get();
-        double distance = sampleEncoder.getDistance();
+        int count;
+        double distance;
+        try (Encoder sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X)) {
+            sampleEncoder.setMaxPeriod(.1);
+            sampleEncoder.setMinRate(10);
+            sampleEncoder.setDistancePerPulse(5);
+            sampleEncoder.setReverseDirection(true);
+            sampleEncoder.setSamplesToAverage(7);
+
+            count = sampleEncoder.get();
+            distance = sampleEncoder.getDistance();
+        }
         //TODO: need to fill out the distance thresholds replacing the 0, 5, 10, and 15 values with measured values
         if (level1 && distance<5)
         {
@@ -117,4 +128,3 @@ class ElevatorControl implements RobotController
 
     }
 }
-        
