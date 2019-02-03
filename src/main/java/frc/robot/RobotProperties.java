@@ -25,8 +25,8 @@ public class RobotProperties {
 
     private WPI_TalonSRX mechanism;*/
 
-    private UsbCamera viewingCamera;
-    private UsbCamera lineTraceCamera;
+    //private UsbCamera viewingCamera;
+    //private UsbCamera lineTraceCamera;
 
     public RobotProperties() {
         joystick = new JoystickController(0);
@@ -44,10 +44,10 @@ public class RobotProperties {
         cargoBay1 = new Solenoid(0);
         cargoBay2 = new Solenoid(1);
 
-        viewingCamera = CameraServer.getInstance().startAutomaticCapture();
-        lineTraceCamera = CameraServer.getInstance().startAutomaticCapture();
-
         mechanism = new WPI_TalonSRX(39);*/
+
+        //viewingCamera = CameraServer.getInstance().startAutomaticCapture();
+       // lineTraceCamera = CameraServer.getInstance().startAutomaticCapture();
     }
     // 4 wheel motors - cims talon srx
     // 2 dual gearboxes - 2 775s each
@@ -128,11 +128,11 @@ public class RobotProperties {
         return this.cargoBay2;
     }*/
 
-    public UsbCamera getViewingCamera() {
-        return this.viewingCamera;
-    }
+    //public UsbCamera getViewingCamera() {
+    //    return this.viewingCamera;
+    //}
 
-    public UsbCamera getLineTraceCamera() {
-        return this.lineTraceCamera;
-    }
+    //public UsbCamera getLineTraceCamera() {
+    //    return this.lineTraceCamera;
+    //}
 }

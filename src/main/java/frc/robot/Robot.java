@@ -10,6 +10,7 @@ package frc.robot;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -34,20 +35,24 @@ public class Robot extends TimedRobot {
     properties = new RobotProperties();
 
     controllers = new ArrayList<RobotController>();
-    //controllers.add(new DriveTrainController());
+    controllers.add(new DriveTrainController());
+    //controllers.add(new VisionController(properties));
   }
 
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
-  @Override
+  //@Override
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     properties = new RobotProperties();
-    CameraServer.getInstance().startAutomaticCapture();
+    CameraServer server = CameraServer.getInstance();
+    UsbCamera camera = server.startAutomaticCapture(0);
+    camera.setResolution(640, 480);
+
   }
 
   /**
@@ -60,6 +65,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    //System.out.println("testing 123");
   }
 
   /**
