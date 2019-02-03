@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
 
     controllers = new ArrayList<RobotController>();
     controllers.add(new DriveTrainController());
-    //controllers.add(new VisionController(properties));
+    controllers.add(new VisionController(properties));
   }
 
   /**
@@ -49,10 +49,10 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     properties = new RobotProperties();
-    CameraServer server = CameraServer.getInstance();
+    /*CameraServer server = CameraServer.getInstance();
     UsbCamera camera = server.startAutomaticCapture(0);
-    camera.setResolution(640, 480);
-
+    camera.setResolution(640, 480);*/
+    
   }
 
   /**
