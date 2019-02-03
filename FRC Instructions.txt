@@ -27,7 +27,7 @@ Download the latest version of the CTRE Phoenix Framework installer here:
 https://github.com/CrossTheRoadElec/Phoenix-Releases/releases/
 
 Download the correct zip file for your system and unzip.
-If using Windows, also download the latest version of the Phoenix Diagnostics Tuner.
+Optional: Download only the Phoenix Tuner installer and not the rest of the CTRE Phoenix libraries.
 
 Windows:
 1) Run the installer.
