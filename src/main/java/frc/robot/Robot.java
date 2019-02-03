@@ -103,10 +103,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     System.out.println("Hi Ishan! We are going to run some controllers.");
-    for (RobotController controller : controllers) {
+    /*for (RobotController controller : controllers) {
       System.out.println("Hi Ishan! We are running this controller: " + controller.getName());
       controller.performAction(properties);
-    }
+    }*/
   }
 
   /**
