@@ -1,5 +1,48 @@
-The following program install instructions are Windows-only. Unfortunately, there is no Mac version of LabView 2018 or the FRC Suite as of now.
-Installing LabView 2018 or NI Vision Software (Optional):
+# 2019-robot-code-new
+FRC 2019 Project Code on VSCode System
+
+## Install FRC VSCode 2019
+Download FRC VSCode installer:
+https://github.com/wpilibsuite/allwpilib/releases
+
+### Windows
+1) Open the zip file, install and open FRC VSCode 2019.
+
+### Mac
+1) Open the tar.gz file, move the WPILib_Mac folder to the home directory and rename it "frc2019". 
+2) Open Terminal (/Applications/Utilities/Terminal.app), type "cd frc2019/tools" and hit enter.
+3) Type "python ToolsUpdater.py" and hit enter.
+4) Download and install Visual Studio Code from visualstudio.microsoft.com, then open it.
+5) In Visual Studio, open the command palette (Cmd + Shift + P) and click on/search for "Extensions: Install from VSIX...".
+6) Navigate to the "frc2019" folder, and go to the "vsCodeExtensions" folder inside.
+7) Select "Cpp.vsix" and open it.
+8) Click "Reload" in the dialog box that pops up in the bottom corner of the VSCode window.
+9) Repeat steps 6-8 for each of the VSIX files in the "vsCodeExtensions" folder in the following order:
+- Cpp.vsix
+- JavaLang.vsix
+- JavaDeps.vsix
+- JavaDebug.vsix
+- WPILib.vsix
+
+## Install CTRE Phoenix Libraries
+Download the latest version of the CTRE Phoenix Framework installer here:
+https://github.com/CrossTheRoadElec/Phoenix-Releases/releases/
+
+Download the correct zip file for your system and unzip.
+Optional: Download only the Phoenix Tuner installer and not the rest of the CTRE Phoenix libraries.
+
+### Windows
+1) Run the installer.
+2) Click "Finish" when the install is complete
+### Mac
+1) Place the "maven" and "vendordeps" folders inside the frc2019 folder in the home directory..
+2) Open VSCode.
+3) Open the command palette (Cmd + Shift + P) & click on/search for "WPILib: Manage Vendor Libraries".
+4) Select "Install new library (online)".
+5) Check the box next to "CTRE Phoenix" and click "OK".
+
+#### The following program install instructions are Windows-only. Unfortunately, there is no Mac version of LabView 2018 or the FRC Suite as of now.
+## Installing LabView 2018 or NI Vision Software (Optional):
 1) Download the LabView 2018 installer (~5-6 GB) here: http://www.ni.com/download/labview-for-frc-18.0/7841/en/. You will have to create or use an existing National Instruments account.
 2) Extract all the files inside the zip file into a new folder. This may take a while.
 3) Run autorun.exe, found inside the folder with the extracted files.
@@ -20,10 +63,10 @@ Installing LabView 2018 or NI Vision Software (Optional):
 18) If all the software activated successfully, click "Next", otherwise double-check the serial number(s) entered.
 19) Close the Activation Wizard.
 20) Click "Yes" on the Restart dialog, then wait for your computer to restart.
-21) Do not install any updates you are prompted to by the NI Update Service unless directed to do so by FRC.
+21) **Do not install any updates you are prompted to by the NI Update Service unless directed to do so by FRC.**
 
-Installing the FRC 2019 Update Suite:
-1) Download the FRC 2019 installer (~700-800 MB) here: http://www.ni.com/download/first-robotics-software-2017/7904/en/. You will have to create or use an existing National Instruments account. Enter the decryption key "$Robots&in#SPACE!!" (no quotes) if prompted to do so.
+## Installing the FRC 2019 Update Suite:
+1) Download the FRC 2019 installer (~700-800 MB) here: http://www.ni.com/download/first-robotics-software-2017/7904/en/. You will have to create or use an existing National Instruments account. Enter the decryption key *$Robots&in#SPACE!!* if prompted to do so.
 2) Extract all the files inside the zip file into a new folder.
 3) Run setup.exe, found inside the folder with the extracted files.
 4) Close all other programs.
@@ -41,4 +84,4 @@ Installing the FRC 2019 Update Suite:
 16) If all the software activated successfully, click "Next", otherwise double-check the serial number(s) entered.
 17) Close the Activation Wizard.
 18) Click "Yes" on the Restart dialog, then wait for your computer to restart.
-19) Do not install any updates you are prompted to by the NI Update Service unless directed to do so by FRC.
+19) **Do not install any updates you are prompted to by the NI Update Service unless directed to do so by FRC.**
