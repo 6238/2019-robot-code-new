@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
   private static final String kCustomAuto = "My Auto";
   private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
-  private final RobotProperties properties;
+  private RobotProperties properties;
   private final List<RobotController> controllers;
 
   public Robot() {
@@ -46,6 +46,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+    properties = new RobotProperties();
     CameraServer.getInstance().startAutomaticCapture();
   }
 
