@@ -113,13 +113,27 @@ public class RobotProperties {
         this.elevator2 = elevator2;
     }
 
-    public Solenoid getCargoBay1() { return this.cargoBay1; }
+    public WPI_TalonSRX getMechanism() {
+        return mechanism;
+    }
 
-    public Solenoid getCargoBay2() { return this.cargoBay2; }
+    public void setMechanism(WPI_TalonSRX mechanism) {
+        this.mechanism = mechanism;
+    }
 
-    public UsbCamera getViewingCamera() { return this.viewingCamera; }
+    public Solenoid getCargoBay1() {
+        return this.cargoBay1;
+    }
 
-    public UsbCamera getLineTraceCamera() { return this.lineTraceCamera; }
+    public Solenoid getCargoBay2() {
+        return this.cargoBay2;
+    }
 
+    public UsbCamera getViewingCamera() {
+        return this.viewingCamera;
+    }
 
+    public UsbCamera getLineTraceCamera() {
+        return this.lineTraceCamera;
+    }
 }
