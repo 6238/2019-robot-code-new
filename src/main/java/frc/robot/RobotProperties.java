@@ -30,7 +30,7 @@ public class RobotProperties {
     private WPI_TalonSRX mechanism;
 
     public RobotProperties() {
-        joystick.port = 0;
+        joystick = new JoystickController(0);
 
         frontLeft = new WPI_TalonSRX(33);
         frontRight = new WPI_TalonSRX(34);
