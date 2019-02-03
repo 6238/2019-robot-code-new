@@ -19,11 +19,11 @@ public class DriveTrainController implements RobotController {
 
     @Override
     public boolean performAction(RobotProperties properties) {
-        WPI_TalonSRX frontLeft = properties.getFrontLeft();
+        /*WPI_TalonSRX frontLeft = properties.getFrontLeft();
         WPI_TalonSRX frontRight = properties.getFrontRight();
         WPI_TalonSRX rearLeft = properties.getRearLeft();
         WPI_TalonSRX rearRight = properties.getRearRight();
-
+        */
         double joyX = properties.joystick.getJoystickX();
         double joyY = properties.joystick.getJoystickY();
         double joyZ = properties.joystick.getJoystickZ();
