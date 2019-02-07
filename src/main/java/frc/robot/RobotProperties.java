@@ -9,7 +9,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 public class RobotProperties {
     JoystickController joystick;
 
-    /*private WPI_TalonSRX frontLeft;
+    private WPI_TalonSRX frontLeft;
     private WPI_TalonSRX frontRight;
     private WPI_TalonSRX rearLeft;
     private WPI_TalonSRX rearRight;
@@ -23,7 +23,7 @@ public class RobotProperties {
     private Solenoid cargoBay1;
     private Solenoid cargoBay2;
 
-    private WPI_TalonSRX mechanism;*/
+    private WPI_TalonSRX mechanism;
 
     //private UsbCamera viewingCamera;
     //private UsbCamera lineTraceCamera;
@@ -31,7 +31,7 @@ public class RobotProperties {
     public RobotProperties() {
         joystick = new JoystickController(0);
 
-        /*frontLeft = new WPI_TalonSRX(33);
+        frontLeft = new WPI_TalonSRX(33);
         frontRight = new WPI_TalonSRX(34);
         rearLeft = new WPI_TalonSRX(35);
         rearRight = new WPI_TalonSRX(36);
@@ -44,7 +44,7 @@ public class RobotProperties {
         cargoBay1 = new Solenoid(0);
         cargoBay2 = new Solenoid(1);
 
-        mechanism = new WPI_TalonSRX(39);*/
+        mechanism = new WPI_TalonSRX(39);
 
         //viewingCamera = CameraServer.getInstance().startAutomaticCapture();
        // lineTraceCamera = CameraServer.getInstance().startAutomaticCapture();
@@ -56,7 +56,7 @@ public class RobotProperties {
 
     */
 
-    /*public WPI_TalonSRX getFrontLeft() {
+    public WPI_TalonSRX getFrontLeft() {
         return frontLeft;
     }
 
@@ -126,7 +126,7 @@ public class RobotProperties {
 
     public Solenoid getCargoBay2() {
         return this.cargoBay2;
-    }*/
+    }
 
     //public UsbCamera getViewingCamera() {
     //    return this.viewingCamera;

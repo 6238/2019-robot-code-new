@@ -17,16 +17,16 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
 
-public class ElevatorControl implements RobotController
+public class ElevatorController implements RobotController
 {
-    public ElevatorControl()
+    public ElevatorController()
     {
 
     }
 
     @Override
     public String getName() {
-        return "ElevatorControl";
+        return "ElevatorController";
     }
 
     @Override
