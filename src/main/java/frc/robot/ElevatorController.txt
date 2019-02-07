@@ -72,9 +72,6 @@ public class ElevatorControl implements RobotController
             m_elevator1.set(0);
             m_elevator2.set(0);
         }
-        try (Encoder enc = new Encoder(0, 1, false, Encoder.EncodingType.k4X)) {
-            // when this block finishes, enc will auto close for you....
-        }
 
         int count;
         double distance;
