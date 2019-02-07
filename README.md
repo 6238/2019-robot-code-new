@@ -5,19 +5,24 @@ FRC 2019 Project Code on VSCode System
 Download FRC VSCode installer:
 https://github.com/wpilibsuite/allwpilib/releases
 
+Download Java Development Kit:
+https://www.oracle.com/technetwork/java/javase/downloads/index.html
+
 ### Windows
-1) Open the zip file, install and open FRC VSCode 2019.
+1) Install the correct version of the latest version of JDK for your PC.
+2) Open the zip file, install and open FRC VSCode 2019.
 
 ### Mac
-1) Open the tar.gz file, move the WPILib_Mac folder to the home directory and rename it "frc2019". 
-2) Open Terminal (/Applications/Utilities/Terminal.app), type "cd frc2019/tools" and hit enter.
-3) Type "python ToolsUpdater.py" and hit enter.
-4) Download and install Visual Studio Code from visualstudio.microsoft.com, then open it.
-5) In Visual Studio, open the command palette (Cmd + Shift + P) and click on/search for "Extensions: Install from VSIX...".
-6) Navigate to the "frc2019" folder, and go to the "vsCodeExtensions" folder inside.
-7) Select "Cpp.vsix" and open it.
-8) Click "Reload" in the dialog box that pops up in the bottom corner of the VSCode window.
-9) Repeat steps 6-8 for each of the VSIX files in the "vsCodeExtensions" folder in the following order:
+1) Install the correct version of the latest version of JDK for your Mac.
+2) Open the tar.gz file, move the WPILib_Mac folder to the home directory and rename it "frc2019". 
+3) Open Terminal (/Applications/Utilities/Terminal.app), type "cd frc2019/tools" and hit enter.
+4) Type "python ToolsUpdater.py" and hit enter.
+5) Download and install Visual Studio Code from visualstudio.microsoft.com, then open it.
+6) In Visual Studio, open the command palette (Cmd + Shift + P) and click on/search for "Extensions: Install from VSIX...".
+7) Navigate to the "frc2019" folder, and go to the "vsCodeExtensions" folder inside.
+8) Select "Cpp.vsix" and open it.
+9) Click "Reload" in the dialog box that pops up in the bottom corner of the VSCode window.
+10) Repeat steps 6-8 for each of the VSIX files in the "vsCodeExtensions" folder in the following order:
 - Cpp.vsix
 - JavaLang.vsix
 - JavaDeps.vsix
