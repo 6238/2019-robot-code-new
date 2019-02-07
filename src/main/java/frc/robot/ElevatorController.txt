@@ -33,9 +33,9 @@ public class ElevatorControl implements RobotController
     public boolean performAction(RobotProperties properties)
     {
 
-        boolean isDownElevatorButtonpressed;
+        boolean isDownElevatorButtonPressed;
         boolean isUpElevatorButtonPressed;
-        isDownElevatorButtonpressed = properties.joystick.getButtonFour();
+        isDownElevatorButtonPressed = properties.joystick.getButtonFour();
         isUpElevatorButtonPressed = properties.joystick.getButtonSix();
         boolean level1;
         boolean level2;
@@ -55,11 +55,11 @@ public class ElevatorControl implements RobotController
         WPI_TalonSRX m_elevator2 = properties.getElevator2();
         m_elevator1.set(0);
         m_elevator2.set(0);
-        if (isUpElevatorButtonPressed && isDownElevatorButtonpressed)
+        if (isUpElevatorButtonPressed && isDownElevatorButtonPressed)
         {
             m_elevator1.set(0);
             m_elevator2.set(0);
-        } else if (isDownElevatorButtonpressed)
+        } else if (isDownElevatorButtonPressed)
         {
             m_elevator1.set(-10);
             m_elevator2.set(-10);
