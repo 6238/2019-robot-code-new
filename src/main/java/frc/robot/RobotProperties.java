@@ -19,7 +19,6 @@ public class RobotProperties {
     private WPI_TalonSRX elevator1;
     private WPI_TalonSRX elevator2;
 
-
     private Solenoid cargoBay1;
     private Solenoid cargoBay2;
 
