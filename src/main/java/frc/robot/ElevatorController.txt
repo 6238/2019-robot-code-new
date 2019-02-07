@@ -75,15 +75,15 @@ public class ElevatorControl implements RobotController
 
         int count;
         double distance;
-        try (Encoder sampleEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X)) {
-            sampleEncoder.setMaxPeriod(.1);
-            sampleEncoder.setMinRate(10);
-            sampleEncoder.setDistancePerPulse(5);
-            sampleEncoder.setReverseDirection(true);
-            sampleEncoder.setSamplesToAverage(7);
+        try (Encoder elevatorEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X)) {
+            elevatorEncoder.setMaxPeriod(.1);
+            elevatorEncoder.setMinRate(10);
+            elevatorEncoder.setDistancePerPulse(5);
+            elevatorEncoder.setReverseDirection(true);
+            elevatorEncoder.setSamplesToAverage(7);
 
-            count = sampleEncoder.get();
-            distance = sampleEncoder.getDistance();
+            count = elevatorEncoder.get();
+            distance = elevatorEncoder.getDistance();
         }
         //TODO: need to fill out the distance thresholds replacing the 0, 5, 10, and 15 values with measured values
         if (level1 )
