@@ -121,11 +121,19 @@ public class RobotProperties {
     }
 
     public Solenoid getCargoBay1() {
-        return this.cargoBay1;
+        return cargoBay1;
+    }
+
+    public void setCargoBay1(Solenoid cargoBay1) {
+        this.cargoBay1 = cargoBay1;
     }
 
     public Solenoid getCargoBay2() {
-        return this.cargoBay2;
+        return cargoBay2;
+    }
+
+    public void setCargoBay2(Solenoid cargoBay2) {
+        this.cargoBay2 = cargoBay2;
     }
 
     //public UsbCamera getViewingCamera() {
