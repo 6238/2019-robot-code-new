@@ -108,8 +108,10 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     properties = new RobotProperties();
     System.out.println("Hi Ishan! We are going to run some controllers.");
-    if (properties.joystick.getSlider() < 0) {
-      for (RobotController controller : controllers) {
+    if (properties.joystick.getSlider() < 0) 
+    {
+      for (RobotController controller : controllers) 
+      {
         System.out.println("Hi Ishan! We are running this controller: " + controller.getName());
         controller.performAction(properties);
       }
