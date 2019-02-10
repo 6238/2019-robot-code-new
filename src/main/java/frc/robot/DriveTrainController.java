@@ -18,15 +18,11 @@ public class DriveTrainController implements RobotController {
 
     @Override
     public boolean performAction(RobotProperties properties) {
-        double joyX = properties.joystick.getJoystickX();
-        double joyY = properties.joystick.getJoystickY();
-        double joyZ = properties.joystick.getJoystickZ();
-
+        
         MecanumDrive robotDrive = properties.getRobotDrive();
 
-        robotDrive.driveCartesian(joyX, joyY, joyZ, 0.0);
-
-        System.out.println(joyX + " " + joyY + " " + joyZ);
+        robotDrive.driveCartesian(properties.joystick.getJoystickX(), properties.joystick.getJoystickY(), properties.joystick.getJoystickZ());
+        System.out.println(properties.joystick.getSlider());
 
         return true;
     }

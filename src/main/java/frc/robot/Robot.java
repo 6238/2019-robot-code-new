@@ -24,17 +24,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends TimedRobot {
   private static final String kDefaultAuto = "Default";
   private static final String kCustomAuto = "My Auto";
-  private String m_autoSelected;
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private RobotProperties properties;
   private final List<RobotController> controllers;
 
   public Robot() {
-    properties = new RobotProperties();
+    //properties = new RobotProperties();
 
     controllers = new ArrayList<RobotController>();
     controllers.add(new DriveTrainController());
-    controllers.add(new VisionController(properties));
+    //controllers.add(new VisionController(properties));
   }
 
   /**
@@ -53,76 +52,14 @@ public class Robot extends TimedRobot {
     
   }
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use
-   * this for items like diagnostics that you want ran during disabled,
-   * autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
-   */
-  @Override
-  public void robotPeriodic() {
-    //System.out.println("testing 123");
-  }
-
-  /**
-   * This autonomous (along with the chooser code above) shows how to select
-   * between different autonomous modes using the dashboard. The sendable
-   * chooser code works with the Java SmartDashboard. If you prefer the
-   * LabVIEW Dashboard, remove all of the chooser code and uncomment the
-   * getString line to get the auto name from the text box below the Gyro
-   *
-   * <p>You can add additional auto modes by adding additional comparisons to
-   * the switch structure below with additional strings. If using the
-   * SendableChooser make sure to add them to the chooser code above as well.
-   */
-  @Override
-  public void autonomousInit() {
-    m_autoSelected = m_chooser.getSelected();
-    // autoSelected = SmartDashboard.getString("Auto Selector",
-    // defaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
-  }
-
-  /**
-   * This function is called periodically during autonomous.
-   */
-  @Override
-  public void autonomousPeriodic() {
-    switch (m_autoSelected) {
-      case kCustomAuto:
-        // Put custom auto code here
-        break;
-      case kDefaultAuto:
-      default:
-        // Put default auto code here
-        break;
-    }
-  }
-
-  /**
-   * This function is called periodically during operator control.
-   */
   @Override
   public void teleopPeriodic() {
-    properties = new RobotProperties();
-    System.out.println("Hi Ishan! We are going to run some controllers.");
-    if (properties.joystick.getSlider() < 0) 
-    {
+    if (properties.joystick.getSlider() < -0.5) {
       for (RobotController controller : controllers) 
       {
-        System.out.println("Hi Ishan! We are running this controller: " + controller.getName());
         controller.performAction(properties);
       }
-      System.out.println("Power on!");
     }
-  }
-
-  /**
-   * This function is called periodically during test mode.
-   */
-  @Override
-  public void testPeriodic() {
+    
   }
 }

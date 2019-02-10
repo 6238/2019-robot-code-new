@@ -119,7 +119,7 @@ public class JoystickController {
     // Slider
 
     public double getSlider() {
-        return getThrottle();
+        return -1*getThrottle();
     }
 
     // DPad
