@@ -120,6 +120,7 @@ public class RobotProperties {
         this.mechanism = mechanism;
     }
 
+<<<<<<< HEAD
     /*public Solenoid getCargoBay1() {
         return this.cargoBay1;
     }
@@ -127,6 +128,23 @@ public class RobotProperties {
     public Solenoid getCargoBay2() {
         return this.cargoBay2;
     }*/
+=======
+    public Solenoid getCargoBay1() {
+        return cargoBay1;
+    }
+
+    public void setCargoBay1(Solenoid cargoBay1) {
+        this.cargoBay1 = cargoBay1;
+    }
+
+    public Solenoid getCargoBay2() {
+        return cargoBay2;
+    }
+
+    public void setCargoBay2(Solenoid cargoBay2) {
+        this.cargoBay2 = cargoBay2;
+    }
+>>>>>>> 43c2be8eab1c9388408f8e71fb34afa00d20423c
 
     //public UsbCamera getViewingCamera() {
     //    return this.viewingCamera;
