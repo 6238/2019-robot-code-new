@@ -34,7 +34,7 @@ public class VisionController implements RobotController{
     public String getName() {
         return "VisionController";
     }
-    public static class Line {
+    /*public static class Line {
         public final double x1, y1, x2, y2;
 
         public Line(double x1, double y1, double x2, double y2) {
@@ -56,7 +56,7 @@ public class VisionController implements RobotController{
             return Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
         }
     }
-    private ArrayList<Line> lines;
+    private ArrayList<Line> lines;*/
                 
     @Override
     public boolean performAction(RobotProperties properties) {
