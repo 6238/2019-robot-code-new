@@ -22,9 +22,9 @@ public class DriveTrainController implements RobotController {
         double joyY = properties.joystick.getJoystickY();
         double joyZ = properties.joystick.getJoystickZ();
 
-        //MecanumDrive robotDrive = properties.getRobotDrive();
+        MecanumDrive robotDrive = properties.getRobotDrive();
 
-        //robotDrive.driveCartesian(joyX, joyY, joyZ, 0.0);
+        robotDrive.driveCartesian(joyX, joyY, joyZ, 0.0);
 
         System.out.println(joyX + " " + joyY + " " + joyZ);
 

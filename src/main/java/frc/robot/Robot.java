@@ -111,8 +111,6 @@ public class Robot extends TimedRobot {
     if (properties.joystick.getSlider() < 0) {
       for (RobotController controller : controllers) {
         System.out.println("Hi Ishan! We are running this controller: " + controller.getName());
-      for (RobotController controller : controllers) {
-        System.out.println("Hi Ishan! We are running this controller: " + controller.getName());
         controller.performAction(properties);
       }
       System.out.println("Power on!");

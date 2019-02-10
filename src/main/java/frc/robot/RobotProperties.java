@@ -20,8 +20,8 @@ public class RobotProperties {
     private WPI_TalonSRX elevator2;
 
 
-    //private Solenoid cargoBay1;
-    //private Solenoid cargoBay2;
+    private Solenoid cargoBay1;
+    private Solenoid cargoBay2;
 
     private WPI_TalonSRX mechanism;
 
@@ -31,20 +31,20 @@ public class RobotProperties {
     public RobotProperties() {
         joystick = new JoystickController(0);
 
-        frontLeft = new WPI_TalonSRX(33);
-        frontRight = new WPI_TalonSRX(34);
-        rearLeft = new WPI_TalonSRX(35);
-        rearRight = new WPI_TalonSRX(36);
+        frontLeft = new WPI_TalonSRX(14);
+        frontRight = new WPI_TalonSRX(13);
+        rearLeft = new WPI_TalonSRX(12);
+        rearRight = new WPI_TalonSRX(11);
 
         robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-        elevator1 = new WPI_TalonSRX(37);
-        elevator2 = new WPI_TalonSRX(38);
+        elevator1 = new WPI_TalonSRX(15);
+        elevator2 = new WPI_TalonSRX(16);
 
         //cargoBay1 = new Solenoid(0);
         //cargoBay2 = new Solenoid(1);
 
-        mechanism = new WPI_TalonSRX(39);
+        //mechanism = new WPI_TalonSRX(39);
 
         //viewingCamera = CameraServer.getInstance().startAutomaticCapture();
        // lineTraceCamera = CameraServer.getInstance().startAutomaticCapture();
@@ -112,7 +112,7 @@ public class RobotProperties {
         this.elevator2 = elevator2;
     }
 
-    public WPI_TalonSRX getMechanism() {
+    /*public WPI_TalonSRX getMechanism() {
         return mechanism;
     }
 
@@ -120,15 +120,6 @@ public class RobotProperties {
         this.mechanism = mechanism;
     }
 
-<<<<<<< HEAD
-    /*public Solenoid getCargoBay1() {
-        return this.cargoBay1;
-    }
-
-    public Solenoid getCargoBay2() {
-        return this.cargoBay2;
-    }*/
-=======
     public Solenoid getCargoBay1() {
         return cargoBay1;
     }
@@ -143,8 +134,7 @@ public class RobotProperties {
 
     public void setCargoBay2(Solenoid cargoBay2) {
         this.cargoBay2 = cargoBay2;
-    }
->>>>>>> 43c2be8eab1c9388408f8e71fb34afa00d20423c
+    }*/
 
     //public UsbCamera getViewingCamera() {
     //    return this.viewingCamera;
