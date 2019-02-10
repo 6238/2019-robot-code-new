@@ -20,8 +20,8 @@ public class RobotProperties {
     private WPI_TalonSRX elevator2;
 
 
-    private Solenoid cargoBay1;
-    private Solenoid cargoBay2;
+    //private Solenoid cargoBay1;
+    //private Solenoid cargoBay2;
 
     private WPI_TalonSRX mechanism;
 
@@ -41,8 +41,8 @@ public class RobotProperties {
         elevator1 = new WPI_TalonSRX(37);
         elevator2 = new WPI_TalonSRX(38);
 
-        cargoBay1 = new Solenoid(0);
-        cargoBay2 = new Solenoid(1);
+        //cargoBay1 = new Solenoid(0);
+        //cargoBay2 = new Solenoid(1);
 
         mechanism = new WPI_TalonSRX(39);
 
@@ -120,13 +120,13 @@ public class RobotProperties {
         this.mechanism = mechanism;
     }
 
-    public Solenoid getCargoBay1() {
+    /*public Solenoid getCargoBay1() {
         return this.cargoBay1;
     }
 
     public Solenoid getCargoBay2() {
         return this.cargoBay2;
-    }
+    }*/
 
     //public UsbCamera getViewingCamera() {
     //    return this.viewingCamera;

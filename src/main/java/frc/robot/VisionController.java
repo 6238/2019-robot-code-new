@@ -14,7 +14,7 @@ public class VisionController implements RobotController{
     public VisionController(RobotProperties properties) {
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(320, 240);
-        camera1.setFrameRate(15);
+        //camera1.setFrameRate(15);
         //camera2 = CameraServer.getInstance().startAutomaticCapture(1);
         //camera2.setResolution(640, 480);
 

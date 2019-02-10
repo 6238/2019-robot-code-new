@@ -164,5 +164,5 @@ public class JoystickController {
         int degree = getPOV(0);
         return (degree <= 247 && degree >= 207);
     }
-
+    
 }
