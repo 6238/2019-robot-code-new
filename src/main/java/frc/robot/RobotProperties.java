@@ -3,6 +3,11 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
+import edu.wpi.first.wpilibj.AnalogGyro;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.cameraserver.CameraServer;
 
@@ -25,6 +30,9 @@ public class RobotProperties {
 
     private WPI_TalonSRX mechanism;
 
+    private Gyro gyro;
+    private Accelerometer accelerometer;
+
     //private UsbCamera viewingCamera;
     //private UsbCamera lineTraceCamera;
 
@@ -45,6 +53,13 @@ public class RobotProperties {
         //cargoBay2 = new Solenoid(1);
 
         //mechanism = new WPI_TalonSRX(39);
+        
+        //TODO: fix this:
+        gyro = new AnalogGyro(0);
+        
+        //TODO: why can't i make a get statement for the accel?
+        accelerometer = new BuiltInAccelerometer();
+        accelerometer = new BuiltInAccelerometer(Accelerometer.Range.k4G);
 
         //viewingCamera = CameraServer.getInstance().startAutomaticCapture();
        // lineTraceCamera = CameraServer.getInstance().startAutomaticCapture();
@@ -56,46 +71,10 @@ public class RobotProperties {
 
     */
 
-    public WPI_TalonSRX getFrontLeft() {
-        return frontLeft;
-    }
-
-    public void setFrontLeft(WPI_TalonSRX frontLeft) {
-        this.frontLeft = frontLeft;
-    }
-
-    public WPI_TalonSRX getFrontRight() {
-        return frontRight;
-    }
-
-    public void setFrontRight(WPI_TalonSRX frontRight) {
-        this.frontRight = frontRight;
-    }
-
-    public WPI_TalonSRX getRearLeft() {
-        return rearLeft;
-    }
-
-    public void setRearLeft(WPI_TalonSRX rearLeft) {
-        this.rearLeft = rearLeft;
-    }
-
-    public WPI_TalonSRX getRearRight() {
-        return rearRight;
-    }
-
-    public void setRearRight(WPI_TalonSRX rearRight) {
-        this.rearRight = rearRight;
-    }
-
     public MecanumDrive getRobotDrive() {
         return robotDrive;
     }
-
-    public void setRobotDrive(MecanumDrive robotDrive) {
-        this.robotDrive = robotDrive;
-    }
-
+    
     public WPI_TalonSRX getElevator1() {
         return elevator1;
     }
@@ -135,6 +114,10 @@ public class RobotProperties {
     public void setCargoBay2(Solenoid cargoBay2) {
         this.cargoBay2 = cargoBay2;
     }*/
+
+    public Gyro getGyro() {
+        return gyro;
+    }
 
     //public UsbCamera getViewingCamera() {
     //    return this.viewingCamera;

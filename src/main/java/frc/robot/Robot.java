@@ -29,8 +29,6 @@ public class Robot extends TimedRobot {
   private final List<RobotController> controllers;
 
   public Robot() {
-    //properties = new RobotProperties();
-
     controllers = new ArrayList<RobotController>();
     controllers.add(new DriveTrainController());
     controllers.add(new VisionController(properties));
@@ -45,7 +43,7 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    properties = new RobotProperties();
+    properties.getGyro().reset();
     /*CameraServer server = CameraServer.getInstance();
     UsbCamera camera = server.startAutomaticCapture(0);
     camera.setResolution(640, 480);*/

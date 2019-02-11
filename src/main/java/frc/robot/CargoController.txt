@@ -21,6 +21,7 @@ public class CargoMechanism implements RobotController
 
     public boolean performAction(RobotProperties properties)
     {
+        //TODO: Can't use trigger, change it
         cargoTriggered = joystick.getButtonOne(); //arbitrary value. update later
         if(cargoTriggered)
         {
