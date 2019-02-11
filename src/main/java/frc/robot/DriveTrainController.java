@@ -21,7 +21,9 @@ public class DriveTrainController implements RobotController {
         
         MecanumDrive robotDrive = properties.getRobotDrive();
 
-        robotDrive.driveCartesian(properties.joystick.getJoystickX(), properties.joystick.getJoystickY(), properties.joystick.getJoystickZ());
+        double insanityFactor = 0.5;
+
+        robotDrive.driveCartesian(-1*insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -1*insanityFactor*properties.joystick.getJoystickZ());
         System.out.println(properties.joystick.getSlider());
 
         return true;

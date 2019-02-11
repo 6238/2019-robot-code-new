@@ -12,7 +12,7 @@ import org.opencv.imgproc.Imgproc;
 import java.util.*;
 public class VisionController implements RobotController{
 
-    private UsbCamera camera1;
+    //private UsbCamera camera1;
     private UsbCamera camera2;
     private VideoSink server;
     private int curCam;
@@ -20,8 +20,8 @@ public class VisionController implements RobotController{
    // private CvSource outputStream; 
    // private GripPipeline pipeline;
     public VisionController(RobotProperties properties) {
-        camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-        camera1.setResolution(640, 480);
+        //camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+        //camera1.setResolution(640, 480);
         camera2 = CameraServer.getInstance().startAutomaticCapture(1);
         camera2.setResolution(640, 480);
 
@@ -63,11 +63,11 @@ public class VisionController implements RobotController{
         
         if (properties.joystick.getButtonTwo()) {
             if (curCam == 1) {
-                curCam = 2;
-                server.setSource(camera1);
+                curCam = 1;
+                //server.setSource(camera1);
                 System.out.println(curCam);
             } else {
-                curCam = 1;
+                curCam = 2;
                 server.setSource(camera2);
                 System.out.println(curCam);
                 

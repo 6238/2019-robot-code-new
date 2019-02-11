@@ -33,7 +33,7 @@ public class Robot extends TimedRobot {
 
     controllers = new ArrayList<RobotController>();
     controllers.add(new DriveTrainController());
-    //controllers.add(new VisionController(properties));
+    controllers.add(new VisionController(properties));
   }
 
   /**
