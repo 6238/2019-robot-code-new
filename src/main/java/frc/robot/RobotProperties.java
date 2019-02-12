@@ -1,18 +1,16 @@
 package frc.robot;
 
+import com.analog.adis16470.frc.ADIS16470_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.cameraserver.CameraServer;
 
 public class RobotProperties {
     JoystickController joystick;
+
+    IMUController imu;
 
     private WPI_TalonSRX frontLeft;
     private WPI_TalonSRX frontRight;
@@ -24,20 +22,18 @@ public class RobotProperties {
     private WPI_TalonSRX elevator1;
     private WPI_TalonSRX elevator2;
 
-
     private Solenoid cargoBay1;
     private Solenoid cargoBay2;
 
     private WPI_TalonSRX mechanism;
-
-    private Gyro gyro;
-    private Accelerometer accelerometer;
 
     //private UsbCamera viewingCamera;
     //private UsbCamera lineTraceCamera;
 
     public RobotProperties() {
         joystick = new JoystickController(0);
+
+        imu = new IMUController();
 
         frontLeft = new WPI_TalonSRX(14);
         frontRight = new WPI_TalonSRX(13);
@@ -53,23 +49,10 @@ public class RobotProperties {
         //cargoBay2 = new Solenoid(1);
 
         //mechanism = new WPI_TalonSRX(39);
-        
-        //TODO: fix this:
-        gyro = new AnalogGyro(0);
-        
-        //TODO: why can't i make a get statement for the accel?
-        accelerometer = new BuiltInAccelerometer();
-        accelerometer = new BuiltInAccelerometer(Accelerometer.Range.k4G);
 
         //viewingCamera = CameraServer.getInstance().startAutomaticCapture();
        // lineTraceCamera = CameraServer.getInstance().startAutomaticCapture();
     }
-    // 4 wheel motors - cims talon srx
-    // 2 dual gearboxes - 2 775s each
-    // one spare 775
-    /*
-
-    */
 
     public MecanumDrive getRobotDrive() {
         return robotDrive;
@@ -114,10 +97,6 @@ public class RobotProperties {
     public void setCargoBay2(Solenoid cargoBay2) {
         this.cargoBay2 = cargoBay2;
     }*/
-
-    public Gyro getGyro() {
-        return gyro;
-    }
 
     //public UsbCamera getViewingCamera() {
     //    return this.viewingCamera;
