@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class RobotProperties {
@@ -88,4 +89,43 @@ public class RobotProperties {
     public void setCargoBay2(Solenoid cargoBay2) {
         this.cargoBay2 = cargoBay2;
     }*/
+
+    public void pushData(RobotProperties properties) {
+        SmartDashboard.putNumber("Joystick X", properties.joystick.getJoystickX());
+        SmartDashboard.putNumber("Joystick Y", properties.joystick.getJoystickY());
+        SmartDashboard.putNumber("Joystick Z", properties.joystick.getJoystickZ());
+
+        SmartDashboard.putNumber("Gyro", properties.imu.getGyro());
+        SmartDashboard.putNumber("Gyro X", properties.imu.getGyroX());
+        SmartDashboard.putNumber("Gyro Y", properties.imu.getGyroY());
+        SmartDashboard.putNumber("Gyro Z", properties.imu.getGyroZ());
+        
+        SmartDashboard.putNumber("Accel X", properties.imu.getAccelX());
+        SmartDashboard.putNumber("Accel Y", properties.imu.getAccelY());
+        SmartDashboard.putNumber("Accel Z", properties.imu.getAccelZ());
+
+        SmartDashboard.putBoolean("Trigger", properties.joystick.getButtonOne());
+        SmartDashboard.putBoolean("SideButton", properties.joystick.getButtonTwo());
+        SmartDashboard.putBoolean("ThumbUpLeft", properties.joystick.getButtonThree());
+        SmartDashboard.putBoolean("ThumbUpRight", properties.joystick.getButtonFour());
+        SmartDashboard.putBoolean("ThumbDownLeft", properties.joystick.getButtonFive());
+        SmartDashboard.putBoolean("ThumbDownRight", properties.joystick.getButtonSix());
+        SmartDashboard.putBoolean("BaseBackLeft", properties.joystick.getButtonSeven());
+        SmartDashboard.putBoolean("BaseBackRight", properties.joystick.getButtonEight());
+        SmartDashboard.putBoolean("BaseMiddleLeft", properties.joystick.getButtonNine());
+        SmartDashboard.putBoolean("BaseMiddleRight", properties.joystick.getButtonTen());
+        SmartDashboard.putBoolean("BaseFrontLeft", properties.joystick.getButtonEleven());
+        SmartDashboard.putBoolean("BaseFrontRight", properties.joystick.getButtonTwelve());
+
+        SmartDashboard.putBoolean("DPadUp", properties.joystick.getDPadUp());
+        SmartDashboard.putBoolean("DPadUpRight", properties.joystick.getDPadUpRight());
+        SmartDashboard.putBoolean("DPadRight", properties.joystick.getDPadRight());
+        SmartDashboard.putBoolean("DPadDownRight", properties.joystick.getDPadDownRight());
+        SmartDashboard.putBoolean("DPadDown", properties.joystick.getDPadDown());
+        SmartDashboard.putBoolean("DPadDownLeft", properties.joystick.getDPadDownLeft());
+        SmartDashboard.putBoolean("DPadLeft", properties.joystick.getDPadLeft());
+        SmartDashboard.putBoolean("DPadUpLeft", properties.joystick.getDPadUpLeft());
+
+        SmartDashboard.putNumber("Shutoff", properties.joystick.getSlider());
+    }
 }
