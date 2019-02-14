@@ -59,5 +59,18 @@ public class Robot extends TimedRobot {
         controller.performAction(properties);
       }
     }
+
+    SmartDashboard.putNumber("Joystick X", properties.joystick.getJoystickX());
+    SmartDashboard.putNumber("Joystick Y", properties.joystick.getJoystickY());
+    SmartDashboard.putNumber("Joystick Z", properties.joystick.getJoystickZ());
+
+    SmartDashboard.putNumber("Gyro", properties.imu.getGyro());
+    SmartDashboard.putNumber("Gyro X", properties.imu.getGyroX());
+    SmartDashboard.putNumber("Gyro Y", properties.imu.getGyroY());
+    SmartDashboard.putNumber("Gyro Z", properties.imu.getGyroZ());
+    
+    SmartDashboard.putNumber("Accel X", properties.imu.getAccelX());
+    SmartDashboard.putNumber("Accel Y", properties.imu.getAccelY());
+    SmartDashboard.putNumber("Accel Z", properties.imu.getAccelZ());
   }
 }

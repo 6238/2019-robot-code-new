@@ -1,11 +1,8 @@
 package frc.robot;
 
-import com.analog.adis16470.frc.ADIS16470_IMU;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.cameraserver.CameraServer;
 
 public class RobotProperties {
     JoystickController joystick;
@@ -27,9 +24,6 @@ public class RobotProperties {
 
     private WPI_TalonSRX mechanism;
 
-    //private UsbCamera viewingCamera;
-    //private UsbCamera lineTraceCamera;
-
     public RobotProperties() {
         joystick = new JoystickController(0);
 
@@ -48,10 +42,7 @@ public class RobotProperties {
         //cargoBay1 = new Solenoid(0);
         //cargoBay2 = new Solenoid(1);
 
-        //mechanism = new WPI_TalonSRX(39);
-
-        //viewingCamera = CameraServer.getInstance().startAutomaticCapture();
-       // lineTraceCamera = CameraServer.getInstance().startAutomaticCapture();
+        //mechanism = new WPI_TalonSRX(17);
     }
 
     public MecanumDrive getRobotDrive() {
@@ -97,12 +88,4 @@ public class RobotProperties {
     public void setCargoBay2(Solenoid cargoBay2) {
         this.cargoBay2 = cargoBay2;
     }*/
-
-    //public UsbCamera getViewingCamera() {
-    //    return this.viewingCamera;
-    //}
-
-    //public UsbCamera getLineTraceCamera() {
-    //    return this.lineTraceCamera;
-    //}
 }
