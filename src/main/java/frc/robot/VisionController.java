@@ -1,5 +1,7 @@
 package frc.robot;
 
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.CvSink;
@@ -16,9 +18,9 @@ public class VisionController implements RobotController{
     private UsbCamera camera2;
     private VideoSink server;
     private int curCam;
-   // private CvSink cvSink;
-   // private CvSource outputStream; 
-   // private GripPipeline pipeline;
+    private CvSink cvSink;
+    private CvSource outputStream; 
+    private GripPipeline pipeline;
     public VisionController(RobotProperties properties) {
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(640, 480);
@@ -34,29 +36,8 @@ public class VisionController implements RobotController{
     public String getName() {
         return "VisionController";
     }
-    /*public static class Line {
-        public final double x1, y1, x2, y2;
-
-        public Line(double x1, double y1, double x2, double y2) {
-            this.x1 = x1;
-            this.y1 = y1;
-            this.x2 = x2;
-            this.y2 = y2;
-        }
-
-        public double lengthSquared() {
-            return Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2);
-        }
-
-        public double length() {
-            return Math.sqrt(lengthSquared());
-        }
-
-        public double angle() {
-            return Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
-        }
-    }
-    private ArrayList<Line> lines;*/
+    
+    private ArrayList<Line> lines;
                 
     @Override
     public boolean performAction(RobotProperties properties) {
@@ -71,7 +52,7 @@ public class VisionController implements RobotController{
                 server.setSource(camera2);
                 System.out.println(curCam);
                 
-                /*cvSink = CameraServer.getInstance().getVideo();
+                cvSink = CameraServer.getInstance().getVideo();
                 outputStream = CameraServer.getInstance().putVideo("Line Trace", 640, 480);
                 
                 Mat source = new Mat();
@@ -79,11 +60,12 @@ public class VisionController implements RobotController{
                 
                 while(!Thread.interrupted()) {
                     cvSink.grabFrame(source);
-                    //Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
-                    pipeline.process(source);
-                    lines = pipeline.findLinesOutput();   
+                    Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+                    //pipeline.process(source);
+                    //lines = pipeline.findLinesOutput();   
+                    //System.out.println(lines.get(0).length());
                     outputStream.putFrame(output);
-                }*/
+                }
             }
         }
 
