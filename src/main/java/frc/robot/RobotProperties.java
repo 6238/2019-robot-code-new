@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class RobotProperties {
     JoystickController joystick;
 
-    //IMUController imu;
+    IMUController imu;
 
     private WPI_TalonSRX frontLeft;
     private WPI_TalonSRX frontRight;
@@ -28,22 +28,18 @@ public class RobotProperties {
     public RobotProperties() {
         joystick = new JoystickController(0);
 
-        //imu = new IMUController();
+        imu = new IMUController();
 
         frontLeft = new WPI_TalonSRX(14);
         frontRight = new WPI_TalonSRX(13);
         rearLeft = new WPI_TalonSRX(12);
-        rearRight = new WPI_TalonSRX(15);
+        rearRight = new WPI_TalonSRX(11);
 
         robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-        elevator1 = new WPI_TalonSRX(17);
+        elevator1 = new WPI_TalonSRX(15);
         elevator2 = new WPI_TalonSRX(16);
-
-        //cargoBay1 = new Solenoid(0);
-        //cargoBay2 = new Solenoid(1);
-
-        //mechanism = new WPI_TalonSRX(17);
+        mechanism = new WPI_TalonSRX(17);
     }
 
     public MecanumDrive getRobotDrive() {
@@ -66,7 +62,7 @@ public class RobotProperties {
         this.elevator2 = elevator2;
     }
 
-    /*public WPI_TalonSRX getMechanism() {
+    public WPI_TalonSRX getMechanism() {
         return mechanism;
     }
 
@@ -74,35 +70,21 @@ public class RobotProperties {
         this.mechanism = mechanism;
     }
 
-    public Solenoid getCargoBay1() {
-        return cargoBay1;
-    }
 
-    public void setCargoBay1(Solenoid cargoBay1) {
-        this.cargoBay1 = cargoBay1;
-    }
-
-    public Solenoid getCargoBay2() {
-        return cargoBay2;
-    }
-
-    public void setCargoBay2(Solenoid cargoBay2) {
-        this.cargoBay2 = cargoBay2;
-    }*/
 
     public void pushData(RobotProperties properties) {
         SmartDashboard.putNumber("Joystick X", properties.joystick.getJoystickX());
         SmartDashboard.putNumber("Joystick Y", properties.joystick.getJoystickY());
         SmartDashboard.putNumber("Joystick Z", properties.joystick.getJoystickZ());
 
-        /*SmartDashboard.putNumber("Gyro", properties.imu.getGyro());
+        SmartDashboard.putNumber("Gyro", properties.imu.getGyro());
         SmartDashboard.putNumber("Gyro X", properties.imu.getGyroX());
         SmartDashboard.putNumber("Gyro Y", properties.imu.getGyroY());
         SmartDashboard.putNumber("Gyro Z", properties.imu.getGyroZ());
         
         SmartDashboard.putNumber("Accel X", properties.imu.getAccelX());
         SmartDashboard.putNumber("Accel Y", properties.imu.getAccelY());
-        SmartDashboard.putNumber("Accel Z", properties.imu.getAccelZ());*/
+        SmartDashboard.putNumber("Accel Z", properties.imu.getAccelZ());
 
         SmartDashboard.putBoolean("Trigger", properties.joystick.getButtonOne());
         SmartDashboard.putBoolean("SideButton", properties.joystick.getButtonTwo());
