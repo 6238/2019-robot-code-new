@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class RobotProperties {
     JoystickController joystick;
 
-    IMUController imu;
+    //IMUController imu;
 
     private WPI_TalonSRX frontLeft;
     private WPI_TalonSRX frontRight;
@@ -28,7 +28,7 @@ public class RobotProperties {
     public RobotProperties() {
         joystick = new JoystickController(0);
 
-        imu = new IMUController();
+        //imu = new IMUController();
 
         frontLeft = new WPI_TalonSRX(14);
         frontRight = new WPI_TalonSRX(13);
@@ -95,14 +95,14 @@ public class RobotProperties {
         SmartDashboard.putNumber("Joystick Y", properties.joystick.getJoystickY());
         SmartDashboard.putNumber("Joystick Z", properties.joystick.getJoystickZ());
 
-        SmartDashboard.putNumber("Gyro", properties.imu.getGyro());
+        /*SmartDashboard.putNumber("Gyro", properties.imu.getGyro());
         SmartDashboard.putNumber("Gyro X", properties.imu.getGyroX());
         SmartDashboard.putNumber("Gyro Y", properties.imu.getGyroY());
         SmartDashboard.putNumber("Gyro Z", properties.imu.getGyroZ());
         
         SmartDashboard.putNumber("Accel X", properties.imu.getAccelX());
         SmartDashboard.putNumber("Accel Y", properties.imu.getAccelY());
-        SmartDashboard.putNumber("Accel Z", properties.imu.getAccelZ());
+        SmartDashboard.putNumber("Accel Z", properties.imu.getAccelZ());*/
 
         SmartDashboard.putBoolean("Trigger", properties.joystick.getButtonOne());
         SmartDashboard.putBoolean("SideButton", properties.joystick.getButtonTwo());

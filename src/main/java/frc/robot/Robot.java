@@ -43,8 +43,8 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    properties.imu.calibrate();
-    System.out.println("Calibrated!");
+    //properties.imu.calibrate();
+    //System.out.println("Calibrated!");
     /*CameraServer server = CameraServer.getInstance();
     UsbCamera camera = server.startAutomaticCapture(0);
     camera.setResolution(640, 480);*/
@@ -59,6 +59,6 @@ public class Robot extends TimedRobot {
         controller.performAction(properties);
       }
     }
-    properties.pushData(properties);
+    //properties.pushData(properties);
   }
 }

@@ -36,21 +36,21 @@ public class DriveTrainController implements RobotController {
 
         //TODO: Calculate what correctAngle is, angleError = correctAngle - actualAngle, subtract angleError from joyZ (demonstrated)
 
-        actualAngle = properties.imu.getGyro();
+        //actualAngle = properties.imu.getGyro();
 
-        if (properties.joystick.getJoystickZ() == 0 && checkNextCycle) {
+        /*if (properties.joystick.getJoystickZ() == 0 && checkNextCycle) {
             correctAngle = actualAngle;
             checkNextCycle = false;
         } else if (properties.joystick.getJoystickZ() != 0) {
             checkNextCycle = true;
-        }
+        }*/
 
-        angleError = correctAngle - actualAngle;
+        //angleError = correctAngle - actualAngle;
 
         if (properties.joystick.getButtonOne()) {
             robotDrive.driveCartesian(-1*insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -1*insanityFactor*properties.joystick.getJoystickZ(), actualAngle);
         } else {
-            robotDrive.driveCartesian(-1*insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -1*insanityFactor*properties.joystick.getJoystickZ() + (angleError * kError));
+            robotDrive.driveCartesian(-1*insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -1*insanityFactor*properties.joystick.getJoystickZ()/* + (angleError * kError)*/);
         }
 
         return true;
