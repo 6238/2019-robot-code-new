@@ -33,11 +33,11 @@ public class RobotProperties {
         frontLeft = new WPI_TalonSRX(14);
         frontRight = new WPI_TalonSRX(13);
         rearLeft = new WPI_TalonSRX(12);
-        rearRight = new WPI_TalonSRX(11);
+        rearRight = new WPI_TalonSRX(15);
 
         robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-        elevator1 = new WPI_TalonSRX(15);
+        elevator1 = new WPI_TalonSRX(17);
         elevator2 = new WPI_TalonSRX(16);
 
         //cargoBay1 = new Solenoid(0);

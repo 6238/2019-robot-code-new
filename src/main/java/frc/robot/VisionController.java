@@ -13,7 +13,7 @@ import java.util.*;
 public class VisionController implements RobotController{
 
     private UsbCamera camera1;
-    private UsbCamera camera2;
+    //private UsbCamera camera2;
     private VideoSink server;
     private int curCam;
    // private CvSink cvSink;
@@ -22,8 +22,8 @@ public class VisionController implements RobotController{
     public VisionController(RobotProperties properties) {
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(640, 480);
-        camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-        camera2.setResolution(640, 480);
+        //camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+        //camera2.setResolution(640, 480);
     }
 
     @Override
