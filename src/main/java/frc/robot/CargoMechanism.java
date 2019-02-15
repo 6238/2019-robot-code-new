@@ -1,18 +1,15 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.*;
 
 public class CargoMechanism implements RobotController
 {
-    private Solenoid cargoBay1;
-    private Solenoid cargoBay2;
-    private JoystickController joystick;
-    private boolean cargoTriggered;
-    public CargoMechanism(RobotProperties properties)
+    
     {
-        cargoBay1 = properties.getCargoBay1();
-        cargoBay2 = properties.getCargoBay2();
-        joystick = properties.joystick;
+        
+        
     }
 
     public String getName() {
@@ -21,19 +18,30 @@ public class CargoMechanism implements RobotController
 
     public boolean performAction(RobotProperties properties)
     {
-        //TODO: Can't use trigger, change it
-        cargoTriggered = joystick.getButtonOne(); //arbitrary value. update later
-        if(cargoTriggered)
+        boolean isMechinButtonPressed;
+        boolean isMechoutButtonPressed;
+        isMechinButtonPressed = properties.joystick.getButtonFive();
+        isMechoutButtonPressed = properties.joystick.getButtonThree();
+        WPI_TalonSRX Mechanism = properties.getMechanism();
+        Mechanism.set(0);
+        if (isMechinButtonPressed && isMechoutButtonPressed)
         {
-            cargoBay1.set(true);
-            cargoBay2.set(true);
-        }
-        else
+            Mechanism.set(0);
+        } else if(isMechinButtonPressed)
         {
-            cargoBay1.set(false);
-            cargoBay2.set(false);
+            Mechanism.set(-5);
+        } else if (isMechoutButtonPressed)
+        {
+            Mechanism.set(5);
+        } else if (isMechinButtonPressed && isMechoutButtonPressed)
+        {
+            Mechanism.set(5);
+        } else
+        {
+            Mechanism.set(0);
         }
 
+    
         return true;
     }
 }
