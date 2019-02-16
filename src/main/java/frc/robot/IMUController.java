@@ -11,38 +11,18 @@ public class IMUController {
     }
     //TODO: angles -180 to 180?
     public double getGyro() {
-        double angle;
-        angle = imu.getAngle();
-        while (angle >= 360) {
-            angle = angle - 360;
-        }
-        return angle;
+        return imu.getAngle();
     }
     public double getGyroX() {
-        double angle;
-        angle = imu.getAngleX();
-        while (angle >= 360) {
-            angle = angle - 360;
-        }
-        return angle;
+        return imu.getAngleX();
     }
 
     public double getGyroY() {
-        double angle;
-        angle = imu.getAngleY();
-        while (angle >= 360) {
-            angle = angle - 360;
-        }
-        return angle;
+        return imu.getAngleY();
     }
 
     public double getGyroZ() {
-        double angle;
-        angle = imu.getAngleZ();
-        while (angle >= 360) {
-            angle = angle - 360;
-        }
-        return angle;
+        return imu.getAngleZ();
     }
 
     public double getAccelX() {
