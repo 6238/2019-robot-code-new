@@ -28,10 +28,10 @@ public class DriveTrainController implements RobotController {
         } else if (properties.joystick.getButtonFive() && insanityFactor > 0) {
             insanityFactor = insanityFactor - 0.05;
         } else {
-            insanityFactor = insanityFactor;
+            
         }
 
-        System.out.println("up:" + properties.joystick.getButtonThree() + "down:" + properties.joystick.getButtonFive() + "factor:" + insanityFactor);
+        //System.out.println("up:" + properties.joystick.getButtonThree() + "down:" + properties.joystick.getButtonFive() + "factor:" + insanityFactor);
 
         robotDrive.driveCartesian(-1*insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -1*insanityFactor*properties.joystick.getJoystickZ());
         

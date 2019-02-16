@@ -136,9 +136,13 @@ public class RobotProperties {
         System.out.println(properties.imu.imu.getAngleY());
         System.out.println(properties.imu.imu.getAngleZ());
         
-        SmartDashboard.putNumber("Accel X", properties.imu.getAccelX());
+        /*SmartDashboard.putNumber("Accel X", properties.imu.getAccelX());
         SmartDashboard.putNumber("Accel Y", properties.imu.getAccelY());
-        SmartDashboard.putNumber("Accel Z", properties.imu.getAccelZ());
+        SmartDashboard.putNumber("Accel Z", properties.imu.getAccelZ());*/
+
+        SmartDashboard.putNumber("Accel X", properties.imu.imu.getAccelX());
+        SmartDashboard.putNumber("Accel Y", properties.imu.imu.getAccelY());
+        SmartDashboard.putNumber("Accel Z", properties.imu.imu.getAccelZ());
 
         SmartDashboard.putBoolean("Trigger", properties.joystick.getButtonOne());
         SmartDashboard.putBoolean("SideButton", properties.joystick.getButtonTwo());
