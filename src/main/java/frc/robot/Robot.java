@@ -10,6 +10,8 @@ package frc.robot;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.analog.adis16470.frc.ADIS16470_IMU;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,6 +29,8 @@ public class Robot extends TimedRobot {
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
   private RobotProperties properties;
   private final List<RobotController> controllers;
+
+  public static final ADIS16470_IMU imu = new ADIS16470_IMU();
 
   public Robot() {
     //properties = new RobotProperties();
@@ -46,6 +50,7 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     properties = new RobotProperties();
+    //properties.imu.reset();
     /*CameraServer server = CameraServer.getInstance();
     UsbCamera camera = server.startAutomaticCapture(0);
     camera.setResolution(640, 480);*/
@@ -55,11 +60,11 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     if (properties.joystick.getSlider() < -0.5) {
-      for (RobotController controller : controllers) 
-      {
+      for (RobotController controller : controllers) {
         controller.performAction(properties);
       }
     }
-    
+    //properties.pushData(properties);
+    System.out.println(imu.getAngle());
   }
 }
