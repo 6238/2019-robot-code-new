@@ -28,9 +28,9 @@ public class DriveTrainController implements RobotController {
         
         MecanumDrive robotDrive = properties.getRobotDrive();
 
-        if (properties.joystick.getDPadUp() && insanityFactor < 1) {
+        if (properties.joystick.getButtonThree() && insanityFactor < 1) {
             insanityFactor = insanityFactor + 0.05;
-        } else if (properties.joystick.getDPadDown() && insanityFactor > 0) {
+        } else if (properties.joystick.getButtonFive() && insanityFactor > 0) {
             insanityFactor = insanityFactor - 0.05;
         }
 
