@@ -110,6 +110,6 @@ public class Robot extends TimedRobot {
         controller.performAction(properties);
       }
     }
-    //properties.pushData(properties);
+    properties.pushData(properties);
   }
 }
