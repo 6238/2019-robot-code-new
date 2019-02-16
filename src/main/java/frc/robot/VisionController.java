@@ -14,24 +14,44 @@ public class VisionController implements RobotController{
     private GripPipeline pipeline;
     private ArrayList<GripPipeline.Line> filteredLines;
     private UsbCamera camera1;
+    
     private CvSink cvSink;
+    private CvSource cvSource; 
+   
     //private UsbCamera camera2;
     private VideoSink server;
     private int curCam;
     private Thread visionThread;
-   // private CvSink cvSink;
-   // private CvSource outputStream; 
-   // private GripPipeline pipeline;
-   
-   public VisionController(RobotProperties properties) {
+    
+    private final int width = 640;
+    private final int height = 480;
+    public VisionController(RobotProperties properties) {
         pipeline = new GripPipeline();
         camera1 = CameraServer.getInstance().startAutomaticCapture();
-        camera1.setResolution(640, 480);
+        camera1.setResolution(width, height);
     
         cvSink = CameraServer.getInstance().getVideo();
-        
+        cvSource = CameraServer.getInstance().putVideo("vision",width,height);    
+
         //camera2 = CameraServer.getInstance().startAutomaticCapture(1);
         //camera2.setResolution(640, 480);
+    
+        visionThread = new Thread(() -> {
+			Mat source = new Mat();
+			
+			while(!Thread.interrupted()){
+				if(cvSink.grabFrame(source)==0){
+					cvSource.notifyError(cvSink.getError());
+					continue;
+				}
+				
+				pipeline.process(source);
+				if (!pipeline.filterLinesOutput().isEmpty()){
+					System.out.println("lines found");
+				}
+				cvSource.putFrame(source);
+			}
+		});
     }
 
     @Override
@@ -42,7 +62,7 @@ public class VisionController implements RobotController{
     @Override
     public boolean performAction(RobotProperties properties) 
     {
-        cvSink.setSource(camera1);
+        /*cvSink.setSource(camera1);
         cvSink.setEnabled(true);
 
         Mat frame = new Mat();
@@ -55,7 +75,7 @@ public class VisionController implements RobotController{
 
         GripPipeline.Line line = filteredLines.get(0);
 
-        System.out.println(line.angle());
+        System.out.println(line.angle());*/
         return true;
     }
 }
