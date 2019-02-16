@@ -3,7 +3,6 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Solenoid;
 
 public class RobotProperties {
     JoystickController joystick;
@@ -19,9 +18,6 @@ public class RobotProperties {
 
     private WPI_TalonSRX elevator1;
     private WPI_TalonSRX elevator2;
-
-    private Solenoid cargoBay1;
-    private Solenoid cargoBay2;
 
     private WPI_TalonSRX mechanism;
 
@@ -69,8 +65,6 @@ public class RobotProperties {
     public void setMechanism(WPI_TalonSRX mechanism) {
         this.mechanism = mechanism;
     }
-
-
 
     public void pushData(RobotProperties properties) {
         SmartDashboard.putNumber("Joystick X", properties.joystick.getJoystickX());
