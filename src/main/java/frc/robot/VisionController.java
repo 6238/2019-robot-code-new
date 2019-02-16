@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -13,17 +14,36 @@ import java.util.*;
 public class VisionController implements RobotController{
 
     private UsbCamera camera1;
-    //private UsbCamera camera2;
+    private UsbCamera camera2;
     private VideoSink server;
-    private int curCam;
+    private Boolean prevButton = false;
    // private CvSink cvSink;
    // private CvSource outputStream; 
    // private GripPipeline pipeline;
     public VisionController(RobotProperties properties) {
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(640, 480);
-        //camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-        //camera2.setResolution(640, 480);
+        camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+        camera2.setResolution(640, 480);
+
+        server = CameraServer.getInstance().getServer();
+
+        /* new Thread(() -> {
+            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+            camera.setResolution(640, 480);
+            
+            CvSink cvSink = CameraServer.getInstance().getVideo();
+            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
+            
+            Mat source = new Mat();
+            Mat output = new Mat();
+            
+            while(!Thread.interrupted()) {
+                cvSink.grabFrame(source);
+                Imgproc.cvtColor(source, output, Imgproc.COLOR_BGR2GRAY);
+                outputStream.putFrame(output);
+            }
+        }).start(); */
     }
 
     @Override
@@ -36,6 +56,16 @@ public class VisionController implements RobotController{
                 
     @Override
     public boolean performAction(RobotProperties properties) {
+
+        if (properties.joystick.getButtonTwo() && !prevButton) {
+            //NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection").forceSetString(camera2.getName());
+            server.setSource(camera2);
+        } else if (!properties.joystick.getButtonTwo() && prevButton) {
+            //NetworkTableInstance.getDefault().getTable("").getEntry("CameraSelection").forceSetString(camera1.getName());
+            server.setSource(camera1);
+        }
+
+        prevButton = properties.joystick.getButtonTwo();
 
         return true;
     }
