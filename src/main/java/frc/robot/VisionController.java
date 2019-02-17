@@ -56,11 +56,6 @@ public class VisionController implements RobotController{
         prevButton = properties.joystick.getButtonTwo();
         
         Mat frame = new Mat();
-        
-        return true;
-    }
-        
-}
 
         cvSink.grabFrame(frame);
         
