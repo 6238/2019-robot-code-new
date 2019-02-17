@@ -23,31 +23,35 @@ public class VisionController implements RobotController {
     private Thread bwVisionThread;
     private CvSource cvSource;
 
-    private final int width = 640;
-    private final int height = 320;
+    private final int width = 320;
+    private final int height = 240;
 
     public VisionController(RobotProperties properties) {
         bwpipeline = new GripPipeline2();
-        camera1 = CameraServer.getInstance().startAutomaticCapture();
-        camera1.setResolution(640, 480);
+        camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+        camera1.setResolution(width, height);
         camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-        camera2.setResolution(640, 480);
+        camera2.setResolution(width, height);
 
-        server = CameraServer.getInstance().getServer();
+        // server = CameraServer.getInstance().getServer();
 
-        cvSink = CameraServer.getInstance().getVideo();
+        cvSink = CameraServer.getInstance().getVideo(camera1);
         cvSource = CameraServer.getInstance().putVideo("vision", width, height);
 
         bwVisionThread = new Thread(() -> {
 
-            Mat img = new Mat();
             Mat output = new Mat();
-            
-            
-            cvSink.grabFrame(img);
-            bwpipeline.process(img);
-            output = bwpipeline.desaturateOutput();
-            cvSource.putFrame(output);
+
+            while (!Thread.interrupted()) {
+                if (cvSink.grabFrame(output) == 0) {
+                    cvSource.notifyError(cvSink.getError());
+                    continue;
+                }
+                cvSink.grabFrame(output);
+                bwpipeline.process(output);
+                output = bwpipeline.desaturateOutput();
+                cvSource.putFrame(output);
+            }
         });
         bwVisionThread.start();
     }
@@ -59,14 +63,16 @@ public class VisionController implements RobotController {
 
     @Override
     public boolean performAction(RobotProperties properties) {
-        cvSink.setSource(camera1);
-        cvSink.setEnabled(true);
+       //cvSink.setSource(camera1);
+       // cvSink.setEnabled(true);
         // System.out.println("Should show black and white");
 
         if (properties.joystick.getButtonTwo() && !prevButton) {
-            server.setSource(camera2);
+            prevButton = !prevButton;
+            cvSink = CameraServer.getInstance().getVideo(camera2);
         } else if (!properties.joystick.getButtonTwo() && prevButton) {
-            server.setSource(camera1);
+            prevButton = !prevButton;
+            cvSink = CameraServer.getInstance().getVideo(camera1);
         }
 
         prevButton = properties.joystick.getButtonTwo();
