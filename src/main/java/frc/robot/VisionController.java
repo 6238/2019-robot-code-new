@@ -48,12 +48,16 @@ public class VisionController implements RobotController{
 				pipeline.process(source);
 				if (!pipeline.filterLinesOutput().isEmpty()){
 					System.out.println("lines found");
-				}
+                }
+                else
+                {
+                    System.out.println("nothing found");
+                }
 				cvSource.putFrame(source);
 			}
 		});
+        visionThread.start();
     }
-
     @Override
     public String getName() {
         return "VisionController";
