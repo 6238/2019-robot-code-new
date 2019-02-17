@@ -26,7 +26,7 @@ public class RobotProperties {
 
         imu = new IMUController();
 
-        frontLeft = new WPI_TalonSRX(14);
+        /*frontLeft = new WPI_TalonSRX(14);
         frontRight = new WPI_TalonSRX(13);
         rearLeft = new WPI_TalonSRX(12);
         rearRight = new WPI_TalonSRX(11);
@@ -35,7 +35,7 @@ public class RobotProperties {
 
         elevator1 = new WPI_TalonSRX(15);
         elevator2 = new WPI_TalonSRX(16);
-        mechanism = new WPI_TalonSRX(17);
+        mechanism = new WPI_TalonSRX(17);*/
     }
 
     public MecanumDrive getRobotDrive() {
