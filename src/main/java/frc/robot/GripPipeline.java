@@ -236,7 +236,7 @@ public class GripPipeline {
 			lsd.detect(input, lines);
 		} else {
 			final Mat tmp = new Mat();
-			Imgproc.cvtCoqlor(input, tmp, Imgproc.COLOR_BGR2GRAY);
+			Imgproc.cvtColor(input, tmp, Imgproc.COLOR_BGR2GRAY);
 			lsd.detect(tmp, lines);
 		}
 		if (!lines.empty()) {
