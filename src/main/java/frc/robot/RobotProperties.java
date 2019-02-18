@@ -88,10 +88,10 @@ public class RobotProperties {
 
         SmartDashboard.putBoolean("Trigger", properties.joystick.getButtonOne());
         SmartDashboard.putBoolean("SideButton", properties.joystick.getButtonTwo());
-        SmartDashboard.putBoolean("ThumbUpLeft", properties.joystick.getButtonThree());
-        SmartDashboard.putBoolean("ThumbUpRight", properties.joystick.getButtonFour());
-        SmartDashboard.putBoolean("ThumbDownLeft", properties.joystick.getButtonFive());
-        SmartDashboard.putBoolean("ThumbDownRight", properties.joystick.getButtonSix());
+        SmartDashboard.putBoolean("ThumbDownLeft", properties.joystick.getButtonThree());
+        SmartDashboard.putBoolean("ThumbDownRight", properties.joystick.getButtonFour());
+        SmartDashboard.putBoolean("ThumbUpLeft", properties.joystick.getButtonFive());
+        SmartDashboard.putBoolean("ThumbUpRight", properties.joystick.getButtonSix());
         SmartDashboard.putBoolean("BaseBackLeft", properties.joystick.getButtonSeven());
         SmartDashboard.putBoolean("BaseBackRight", properties.joystick.getButtonEight());
         SmartDashboard.putBoolean("BaseMiddleLeft", properties.joystick.getButtonNine());
