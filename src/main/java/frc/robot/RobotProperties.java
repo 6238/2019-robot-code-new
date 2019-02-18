@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class RobotProperties {
     JoystickController joystick;
 
-    IMUController imu;
+    /*IMUController imu;
 
     private WPI_TalonSRX frontLeft;
     private WPI_TalonSRX frontRight;
@@ -19,14 +19,14 @@ public class RobotProperties {
     private WPI_TalonSRX elevator1;
     private WPI_TalonSRX elevator2;
 
-    private WPI_TalonSRX mechanism;
+    private WPI_TalonSRX mechanism;*/
 
     public RobotProperties() {
         joystick = new JoystickController(0);
 
-        imu = new IMUController();
+        /*imu = new IMUController();
 
-        /*frontLeft = new WPI_TalonSRX(14);
+        frontLeft = new WPI_TalonSRX(14);
         frontRight = new WPI_TalonSRX(13);
         rearLeft = new WPI_TalonSRX(12);
         rearRight = new WPI_TalonSRX(11);
@@ -38,7 +38,7 @@ public class RobotProperties {
         mechanism = new WPI_TalonSRX(17);*/
     }
 
-    public MecanumDrive getRobotDrive() {
+    /*public MecanumDrive getRobotDrive() {
         return robotDrive;
     }
     
@@ -64,14 +64,14 @@ public class RobotProperties {
 
     public void setMechanism(WPI_TalonSRX mechanism) {
         this.mechanism = mechanism;
-    }
+    }*/
 
     public void pushData(RobotProperties properties) {
         SmartDashboard.putNumber("Joystick X", properties.joystick.getJoystickX());
         SmartDashboard.putNumber("Joystick Y", properties.joystick.getJoystickY());
         SmartDashboard.putNumber("Joystick Z", properties.joystick.getJoystickZ());
 
-        SmartDashboard.putNumber("Gyro", properties.imu.getGyro());
+       /* SmartDashboard.putNumber("Gyro", properties.imu.getGyro());
         SmartDashboard.putNumber("Gyro X", properties.imu.getGyroX());
         SmartDashboard.putNumber("Gyro Y", properties.imu.getGyroY());
         SmartDashboard.putNumber("Gyro Z", properties.imu.getGyroZ());
@@ -79,7 +79,7 @@ public class RobotProperties {
         SmartDashboard.putNumber("Accel X", properties.imu.getAccelX());
         SmartDashboard.putNumber("Accel Y", properties.imu.getAccelY());
         SmartDashboard.putNumber("Accel Z", properties.imu.getAccelZ());
-
+*/
         SmartDashboard.putBoolean("Trigger", properties.joystick.getButtonOne());
         SmartDashboard.putBoolean("SideButton", properties.joystick.getButtonTwo());
         SmartDashboard.putBoolean("ThumbUpLeft", properties.joystick.getButtonThree());
