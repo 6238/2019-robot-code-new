@@ -79,8 +79,7 @@ public class GripPipeline {
 		// Step Filter_Lines0:
 		ArrayList<Line> filterLinesLines = findLinesOutput;
 		double filterLinesMinLength = 10.0;
-		double[] filterLinesAngle = { 0, 360.0 };
-		filterLines(filterLinesLines, filterLinesMinLength, filterLinesAngle, filterLinesOutput);
+		filterLines(filterLinesLines, filterLinesMinLength, filterLinesOutput);
 
 	}
 
@@ -271,7 +270,7 @@ public class GripPipeline {
 	 * @param angle     The minimum and maximum angle of a line to be kept.
 	 * @param outputs   The output lines after the filter.
 	 */
-	private void filterLines(List<Line> inputs, double minLength, double[] angle, List<Line> outputs) {
+	private void filterLines(List<Line> inputs, double minLength, List<Line> outputs) {
 		for(int i=0;i<inputs.size();i++)
 		{
 			Line curr = inputs.get(i);

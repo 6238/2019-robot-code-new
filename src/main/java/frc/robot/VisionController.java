@@ -5,6 +5,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.VideoSink;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.vision.VisionRunner;
 import edu.wpi.first.wpilibj.vision.VisionThread;
 import org.opencv.core.Mat;
@@ -62,13 +63,26 @@ public class VisionController implements RobotController {
                                 new Scalar(0, 255, 0), 2);
                     }
                 }
+                drive(properties, pipeline.filterLinesOutput());
                 cvSource.putFrame(output);
             }
         });
-        visionThread.setDaemon(true);
+        //visionThread.setDaemon(true);
         visionThread.start();
     }
 
+    public void drive(RobotProperties properties, ArrayList<GripPipeline.Line> lines)
+    {
+        MecanumDrive drive = properties.getRobotDrive();
+        if(Math.abs(lines.get(0).angle())>0.1)
+        {
+            drive.driveCartesian(0, 0, -lines.get(0).angle());
+        }
+        else
+        {
+            drive.driveCartesian(5, 0, 0);
+        }
+    }
     @Override
     public String getName() {
         return "VisionController";
