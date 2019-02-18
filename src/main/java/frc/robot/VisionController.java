@@ -26,12 +26,12 @@ public class VisionController implements RobotController {
     private int curCam;
     private Thread visionThread;
 
-    private final int width = 640;
-    private final int height = 480;
+    private final int width = 320;
+    private final int height = 240;
 
     public VisionController(RobotProperties properties) {
         pipeline = new GripPipeline();
-        camera1 = CameraServer.getInstance().startAutomaticCapture();
+        camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(width, height);
 
         cvSink = CameraServer.getInstance().getVideo();
@@ -39,29 +39,29 @@ public class VisionController implements RobotController {
 
         // camera2 = CameraServer.getInstance().startAutomaticCapture(1);
         // camera2.setResolution(640, 480);
-
+        
+        System.out.println("Constructor Runs");
         visionThread = new Thread(() -> {
             Mat source = new Mat();
             Mat output = new Mat();
             while (!Thread.interrupted()) {
-                //System.out.println("Hello World");
+                System.out.println("Thread Running");
                 if (cvSink.grabFrame(source) == 0) {
                     cvSource.notifyError(cvSink.getError());
                     continue;
                 }
 
                 pipeline.process(source);
-                if (!pipeline.findLinesOutput().isEmpty()) {
-                    System.out.println(pipeline.findLinesOutput().size());
-                } else {
-                    //System.out.println("nothing found");
+                output = pipeline.desaturateOutput();
+
+                if (!pipeline.filterLinesOutput().isEmpty()) {
+                    for (int i = 0; i < pipeline.filterLinesOutput().size(); i++) {
+                        Imgproc.line(output,
+                                new Point(pipeline.findLinesOutput().get(i).x1, pipeline.findLinesOutput().get(i).y1),
+                                new Point(pipeline.findLinesOutput().get(i).x2, pipeline.findLinesOutput().get(i).y2),
+                                new Scalar(0, 255, 0), 2);
+                    }
                 }
-                for (int i = 0; i < pipeline.findLinesOutput().size(); i++) 
-                { 
-                    Imgproc.line(output, new Point(pipeline.findLinesOutput().get(i).x1, pipeline.findLinesOutput().get(i).y1),
-                    new Point(pipeline.findLinesOutput().get(i).x2, pipeline.findLinesOutput().get(i).y2), new Scalar(0, 255, 0), 10);
-                }
-                output = pipeline.cvErodeOutput();
                 cvSource.putFrame(output);
             }
         });
