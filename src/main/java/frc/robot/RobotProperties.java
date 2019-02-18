@@ -1,6 +1,8 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -8,6 +10,8 @@ public class RobotProperties {
     JoystickController joystick;
 
     IMUController imu;
+    
+    AnalogGyro gyro;
 
     private WPI_TalonSRX frontLeft;
     private WPI_TalonSRX frontRight;
@@ -25,6 +29,8 @@ public class RobotProperties {
         joystick = new JoystickController(0);
 
         imu = new IMUController();
+
+        gyro = new AnalogGyro(0);
 
         frontLeft = new WPI_TalonSRX(14);
         frontRight = new WPI_TalonSRX(13);
@@ -82,10 +88,10 @@ public class RobotProperties {
 
         SmartDashboard.putBoolean("Trigger", properties.joystick.getButtonOne());
         SmartDashboard.putBoolean("SideButton", properties.joystick.getButtonTwo());
-        SmartDashboard.putBoolean("ThumbUpLeft", properties.joystick.getButtonThree());
-        SmartDashboard.putBoolean("ThumbUpRight", properties.joystick.getButtonFour());
-        SmartDashboard.putBoolean("ThumbDownLeft", properties.joystick.getButtonFive());
-        SmartDashboard.putBoolean("ThumbDownRight", properties.joystick.getButtonSix());
+        SmartDashboard.putBoolean("ThumbDownLeft", properties.joystick.getButtonThree());
+        SmartDashboard.putBoolean("ThumbDownRight", properties.joystick.getButtonFour());
+        SmartDashboard.putBoolean("ThumbUpLeft", properties.joystick.getButtonFive());
+        SmartDashboard.putBoolean("ThumbUpRight", properties.joystick.getButtonSix());
         SmartDashboard.putBoolean("BaseBackLeft", properties.joystick.getButtonSeven());
         SmartDashboard.putBoolean("BaseBackRight", properties.joystick.getButtonEight());
         SmartDashboard.putBoolean("BaseMiddleLeft", properties.joystick.getButtonNine());

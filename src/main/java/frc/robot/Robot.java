@@ -48,6 +48,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto choices", m_chooser);
     properties = new RobotProperties();
     //properties.imu.calibrate();
+    //properties.imu.reset();
+    properties.gyro.setSensitivity(0.0128);
     /*CameraServer server = CameraServer.getInstance();
     UsbCamera camera = server.startAutomaticCapture(0);
     camera.setResolution(640, 480);*/
@@ -112,5 +114,6 @@ public class Robot extends TimedRobot {
       }
     }
     properties.pushData(properties);
+    System.out.println(properties.gyro.getAngle());
   }
 }

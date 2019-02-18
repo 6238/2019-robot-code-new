@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
@@ -16,36 +17,34 @@ import java.util.*;
 
 public class VisionController implements RobotController {
     private GripPipeline pipeline;
+    private GripPipeline2 bwpipeline;
     private ArrayList<GripPipeline.Line> filteredLines;
+  
     private UsbCamera camera1;
+    private UsbCamera camera2;
 
     private CvSink cvSink;
     private CvSource cvSource;
 
-    // private UsbCamera camera2;
-    private VideoSink server;
-    private int curCam;
     private Thread visionThread;
+    private Thread bwVisionThread;
+    private Boolean prevButton = false;
 
     private final int width = 320;
     private final int height = 240;
-
-    public void startThread()
-    {
-        visionThread.start();
-    }
+  
     public VisionController(RobotProperties properties) {
         pipeline = new GripPipeline();
+        bwpipeline = new GripPipeline2();
+        
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(width, height);
+        camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+        camera2.setResolution(width, height);
 
-        cvSink = CameraServer.getInstance().getVideo();
+        cvSink = CameraServer.getInstance().getVideo(camera1);
         cvSource = CameraServer.getInstance().putVideo("vision", width, height);
 
-        // camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-        // camera2.setResolution(640, 480);
-        
-        System.out.println("Constructor Runs");
         visionThread = new Thread(() -> {
             Mat source = new Mat();
             Mat output = new Mat();
@@ -66,6 +65,24 @@ public class VisionController implements RobotController {
             }
         });
         //visionThread.setDaemon(true);
+        visionThread.start();
+        
+        bwVisionThread = new Thread(() -> {
+
+            Mat output = new Mat();
+
+            while (!Thread.interrupted()) {
+                if (cvSink.grabFrame(output) == 0) {
+                    cvSource.notifyError(cvSink.getError());
+                    continue;
+                }
+                cvSink.grabFrame(output);
+                bwpipeline.process(output);
+                output = bwpipeline.desaturateOutput();
+                cvSource.putFrame(output);
+            }
+        });
+        bwVisionThread.start();
     }
 
     /*public void drive(RobotProperties properties, ArrayList<GripPipeline.Line> lines)
@@ -88,6 +105,16 @@ public class VisionController implements RobotController {
 
     @Override
     public boolean performAction(RobotProperties properties) {
+
+        if (properties.joystick.getButtonTwo() && !prevButton) {
+            prevButton = !prevButton;
+            cvSink = CameraServer.getInstance().getVideo(camera2);
+        } else if (!properties.joystick.getButtonTwo() && prevButton) {
+            prevButton = !prevButton;
+            cvSink = CameraServer.getInstance().getVideo(camera1);
+        }
+
+        prevButton = properties.joystick.getButtonTwo();
         return true;
     }
 }
