@@ -78,7 +78,7 @@ public class GripPipeline {
 
 		// Step Filter_Lines0:
 		ArrayList<Line> filterLinesLines = findLinesOutput;
-		double filterLinesMinLength = 10.0;
+		double filterLinesMinLength = 50.0;
 		filterLines(filterLinesLines, filterLinesMinLength, filterLinesOutput);
 
 	}
@@ -271,6 +271,7 @@ public class GripPipeline {
 	 * @param outputs   The output lines after the filter.
 	 */
 	private void filterLines(List<Line> inputs, double minLength, List<Line> outputs) {
+		outputs.clear();
 		for(int i=0;i<inputs.size();i++)
 		{
 			Line curr = inputs.get(i);

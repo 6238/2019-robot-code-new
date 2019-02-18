@@ -30,6 +30,10 @@ public class VisionController implements RobotController {
     private final int width = 320;
     private final int height = 240;
 
+    public void startThread()
+    {
+        visionThread.start();
+    }
     public VisionController(RobotProperties properties) {
         pipeline = new GripPipeline();
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
@@ -46,32 +50,25 @@ public class VisionController implements RobotController {
             Mat source = new Mat();
             Mat output = new Mat();
             while (!Thread.interrupted()) {
-                System.out.println("Thread Running");
                 if (cvSink.grabFrame(source) == 0) {
                     cvSource.notifyError(cvSink.getError());
                     continue;
                 }
 
                 pipeline.process(source);
-                output = pipeline.desaturateOutput();
+                output = pipeline.cvResizeOutput();
 
-                if (!pipeline.filterLinesOutput().isEmpty()) {
-                    for (int i = 0; i < pipeline.filterLinesOutput().size(); i++) {
-                        Imgproc.line(output,
-                                new Point(pipeline.findLinesOutput().get(i).x1, pipeline.findLinesOutput().get(i).y1),
-                                new Point(pipeline.findLinesOutput().get(i).x2, pipeline.findLinesOutput().get(i).y2),
-                                new Scalar(0, 255, 0), 2);
-                    }
-                }
-                drive(properties, pipeline.filterLinesOutput());
+                /*if (!pipeline.filterLinesOutput().isEmpty()) {
+                    drive(properties, pipeline.filterLinesOutput());
+                }*/
+
                 cvSource.putFrame(output);
             }
         });
         //visionThread.setDaemon(true);
-        visionThread.start();
     }
 
-    public void drive(RobotProperties properties, ArrayList<GripPipeline.Line> lines)
+    /*public void drive(RobotProperties properties, ArrayList<GripPipeline.Line> lines)
     {
         MecanumDrive drive = properties.getRobotDrive();
         if(Math.abs(lines.get(0).angle())>0.1)
@@ -82,7 +79,8 @@ public class VisionController implements RobotController {
         {
             drive.driveCartesian(5, 0, 0);
         }
-    }
+    }*/
+
     @Override
     public String getName() {
         return "VisionController";
@@ -90,21 +88,6 @@ public class VisionController implements RobotController {
 
     @Override
     public boolean performAction(RobotProperties properties) {
-        /*
-         * cvSink.setSource(camera1); cvSink.setEnabled(true);
-         * 
-         * Mat frame = new Mat();
-         * 
-         * cvSink.grabFrame(frame);
-         * 
-         * pipeline.process(frame);
-         * 
-         * filteredLines = pipeline.filterLinesOutput();
-         * 
-         * GripPipeline.Line line = filteredLines.get(0);
-         * 
-         * System.out.println(line.angle());
-         */
         return true;
     }
 }
