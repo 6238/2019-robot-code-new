@@ -4,7 +4,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.*;
 
-public class CargoMechanism implements RobotController
+public class CargoController implements RobotController
 {
     
     {
