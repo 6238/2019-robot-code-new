@@ -23,7 +23,7 @@ import org.opencv.objdetect.*;
 *
 * @author GRIP
 */
-public class GripPipeline2 {
+public class bwGripPipeline {
 
 	//Outputs
 	private Mat desaturateOutput = new Mat();
