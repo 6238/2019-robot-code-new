@@ -116,5 +116,7 @@ public class RobotProperties {
         SmartDashboard.putBoolean("DPadUpLeft", properties.joystick.getDPadUpLeft());
 
         SmartDashboard.putNumber("Shutoff", properties.joystick.getSlider());
+
+        SmartDashboard.putData(properties.getRobotDrive());
     }
 }
