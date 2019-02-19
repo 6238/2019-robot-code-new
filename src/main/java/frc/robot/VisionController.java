@@ -17,7 +17,7 @@ import java.util.*;
 
 public class VisionController implements RobotController {
     private GripPipeline pipeline;
-    private GripPipeline2 bwpipeline;
+    private bwGripPipeline bwpipeline;
     private ArrayList<GripPipeline.Line> filteredLines;
   
     private UsbCamera camera1;
@@ -35,7 +35,7 @@ public class VisionController implements RobotController {
   
     public VisionController(RobotProperties properties) {
         pipeline = new GripPipeline();
-        bwpipeline = new GripPipeline2();
+        bwpipeline = new bwGripPipeline();
         
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(width, height);
