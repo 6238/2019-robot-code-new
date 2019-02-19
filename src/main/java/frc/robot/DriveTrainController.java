@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Created by imadan on 1/26/19.
@@ -28,11 +29,21 @@ public class DriveTrainController implements RobotController {
         
         MecanumDrive robotDrive = properties.getRobotDrive();
 
-        if (properties.joystick.getButtonThree() && insanityFactor < 1) {
+        /* if (properties.joystick.getButtonThree() && insanityFactor < 1) {
             insanityFactor = insanityFactor + 0.05;
         } else if (properties.joystick.getButtonFive() && insanityFactor > 0) {
             insanityFactor = insanityFactor - 0.05;
+        } */
+        // SmartDashboard.putNumber("insanityFactor", insanityFactor);
+        // insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
+        if (properties.joystick.getButtonThree()) {
+            insanityFactor = 0.1;
+        } else if (properties.joystick.getButtonFive()) {
+            insanityFactor = 0.5;
+        } else if (properties.joystick.getButtonOne()) {
+            insanityFactor = 1;
         }
+        System.out.println(insanityFactor);
 
         //TODO: Calculate what correctAngle is, angleError = correctAngle - actualAngle, subtract angleError from joyZ (demonstrated)
 

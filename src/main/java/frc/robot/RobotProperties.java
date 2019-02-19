@@ -32,16 +32,16 @@ public class RobotProperties {
 
         gyro = new AnalogGyro(0);
 
-        frontLeft = new WPI_TalonSRX(14);
-        frontRight = new WPI_TalonSRX(13);
-        rearLeft = new WPI_TalonSRX(12);
-        rearRight = new WPI_TalonSRX(11);
+        frontLeft = new WPI_TalonSRX(4);
+        frontRight = new WPI_TalonSRX(3);
+        rearLeft = new WPI_TalonSRX(2);
+        rearRight = new WPI_TalonSRX(1);
 
         robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-        elevator1 = new WPI_TalonSRX(15);
-        elevator2 = new WPI_TalonSRX(16);
-        mechanism = new WPI_TalonSRX(17);
+        elevator1 = new WPI_TalonSRX(5);
+        elevator2 = new WPI_TalonSRX(6);
+        mechanism = new WPI_TalonSRX(7);
     }
 
     public MecanumDrive getRobotDrive() {
