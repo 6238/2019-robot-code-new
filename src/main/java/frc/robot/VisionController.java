@@ -1,19 +1,11 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.vision.VisionRunner;
-import edu.wpi.first.wpilibj.vision.VisionThread;
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
 import java.util.*;
 
 public class VisionController implements RobotController {
@@ -28,7 +20,6 @@ public class VisionController implements RobotController {
     private CvSource cvSource;
 
     private Thread visionThread;
-    private Thread bwVisionThread;
     private Boolean prevButton = false;
 
     private Boolean bwIsRunning = true;
