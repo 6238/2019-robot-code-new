@@ -25,6 +25,10 @@ public class RobotProperties {
 
     private WPI_TalonSRX mechanism;
 
+    private WPI_TalonSRX motor8;
+    private WPI_TalonSRX motor9;
+    private WPI_TalonSRX motor10;
+
     public RobotProperties() {
         joystick = new JoystickController(0);
 
@@ -42,6 +46,9 @@ public class RobotProperties {
         elevator1 = new WPI_TalonSRX(5);
         elevator2 = new WPI_TalonSRX(6);
         mechanism = new WPI_TalonSRX(7);
+        motor8 = new WPI_TalonSRX(8);
+        motor9 = new WPI_TalonSRX(9);
+        motor10 = new WPI_TalonSRX(10);
     }
 
     public MecanumDrive getRobotDrive() {
