@@ -34,7 +34,7 @@ public class DriveTrainController implements RobotController {
         } else if (properties.joystick.getButtonFive() && insanityFactor > 0) {
             insanityFactor = insanityFactor - 0.05;
         } */
-        // SmartDashboard.putNumber("insanityFactor", insanityFactor);
+        SmartDashboard.putNumber("insanityFactor", insanityFactor);
         // insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
         if (properties.joystick.getButtonThree()) {
             insanityFactor = 0.1;
@@ -43,7 +43,7 @@ public class DriveTrainController implements RobotController {
         } else if (properties.joystick.getButtonOne()) {
             insanityFactor = 1;
         }
-        System.out.println(insanityFactor);
+        //System.out.println(insanityFactor);
 
         //TODO: Calculate what correctAngle is, angleError = correctAngle - actualAngle, subtract angleError from joyZ (demonstrated)
 

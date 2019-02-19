@@ -71,7 +71,7 @@ public class VisionController implements RobotController {
                      * if (!pipeline.filterLinesOutput().isEmpty()) { drive(properties,
                      * pipeline.filterLinesOutput()); }
                      */
-                    /* ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
+                    ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
                     if (lines.size() > 0) {
                         for (int i = 0; i < lines.size(); i++) {
                             Imgproc.line(output, new Point(lines.get(i).x1, lines.get(i).y1),
@@ -79,7 +79,7 @@ public class VisionController implements RobotController {
                         }
                         //System.out.println(Double.toString(lines.get(0).angle()));
                         SmartDashboard.putString("Angle", Double.toString(lines.get(0).angle()));
-                    } */
+                    } 
                     cvSource.putFrame(output);
                 }
             }
