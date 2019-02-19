@@ -112,6 +112,6 @@ public class Robot extends TimedRobot {
       }
     }
     properties.pushData(properties);
-    System.out.println(properties.gyro.getAngle());
+    //System.out.println(properties.gyro.getAngle());
   }
 }
