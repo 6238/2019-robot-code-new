@@ -33,8 +33,8 @@ public class VisionController implements RobotController {
 
     private Boolean bwIsRunning = true;
 
-    private final int width = 640;
-    private final int height = 480;
+    private final int width = 160;
+    private final int height = 120;
 
     /*class ExceptionHandler implements Thread.UncaughtExceptionHandler
     {
