@@ -68,7 +68,7 @@ public class GripPipeline {
 
 		// Step Filter_Lines0:
 		ArrayList<Line> filterLinesLines = findLinesOutput;
-		double filterLinesMinLength = 50.0;
+		double filterLinesMinLength = 5.0;
 		filterLines(filterLinesLines, filterLinesMinLength, filterLinesOutput);
 
 	}
@@ -224,7 +224,7 @@ public class GripPipeline {
 		}
 
 		public double angle() {
-			return Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
+			return Math.atan2(y2 - y1, x2 - x1);
 		}
 	}
 

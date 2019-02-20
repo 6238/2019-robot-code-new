@@ -31,7 +31,7 @@ public class DriveTrainController implements RobotController {
     public boolean performAction(RobotProperties properties) {
         
         MecanumDrive robotDrive = properties.getRobotDrive();
-
+        
         insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
 
         reverseDrive = SmartDashboard.getBoolean("reverseDrive", reverseDrive);
