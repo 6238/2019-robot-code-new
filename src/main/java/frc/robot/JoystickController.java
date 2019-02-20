@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class JoystickController {
 
@@ -34,6 +35,13 @@ public class JoystickController {
         return value;
     }
 
+    public double correctDeadSpotY(double value) {
+        if (Math.abs(value) < 0.3) {
+            return 0;
+        }
+        return value;
+    }
+
     public boolean getButton(int buttonNumber) {
         return controller.getRawButton(buttonNumber);
     }
@@ -58,6 +66,7 @@ public class JoystickController {
     }
 
     public double getJoystickY() {
+        //return correctDeadSpotY(getAxis(1));
         return correctDeadSpot(getAxis(1));
     }
 

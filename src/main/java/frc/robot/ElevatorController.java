@@ -73,7 +73,73 @@ public class ElevatorController implements RobotController
             m_elevator2.set(0);
         }
 
-        
+        int count;
+        double distance;
+        try (Encoder elevatorEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X)) {
+            elevatorEncoder.setMaxPeriod(.1);
+            elevatorEncoder.setMinRate(10);
+            elevatorEncoder.setDistancePerPulse(5);
+            elevatorEncoder.setReverseDirection(true);
+            elevatorEncoder.setSamplesToAverage(7);
+
+            count = elevatorEncoder.get();
+            distance = elevatorEncoder.getDistance();
+        }
+        //TODO: need to fill out the distance thresholds replacing the 0, 5, 10, and 15 values with measured values
+        if (level1 )
+        {
+            while(distance<5)
+            {
+                m_elevator1.set(10);
+                m_elevator2.set(10);
+            }
+        }
+        else if (level2 && distance<10)
+        {
+            while(distance<10)
+            {
+            m_elevator1.set(10);
+            m_elevator2.set(10);
+            }
+        }
+        else if (level3 && distance<15)
+        {
+            while(distance<15)
+            {
+            m_elevator1.set(10);
+            m_elevator2.set(10);
+            }
+
+        }
+        else if (level4 && distance>10)
+        {
+            while(distance>10)
+            {
+            m_elevator1.set(-10);
+            m_elevator2.set(-10);
+            }
+        }
+        else if (level5 && distance>5)
+        {
+            while(distance>5)
+            {
+            m_elevator1.set(-10);
+            m_elevator2.set(-10);
+            }
+        }
+        else if (level6)
+        {
+            while(distance>0)
+            {
+            m_elevator1.set(-10);
+            m_elevator2.set(-10);
+            }
+        }
+        else
+        {
+            m_elevator1.set(0);
+            m_elevator2.set(0);
+        }
         return true;
 
     }
