@@ -8,13 +8,10 @@ public class JoystickController {
     public Joystick controller;
     public int port;
 
-    double DEAD_ZONE_Y = 0.08;
-
     public JoystickController(int port) {
         this.port = port;
         this.controller = new Joystick(port);
         // When the Controller is initialized, it will automatically set the controller object and port value
-        SmartDashboard.putNumber("DEAD_ZONE_Y", DEAD_ZONE_Y);
     }
 
     // Configuration
@@ -39,8 +36,7 @@ public class JoystickController {
     }
 
     public double correctDeadSpotY(double value) {
-        DEAD_ZONE_Y = SmartDashboard.getNumber("DEAD_ZONE_Y", DEAD_ZONE_Y);
-        if (Math.abs(value) < DEAD_ZONE_Y) {
+        if (Math.abs(value) < 0.3) {
             return 0;
         }
         return value;

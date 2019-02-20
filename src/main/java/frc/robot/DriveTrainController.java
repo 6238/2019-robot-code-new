@@ -9,9 +9,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveTrainController implements RobotController {
     
     double insanityFactor = 0.5;
+    boolean reverseDrive = false;
 
     public DriveTrainController() {
         SmartDashboard.putNumber("insanityFactor", insanityFactor);
+        SmartDashboard.putBoolean("reverseDrive", reverseDrive);
     }
 
     @Override
@@ -30,21 +32,9 @@ public class DriveTrainController implements RobotController {
         
         MecanumDrive robotDrive = properties.getRobotDrive();
 
-        /* if (properties.joystick.getButtonThree() && insanityFactor < 1) {
-            insanityFactor = insanityFactor + 0.05;
-        } else if (properties.joystick.getButtonFive() && insanityFactor > 0) {
-            insanityFactor = insanityFactor - 0.05;
-        } */
-        // SmartDashboard.putNumber("insanityFactor", insanityFactor);
         insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
-        /* if (properties.joystick.getButtonThree()) {
-            insanityFactor = 0.1;
-        } else if (properties.joystick.getButtonFive()) {
-            insanityFactor = 0.5;
-        } else if (properties.joystick.getButtonOne()) {
-            insanityFactor = 1;
-        } */
-        //System.out.println(insanityFactor);
+
+        reverseDrive = SmartDashboard.getBoolean("reverseDrive", reverseDrive);
 
         //TODO: Calculate what correctAngle is, angleError = correctAngle - actualAngle, subtract angleError from joyZ (demonstrated)
 
@@ -61,9 +51,11 @@ public class DriveTrainController implements RobotController {
 
         if (SmartDashboard.getBoolean("Joystick Control", true)) {
             if (properties.joystick.getButtonOne()) {
-                robotDrive.driveCartesian(-1*insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -1*insanityFactor*properties.joystick.getJoystickZ(), actualAngle);
+                robotDrive.driveCartesian(-insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -insanityFactor*properties.joystick.getJoystickZ(), actualAngle);
+            } else if (reverseDrive) {
+                robotDrive.driveCartesian(insanityFactor*properties.joystick.getJoystickX(), -insanityFactor*properties.joystick.getJoystickY(), -insanityFactor*properties.joystick.getJoystickZ()/* + (angleError * kError)*/);
             } else {
-                robotDrive.driveCartesian(-1*insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -1*insanityFactor*properties.joystick.getJoystickZ()/* + (angleError * kError)*/);
+                robotDrive.driveCartesian(-insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -insanityFactor*properties.joystick.getJoystickZ()/* + (angleError * kError)*/);
             }
         }
 
