@@ -36,15 +36,16 @@ public class VisionController implements RobotController {
     private final int width = 160;
     private final int height = 120;
 
-    /*class ExceptionHandler implements Thread.UncaughtExceptionHandler
-    {
-        public void uncaughtException(Thread t, Throwable e)
-        {
-            visionThread.start();
-        }
-    }*/
+    boolean selfAlign = false;
+
+    /*
+     * class ExceptionHandler implements Thread.UncaughtExceptionHandler { public
+     * void uncaughtException(Thread t, Throwable e) { visionThread.start(); } }
+     */
 
     public VisionController(RobotProperties properties) {
+        SmartDashboard.putBoolean("selfAlign", selfAlign);
+
         pipeline = new GripPipeline();
         bwpipeline = new bwGripPipeline();
 
@@ -55,7 +56,7 @@ public class VisionController implements RobotController {
         camera2.setResolution(width, height);
         camera2.setFPS(30);
 
-        cvSink = CameraServer.getInstance().getVideo(camera1);//camera1
+        cvSink = CameraServer.getInstance().getVideo(camera1);// camera1
         cvSource = CameraServer.getInstance().putVideo("vision", width, height);
 
         visionThread = new Thread(() -> {
@@ -66,6 +67,7 @@ public class VisionController implements RobotController {
                     cvSource.notifyError(cvSink.getError());
                     continue;
                 }
+                SmartDashboard.getBoolean("selfAlign", selfAlign);
                 if (bwIsRunning) {
                     bwpipeline.process(source);
                     output = bwpipeline.desaturateOutput();
@@ -75,20 +77,21 @@ public class VisionController implements RobotController {
                     pipeline.process(source);
                     output = pipeline.desaturateOutput();
 
-                    /*
-                     * if (!pipeline.filterLinesOutput().isEmpty()) { drive(properties,
-                     * pipeline.filterLinesOutput()); }
-                     */
-                     ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
+                    if (!pipeline.filterLinesOutput().isEmpty() && selfAlign) {
+                        drive(properties, pipeline.filterLinesOutput());
+                    }
+
+                    ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
                     if (lines.size() > 0) {
                         for (int i = 0; i < lines.size(); i++) {
                             Imgproc.line(output, new Point(lines.get(i).x1, lines.get(i).y1),
                                     new Point(lines.get(i).x2, lines.get(i).y2), new Scalar(0, 255, 0), 2);
                         }
-                        //System.out.println(Double.toString(lines.get(0).angle()));
-                        //Imgproc.putText(output, Double.toString(lines.get(0).angle()), new Point(5,50), 1, 2, new Scalar(0,255,0));
+                        // System.out.println(Double.toString(lines.get(0).angle()));
+                        // Imgproc.putText(output, Double.toString(lines.get(0).angle()), new
+                        // Point(5,50), 1, 2, new Scalar(0,255,0));
                         SmartDashboard.putString("Angle", Double.toString(lines.get(0).angle()));
-                    } 
+                    }
                     cvSource.putFrame(output);
                 }
             }
@@ -112,9 +115,8 @@ public class VisionController implements RobotController {
 
     @Override
     public boolean performAction(RobotProperties properties) {
-        //Thread.currentThread().setUncaughtExceptionHandler(new ExceptionHandler());
-        if(!visionThread.isAlive())
-        {
+        // Thread.currentThread().setUncaughtExceptionHandler(new ExceptionHandler());
+        if (!visionThread.isAlive()) {
             visionThread.start();
         }
         if (properties.joystick.getButtonTwo() && !prevButton) {
@@ -125,7 +127,7 @@ public class VisionController implements RobotController {
         } else if (!properties.joystick.getButtonTwo() && prevButton) {
             prevButton = !prevButton;
             bwIsRunning = true;
-            cvSink = CameraServer.getInstance().getVideo(camera1); //camera1
+            cvSink = CameraServer.getInstance().getVideo(camera1); // camera1
         }
         prevButton = properties.joystick.getButtonTwo();
         return true;
