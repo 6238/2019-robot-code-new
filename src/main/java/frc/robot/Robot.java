@@ -50,9 +50,6 @@ public class Robot extends TimedRobot {
     //properties.imu.calibrate();
     //properties.imu.reset();
     properties.gyro.setSensitivity(0.0128);
-    /*CameraServer server = CameraServer.getInstance();
-    UsbCamera camera = server.startAutomaticCapture(0);
-    camera.setResolution(640, 480);*/
     
   }
   
