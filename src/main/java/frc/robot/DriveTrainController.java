@@ -7,43 +7,39 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * Created by imadan on 1/26/19.
  */
 public class DriveTrainController implements RobotController {
+    
+    //speed multiplier/reducer
+    double insanityFactor = 0.5;
+    
+    //inverted drive for hatch panel
+    boolean reverseDrive = false;
+
     public DriveTrainController() {
-
+        //send values to dashboard
+        SmartDashboard.putNumber("insanityFactor", insanityFactor);
+        SmartDashboard.putBoolean("reverseDrive", reverseDrive);
     }
-
+    
+    //name function for initial testing
     @Override
     public String getName() {
         return "DriveTrainController";
     }
-
-    double insanityFactor = 0.5;
     
     double correctAngle; //What the robot should be doing (angle after joyZ stopped changing)
     double actualAngle; //What the gyro currently measures
-    double angleError;
-    double kError = 1/180;
-    boolean checkNextCycle;
+    double angleError; //diff btwn actual & correct
+    double kError = 1/180; //constant for sending error to actual drivecartesian function
+    boolean checkNextCycle; //check for error next cycle
 
     @Override
     public boolean performAction(RobotProperties properties) {
         
         MecanumDrive robotDrive = properties.getRobotDrive();
+        
+        insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
 
-        /* if (properties.joystick.getButtonThree() && insanityFactor < 1) {
-            insanityFactor = insanityFactor + 0.05;
-        } else if (properties.joystick.getButtonFive() && insanityFactor > 0) {
-            insanityFactor = insanityFactor - 0.05;
-        } */
-        SmartDashboard.putNumber("insanityFactor", insanityFactor);
-        // insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
-        if (properties.joystick.getButtonThree()) {
-            insanityFactor = 0.1;
-        } else if (properties.joystick.getButtonFive()) {
-            insanityFactor = 0.5;
-        } else if (properties.joystick.getButtonOne()) {
-            insanityFactor = 1;
-        }
-        //System.out.println(insanityFactor);
+        reverseDrive = SmartDashboard.getBoolean("reverseDrive", reverseDrive);
 
         //TODO: Calculate what correctAngle is, angleError = correctAngle - actualAngle, subtract angleError from joyZ (demonstrated)
 
@@ -58,10 +54,17 @@ public class DriveTrainController implements RobotController {
 
         //angleError = correctAngle - actualAngle;
 
-        if (properties.joystick.getButtonOne()) {
-            robotDrive.driveCartesian(-1*insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -1*insanityFactor*properties.joystick.getJoystickZ(), actualAngle);
-        } else {
-            robotDrive.driveCartesian(-1*insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -1*insanityFactor*properties.joystick.getJoystickZ()/* + (angleError * kError)*/);
+        if (SmartDashboard.getBoolean("Joystick Control", true)) {
+            if (properties.joystick.getButtonOne()) {
+                //trigger => absolute drive
+                robotDrive.driveCartesian(-insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -insanityFactor*properties.joystick.getJoystickZ(), actualAngle);
+            } else if (reverseDrive) {
+                //reverseDrive switch
+                robotDrive.driveCartesian(insanityFactor*properties.joystick.getJoystickX(), -insanityFactor*properties.joystick.getJoystickY(), -insanityFactor*properties.joystick.getJoystickZ()/* + (angleError * kError)*/);
+            } else {
+                //normal driving
+                robotDrive.driveCartesian(-insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -insanityFactor*properties.joystick.getJoystickZ()/* + (angleError * kError)*/);
+            }
         }
 
         return true;
