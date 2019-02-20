@@ -46,6 +46,7 @@ public class RobotProperties {
         elevator1 = new WPI_TalonSRX(5);
         elevator2 = new WPI_TalonSRX(6);
         mechanism = new WPI_TalonSRX(7);
+
         motor8 = new WPI_TalonSRX(8);
         motor9 = new WPI_TalonSRX(9);
         motor10 = new WPI_TalonSRX(10);
@@ -77,6 +78,30 @@ public class RobotProperties {
 
     public void setMechanism(WPI_TalonSRX mechanism) {
         this.mechanism = mechanism;
+    }
+
+    public WPI_TalonSRX getMotor8() {
+        return motor8;
+    }
+
+    public void setMotor8(WPI_TalonSRX motor8) {
+        this.motor8 = motor8;
+    }
+
+    public WPI_TalonSRX getMotor9() {
+        return motor9;
+    }
+
+    public void setMotor9(WPI_TalonSRX motor9) {
+        this.motor9 = motor9;
+    }
+
+    public WPI_TalonSRX getMotor10() {
+        return motor10;
+    }
+
+    public void setMotor10(WPI_TalonSRX motor10) {
+        this.motor10 = motor10;
     }
 
     public void pushData(RobotProperties properties) {
