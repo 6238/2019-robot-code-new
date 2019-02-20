@@ -41,6 +41,11 @@ public class RobotProperties {
         rearLeft = new WPI_TalonSRX(2);
         rearRight = new WPI_TalonSRX(1);
 
+        frontLeft.setInverted(true);
+        frontRight.setInverted(true);
+        rearLeft.setInverted(true);
+        rearRight.setInverted(true);
+
         robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
         elevator1 = new WPI_TalonSRX(5);

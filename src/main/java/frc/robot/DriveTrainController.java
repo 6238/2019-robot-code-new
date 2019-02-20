@@ -57,13 +57,13 @@ public class DriveTrainController implements RobotController {
         if (SmartDashboard.getBoolean("Joystick Control", true)) {
             if (properties.joystick.getButtonOne()) {
                 //trigger => absolute drive
-                robotDrive.driveCartesian(-insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -insanityFactor*properties.joystick.getJoystickZ(), actualAngle);
+                robotDrive.driveCartesian(insanityFactor*properties.joystick.getJoystickX(), -insanityFactor*properties.joystick.getJoystickY(), insanityFactor*properties.joystick.getJoystickZ(), actualAngle);
             } else if (reverseDrive) {
                 //reverseDrive switch
-                robotDrive.driveCartesian(insanityFactor*properties.joystick.getJoystickX(), -insanityFactor*properties.joystick.getJoystickY(), -insanityFactor*properties.joystick.getJoystickZ()/* + (angleError * kError)*/);
+                robotDrive.driveCartesian(-insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), insanityFactor*properties.joystick.getJoystickZ()/* + (angleError * kError)*/);
             } else {
                 //normal driving
-                robotDrive.driveCartesian(-insanityFactor*properties.joystick.getJoystickX(), insanityFactor*properties.joystick.getJoystickY(), -insanityFactor*properties.joystick.getJoystickZ()/* + (angleError * kError)*/);
+                robotDrive.driveCartesian(insanityFactor*properties.joystick.getJoystickX(), -insanityFactor*properties.joystick.getJoystickY(), insanityFactor*properties.joystick.getJoystickZ()/* + (angleError * kError)*/);
             }
         }
 
