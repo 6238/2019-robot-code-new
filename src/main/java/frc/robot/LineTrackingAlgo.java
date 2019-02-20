@@ -8,8 +8,10 @@ off the last known set of lines.
 Algorithm:
 1) draw an imaginary, vertical line down the center of the frame(create a method or variable 
    to return the points on the line)
+
 2) find the the two edges of the tape
-3) whenever the imaginary line crosses over one of the detected lines within some margin of error:
+
+3) Find intersections of the lines:
 
    case 1) the detected lines are updated every iteration:
         
@@ -26,14 +28,53 @@ Algorithm:
             seconds), the vision feed will cut to a backup feed in which line processing is 
             not carried out, so the driver will have to manually align. An option to lower turn
             speed will be added so the driver can more accurately align.
+
+            If the line detection restarts while the robot is turning under case 2, switch back to 
+            case 1 and reset all turning variables.
+
+    Use the following equation to determine how many iterations to turn left/right:
+
+        x = n * w * t
+        x is angle
+        n is number of iterations
+        v is angular speed(turning in place)
+        t is time per iteration
             
-4) Drive forward at a predetermined(likely slow)speed.
+    case 3) if the lines do not intersect, continue to step 4
+
+    case 4) if the tape is clearly on the screen, but the pipeline cannot find the lines, switch to
+            manual turning
+
+4) Draw an imaginary horizontal line across the screen
+
+5) Find the x coordinate(or columns) of the intersections, called xleft and xright:
+
+    case 1) xleft is left of the vertical line and xright is right of the horizontal line: proceed
+            to step 6
+
+    case 2) xright is left of the vertical line: xmid = (xleft + xright)/2, move right until 
+           xmid = vertical line
+
+    case 3) xleft is right of the vertical line: xmid = (xleft + xright)/2, move left until 
+           xmid = vertical line
+
+    for case 2 and 3 use the following equation to determine how many iterations to move left/right:
+
+        x = n * v * t
+        x is distance
+        n is number of iterations
+        v is speed
+        t is time per iteration
+
+    should the line tracing fail, the driver must manually strafe the robot
+
+6) Drive forward at a predetermined(likely slow)speed.
 
 IMPORTANT:
 
 All driver inputs will be ignored when this method is triggered to prevent inaccuracies in alignment.
-This can be manually overrided by turning the switch off the switch on the smart dashboard or by switching 
-camera views.
+This can be manually overrided by turning the switch off the switch on the smart dashboard(equivalent
+to case 2))or by switching camera views.
 */
 package frc.robot;
 
@@ -51,13 +92,13 @@ public class LineTrackingAlgo {
     
     //tells if the robot currently has some value or command to turn
     private Boolean hasTurnCommand;
-    private int backUpTurnValue;
+    private int backUpTurnPeriod;
 
     //initializes everything
     public LineTrackingAlgo(ArrayList<GripPipeline.Line> currLines)
     {
         iterationsWithoutLines = 0;
-        backUpTurnValue = 0;
+        backUpTurnPeriod = 0;
         hasTurnCommand = false;
     }
 
@@ -72,13 +113,19 @@ public class LineTrackingAlgo {
         return false;
     }
 
-    //tries aligning with the line
+    /*tries aligning with the line
+    
+    Algo: check isLinesUpdated() first -> case 2)
+    */
     public void selfAlign(RobotProperties properties, ArrayList<GripPipeline.Line> currLines)
     {
 
     }
 
-    //calculates the amount which the robot must turn to align with tape given the last known line values
+    /*calculates the amount which the robot must turn to align with tape given the last known line values
+    
+    algorithm
+    */
     public double turnPeriod(RobotProperties properties)
     {
         return 0.0;
