@@ -35,6 +35,7 @@ public class VisionController implements RobotController {
 
     private final int width = 160;
     private final int height = 120;
+    private final int fps = 120;
 
     boolean selfAlign = false;
 
@@ -51,10 +52,10 @@ public class VisionController implements RobotController {
 
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(width, height);
-        camera1.setFPS(30);
+        camera1.setFPS(fps);
         camera2 = CameraServer.getInstance().startAutomaticCapture(1);
         camera2.setResolution(width, height);
-        camera2.setFPS(30);
+        camera2.setFPS(fps);
 
         cvSink = CameraServer.getInstance().getVideo(camera1);// camera1
         cvSource = CameraServer.getInstance().putVideo("vision", width, height);
