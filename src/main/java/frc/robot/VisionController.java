@@ -22,6 +22,9 @@ public class VisionController implements RobotController {
     //converts an image to black and white
     private bwGripPipeline bwpipeline;
 
+    //line tracking algorithm
+    private LineTrackingAlgo linetracker; 
+        
     //stores the results of pipeline
     private ArrayList<GripPipeline.Line> filteredLines;
 
@@ -56,7 +59,7 @@ public class VisionController implements RobotController {
         //initializes pipelines
         pipeline = new GripPipeline();
         bwpipeline = new bwGripPipeline();
-
+        LineTrackingAlgo linetracker = new LineTrackingAlgo(); 
         //initializes both cameras
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(width, height);
@@ -90,18 +93,11 @@ public class VisionController implements RobotController {
                     output = bwpipeline.desaturateOutput();
                     cvSource.putFrame(output);
                 } else {
-                    
-                    //displays b+w video, along with all detected lines highlighted
+                    System.out.println("Hello World!");
                     pipeline.process(source);
                     output = pipeline.desaturateOutput();
                     ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
-                    if (lines.size() > 0) {
-                        for (int i = 0; i < lines.size(); i++) {
-                            Imgproc.line(output, new Point(lines.get(i).x1, lines.get(i).y1),
-                                    new Point(lines.get(i).x2, lines.get(i).y2), new Scalar(0, 255, 0), 2);
-                        }
-                        //SmartDashboard.putString("Angle", Double.toString(lines.get(0).angle()));
-                    }
+                    output = linetracker.process(output, lines, width, height);
                     cvSource.putFrame(output);
                 }
             }

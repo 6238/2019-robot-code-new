@@ -18,47 +18,57 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
-public class LineTrackingAlgo
-{
+public class LineTrackingAlgo {
     ArrayList<GripPipeline.Line> currLines;
-    
-    //these constants control how much the robot turns/moves based off the image
+
+    // these constants control how much the robot turns/moves based off the image
     public final double turnP = 1.0;
     public final double translateP = 1.0;
     public final double turnI = 1.0;
     public final double translateI = 1.0;
 
-    //constructor
-    public LineTrackingAlgo()
-    {
+    // constructor
+    public LineTrackingAlgo() {
 
     }
 
-    //annotates image with vertical and horizontal lines, runs the other methods
-    public Mat process(Mat img, ArrayList<GripPipeline.Line> lines,int x, int y)
-    {
-        Imgproc.line(img, new Point(x/2,0), new Point(x/2,y), new Scalar(0,255,0));
-        Imgproc.line(img, new Point(0,y/2), new Point(x,y/2), new Scalar(0,255,0));
-        Point offset = weightedXY(lines);
+    // annotates image with vertical and horizontal lines, runs the other methods
+    public Mat process(Mat img, ArrayList<GripPipeline.Line> lines, int x, int y) {
+        Imgproc.line(img, new Point(x / 2, 0), new Point(x / 2, y), new Scalar(0, 255, 0));
+        Imgproc.line(img, new Point(0, y / 2), new Point(x, y / 2), new Scalar(0, 255, 0));
+        Point offset;
+        if(lines.size()>0)
+        {
+            offset = weightedXY(lines);
+        }
+        else
+        {
+            offset = new Point(0,0);
+        }
+        Imgproc.circle(img, offset, 1, new Scalar(0,255,0));
         offset.x -= x;
         offset.y -= y;
         move(offset);
         return img;
     }
 
-    //calculates the weighted average of the x and y coordinates of the lines
-    //this determines how offset the robot is from the "center" of the tape
-    //and will be used to turn/translate the robot
-    public Point weightedXY(ArrayList<GripPipeline.Line> lines)
-    {
+    // calculates the weighted average of the x and y coordinates of the lines
+    // this determines how offset the robot is from the "center" of the tape
+    // and will be used to turn/translate the robot
+    public Point weightedXY(ArrayList<GripPipeline.Line> lines) {
         double sumx = 0;
         double sumy = 0;
-        return new Point();
+        for (int i = 0; i < lines.size(); i++) {
+            sumx += lines.get(i).x1;
+            sumx += lines.get(i).y1;
+            sumy += lines.get(i).x2;
+            sumy += lines.get(i).y2;
+        }
+        return new Point(sumx/lines.size(),sumy/lines.size());
     }
 
-    //turns and translates the robot
-    public void move(Point offset)
-    {
+    // turns and translates the robot
+    public void move(Point offset) {
 
     }
 }
