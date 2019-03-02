@@ -68,7 +68,7 @@ public class GripPipeline {
 
 		// Step Filter_Lines0:
 		ArrayList<Line> filterLinesLines = findLinesOutput;
-		double filterLinesMinLength = 10.0;
+		double filterLinesMinLength = 20.0;
 		filterLines(filterLinesLines, filterLinesMinLength, filterLinesOutput);
 
 	}

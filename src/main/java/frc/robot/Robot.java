@@ -31,6 +31,7 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     controllers = new ArrayList<RobotController>();
+    properties = new RobotProperties();
     controllers.add(new DriveTrainController());
     controllers.add(new VisionController(properties));
     controllers.add(new ElevatorController());
@@ -46,7 +47,6 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    properties = new RobotProperties();
     //properties.imu.calibrate();
     //properties.imu.reset();
     properties.gyro.setSensitivity(0.0128);

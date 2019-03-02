@@ -59,7 +59,7 @@ public class VisionController implements RobotController {
         //initializes pipelines
         pipeline = new GripPipeline();
         bwpipeline = new bwGripPipeline();
-        LineTrackingAlgo linetracker = new LineTrackingAlgo(); 
+        LineTrackingAlgo linetracker = new LineTrackingAlgo(properties); 
         //initializes both cameras
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(width, height);
@@ -105,7 +105,7 @@ public class VisionController implements RobotController {
                                         new Point(lines.get(i).x2*0.95,lines.get(i).y2*0.95), new Scalar(0,255,0));
                         }
                     }
-                    output = linetracker.process(output, lines, width, height,properties);
+                    output = linetracker.process(output, lines, width, height, selfAlign);
                     cvSource.putFrame(output);
                 }
             }
