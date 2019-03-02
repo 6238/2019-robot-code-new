@@ -45,7 +45,7 @@ public class LineTrackingAlgo {
         {
             offset = new Point(0,0);
         }
-        Imgproc.circle(img, offset, 1, new Scalar(0,255,0));
+        Imgproc.circle(img, offset, 2, new Scalar(0,255,0));
         offset.x -= x;
         offset.y -= y;
         move(offset);
@@ -60,11 +60,11 @@ public class LineTrackingAlgo {
         double sumy = 0;
         for (int i = 0; i < lines.size(); i++) {
             sumx += lines.get(i).x1;
-            sumx += lines.get(i).y1;
-            sumy += lines.get(i).x2;
+            sumy += lines.get(i).y1;
+            sumx += lines.get(i).x2;
             sumy += lines.get(i).y2;
         }
-        return new Point(sumx/lines.size(),sumy/lines.size());
+        return new Point(sumx/(2*lines.size()),sumy/(2*lines.size()));
     }
 
     // turns and translates the robot

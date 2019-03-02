@@ -86,17 +86,25 @@ public class VisionController implements RobotController {
                 //button on dashboard triggers the LineTrackingAlgo
                 SmartDashboard.getBoolean("selfAlign", selfAlign);
 
-                if (bwIsRunning) {
+                /*if (bwIsRunning) {
 
                     //displays b+w video, this is the default setting
                     bwpipeline.process(source);
                     output = bwpipeline.desaturateOutput();
                     cvSource.putFrame(output);
-                } else {
-                    System.out.println("Hello World!");
+                } else*/ {
+                    //System.out.println("Hello World!");
                     pipeline.process(source);
-                    output = pipeline.desaturateOutput();
+                    output = pipeline.cvResizeOutput();
                     ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
+                    if(!lines.isEmpty())
+                    {
+                        for(int i=0;i<lines.size();i++)
+                        {
+                            Imgproc.line(output, new Point(lines.get(i).x1*0.95,lines.get(i).y1*0.95), 
+                                        new Point(lines.get(i).x2*0.95,lines.get(i).y2*0.95), new Scalar(0,255,0));
+                        }
+                    }
                     output = linetracker.process(output, lines, width, height);
                     cvSource.putFrame(output);
                 }
