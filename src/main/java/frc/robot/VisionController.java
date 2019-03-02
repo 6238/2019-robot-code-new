@@ -105,7 +105,7 @@ public class VisionController implements RobotController {
                                         new Point(lines.get(i).x2*0.95,lines.get(i).y2*0.95), new Scalar(0,255,0));
                         }
                     }
-                    output = linetracker.process(output, lines, width, height);
+                    output = linetracker.process(output, lines, width, height,properties);
                     cvSource.putFrame(output);
                 }
             }

@@ -17,38 +17,39 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 public class LineTrackingAlgo {
     ArrayList<GripPipeline.Line> currLines;
 
     // these constants control how much the robot turns/moves based off the image
-    public final double turnP = 1.0;
-    public final double translateP = 1.0;
-    public final double turnI = 1.0;
-    public final double translateI = 1.0;
-
+    public final double turnP = 0.05;
+    public final double forwardP = 0.05;
+    public final double leftRight = 0.05;
+    
     // constructor
     public LineTrackingAlgo() {
 
     }
 
     // annotates image with vertical and horizontal lines, runs the other methods
-    public Mat process(Mat img, ArrayList<GripPipeline.Line> lines, int x, int y) {
-        Imgproc.line(img, new Point(x / 2, 0), new Point(x / 2, y), new Scalar(0, 255, 0));
-        Imgproc.line(img, new Point(0, y / 2), new Point(x, y / 2), new Scalar(0, 255, 0));
-        Point offset;
+    public Mat process(Mat img, ArrayList<GripPipeline.Line> lines, int x, int y, RobotProperties properties) {
+        Point offsetPosition;
+        double offsetAngle;
         if(lines.size()>0)
         {
-            offset = weightedXY(lines);
+            offsetPosition = weightedXY(lines);
+            offsetAngle = weightedAngle(lines);
         }
         else
         {
-            offset = new Point(0,0);
+            offsetPosition = new Point(0,0);
+            offsetAngle = 0;
         }
-        Imgproc.circle(img, offset, 2, new Scalar(0,255,0));
-        offset.x -= x;
-        offset.y -= y;
-        move(offset);
+        Imgproc.circle(img, offsetPosition, 2, new Scalar(0,255,0));
+        offsetPosition.x -= x/2;
+        offsetPosition.y -= y/2;
+        move(offsetPosition, offsetAngle, properties, x, y);
         return img;
     }
 
@@ -67,8 +68,26 @@ public class LineTrackingAlgo {
         return new Point(sumx/(2*lines.size()),sumy/(2*lines.size()));
     }
 
+    // calculates the weighted average of the x and y coordinates of the lines
+    // this determines how much the robot should turn
+    public double weightedAngle(ArrayList<GripPipeline.Line> lines)
+    {
+        double sum = 0;
+        for (int i = 0; i < lines.size(); i++) {
+            sum += lines.get(i).angle();
+        }
+        return sum/lines.size();
+    }
     // turns and translates the robot
-    public void move(Point offset) {
-
+    // the speed at which it moves forward is proportional to the constant forwardP and the 
+    // variable angle(90 = upright 0 = perpendicular)
+    // the speed at which it moves left and right is proportional to the constant leftright
+    // and the difference between the weighted x of the lines and the center
+    // the speed at which it turns is proportional to the difference between the angle and 
+    // vertical line and the constant turnP
+    public void move(Point offset, double angle, RobotProperties properties, int x, int y) 
+    {
+        MecanumDrive robotDrive = properties.getRobotDrive();
+        robotDrive.driveCartesian(forwardP * angle, leftRight * (x - offset.x), turnP * (angle-90));
     }
 }
