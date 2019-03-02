@@ -119,6 +119,7 @@ public class RobotProperties {
         SmartDashboard.putNumber("Gyro Y", properties.imu.getGyroY());
         SmartDashboard.putNumber("Gyro Z", properties.imu.getGyroZ());
         
+        
         SmartDashboard.putNumber("Accel X", properties.imu.getAccelX());
         SmartDashboard.putNumber("Accel Y", properties.imu.getAccelY());
         SmartDashboard.putNumber("Accel Z", properties.imu.getAccelZ());

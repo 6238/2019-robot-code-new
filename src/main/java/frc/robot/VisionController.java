@@ -101,8 +101,9 @@ public class VisionController implements RobotController {
                     {
                         for(int i=0;i<lines.size();i++)
                         {
+                            System.out.println(i+"   "+lines.get(i).angle());
                             Imgproc.line(output, new Point(lines.get(i).x1*0.95,lines.get(i).y1*0.95), 
-                                        new Point(lines.get(i).x2*0.95,lines.get(i).y2*0.95), new Scalar(0,255,0));
+                                        new Point(lines.get(i).x2*0.95,lines.get(i).y2*0.95), new Scalar(0,100,0));
                         }
                     }
                     output = linetracker.process(output, lines, width, height, selfAlign);

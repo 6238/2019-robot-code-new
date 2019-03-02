@@ -92,7 +92,7 @@ public class LineTrackingAlgo {
     // vertical line and the constant turnP
     public void move(Point offset, double angle, int x, int y, boolean selfAlign) {
         if (selfAlign) {
-            robotDrive.driveCartesian(forwardP * angle, leftRight * (x - offset.x), turnP * (angle - 90));
+            robotDrive.driveCartesian(0, leftRight * (x - offset.x), turnP * (angle - 90));
         }
     }
 }
