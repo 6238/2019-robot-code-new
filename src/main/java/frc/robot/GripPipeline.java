@@ -214,8 +214,7 @@ public class GripPipeline {
 				this.y1 = y1;
 				this.x2 = x2;
 				this.y2 = y2;
-			}
-			else{
+			} else {
 				this.x1 = x2;
 				this.y1 = y2;
 				this.x2 = x1;
@@ -231,9 +230,9 @@ public class GripPipeline {
 		public double length() {
 			return Math.sqrt(lengthSquared());
 		}
-
 		public double angle() {
-			return Math.atan2(y2 - y1, x2 - x1);
+			double angle = Math.atan2(y2 - y1, x2 - x1);
+			return (angle > 0) ? angle : angle + 2 * Math.PI;
 		}
 	}
 

@@ -26,10 +26,12 @@ public class LineTrackingAlgo {
     private final double turnP = 0.05;
     private final double forwardP = 0.05;
     private final double leftRight = 0.05;
+    private RobotProperties properties;
 
     // constructor
     public LineTrackingAlgo(RobotProperties properties) {
         robotDrive = properties.getRobotDrive();
+        this.properties = properties;
 
     }
 
@@ -81,9 +83,7 @@ public class LineTrackingAlgo {
     }
 
     // turns and translates the robot
-    // the speed at which it moves forward is proportional to the constant forwardP
-    // and the
-    // variable angle(90 = upright 0 = perpendicular)
+    // the speed at which it moves forward is proportional the y value on the joystick
     // the speed at which it moves left and right is proportional to the constant
     // leftright
     // and the difference between the weighted x of the lines and the center
@@ -92,7 +92,7 @@ public class LineTrackingAlgo {
     // vertical line and the constant turnP
     public void move(Point offset, double angle, int x, int y, boolean selfAlign) {
         if (selfAlign) {
-            robotDrive.driveCartesian(0, leftRight * (x - offset.x), turnP * (angle - 90));
+            robotDrive.driveCartesian(leftRight * (x - offset.x), properties.joystick.getJoystickX(), turnP * (angle - Math.PI/2));
         }
     }
 }
