@@ -34,8 +34,8 @@ public class DriveTrainController implements RobotController {
 
     @Override
     public boolean performAction(RobotProperties properties) {
+        MecanumDrive robotDrive = properties.getRobotDrive();
         if (!SmartDashboard.getBoolean("selfAlign", false)) {
-            MecanumDrive robotDrive = properties.getRobotDrive();
 
             insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
 
@@ -72,6 +72,8 @@ public class DriveTrainController implements RobotController {
                             insanityFactor * properties.joystick.getJoystickZ()/* + (angleError * kError) */);
                 }
             }
+        } else {
+          //  robotDrive.driveCartesian(0,0,0/* + (angleError * kError) */);
         }
         return true;
     }

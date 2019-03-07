@@ -232,7 +232,7 @@ public class GripPipeline {
 		}
 		public double angle() {
 			double angle = Math.atan2(y2 - y1, x2 - x1);
-			return (angle > 0) ? angle : angle + 2 * Math.PI;
+			return (angle > 0) ? angle : angle + Math.PI;
 		}
 	}
 

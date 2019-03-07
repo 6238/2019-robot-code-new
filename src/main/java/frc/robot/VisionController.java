@@ -84,15 +84,15 @@ public class VisionController implements RobotController {
                 }
 
                 //button on dashboard triggers the LineTrackingAlgo
-                SmartDashboard.getBoolean("selfAlign", selfAlign);
+                selfAlign = SmartDashboard.getBoolean("selfAlign", false);
 
-                if (bwIsRunning) {
+                /*if (bwIsRunning) {
 
                     //displays b+w video, this is the default setting
                     bwpipeline.process(source);
                     output = bwpipeline.desaturateOutput();
                     cvSource.putFrame(output);
-                } else {
+                } else*/ {
                     //System.out.println("Hello World!");
                     pipeline.process(source);
                     output = pipeline.cvResizeOutput();
@@ -101,10 +101,11 @@ public class VisionController implements RobotController {
                     {
                         for(int i=0;i<lines.size();i++)
                         {
-                            System.out.println(i+"   "+lines.get(i).angle());
+                            //System.out.println(i+"   "+lines.get(i).angle());
                             Imgproc.line(output, new Point(lines.get(i).x1*0.95,lines.get(i).y1*0.95), 
                                         new Point(lines.get(i).x2*0.95,lines.get(i).y2*0.95), new Scalar(0,100,0));
                         }
+                        System.out.println(linetracker.weightedAngle(lines));
                     }
                     output = linetracker.process(output, lines, width, height, selfAlign);
                     cvSource.putFrame(output);

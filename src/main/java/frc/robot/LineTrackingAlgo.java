@@ -49,6 +49,7 @@ public class LineTrackingAlgo {
         Imgproc.circle(img, offsetPosition, 2, new Scalar(255, 0, 0));
         offsetPosition.x -= x / 2;
         offsetPosition.y -= y / 2;
+        //System.out.println(selfAlign);
         move(offsetPosition, offsetAngle, x, y, selfAlign);
         return img;
     }
@@ -92,7 +93,7 @@ public class LineTrackingAlgo {
     // vertical line and the constant turnP
     public void move(Point offset, double angle, int x, int y, boolean selfAlign) {
         if (selfAlign) {
-            robotDrive.driveCartesian(leftRight * (x - offset.x), properties.joystick.getJoystickX(), turnP * (angle - Math.PI/2));
+            robotDrive.driveCartesian(leftRight * (x - offset.x), -1 * properties.joystick.getJoystickY(), turnP * (angle - Math.PI/2));
         }
     }
 }
