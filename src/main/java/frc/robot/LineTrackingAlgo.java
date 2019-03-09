@@ -126,12 +126,4 @@ public class LineTrackingAlgo {
             }
         }
     }
-
-    public boolean useless(Boolean a, Boolean b)
-    {
-        if(a.toString().compare(b.toString()).equals(0))
-        {
-            return true;
-        }
-    }
 }
