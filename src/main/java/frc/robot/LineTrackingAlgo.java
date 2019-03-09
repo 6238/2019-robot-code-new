@@ -18,14 +18,14 @@ import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class LineTrackingAlgo {
     private ArrayList<GripPipeline.Line> currLines;
     private MecanumDrive robotDrive;
     // these constants control how much the robot turns/moves based off the image
-    private final double turnP = 0.05;
-    private final double forwardP = 0.05;
-    private final double leftRight = 0.05;
+    private final double turnP = 0.0035;
+    private final double leftRight = 0.025;
     private RobotProperties properties;
 
     // constructor
@@ -47,10 +47,10 @@ public class LineTrackingAlgo {
             offsetAngle = 0;
         }
         Imgproc.circle(img, offsetPosition, 2, new Scalar(255, 0, 0));
-        offsetPosition.x -= x / 2;
-        offsetPosition.y -= y / 2;
-        //System.out.println(selfAlign);
-        move(offsetPosition, offsetAngle, x, y, selfAlign);
+        offsetPosition.x -= x / 8;
+        offsetPosition.y -= y / 8;
+        // System.out.println(selfAlign);
+        move(offsetPosition, offsetAngle, x, y, selfAlign, lines);
         return img;
     }
 
@@ -66,9 +66,9 @@ public class LineTrackingAlgo {
             sumy += lines.get(i).y1 * lines.get(i).length();
             sumx += lines.get(i).x2 * lines.get(i).length();
             sumy += lines.get(i).y2 * lines.get(i).length();
-            weightedSum += lines.get(i).length();
+            weightedSum += 2 * lines.get(i).length();
         }
-        return new Point(sumx / (weightedSum * lines.size()), sumy / (weightedSum * lines.size()));
+        return new Point(sumx / (weightedSum), sumy / (weightedSum));
     }
 
     // calculates the weighted average of the x and y coordinates of the lines
@@ -80,20 +80,30 @@ public class LineTrackingAlgo {
             sum += lines.get(i).angle() * lines.get(i).length();
             weightedSum += lines.get(i).length();
         }
-        return sum / (weightedSum * lines.size());
+        return sum / (weightedSum);
     }
 
     // turns and translates the robot
-    // the speed at which it moves forward is proportional the y value on the joystick
+    // the speed at which it moves forward is proportional the y value on the
+    // joystick
     // the speed at which it moves left and right is proportional to the constant
     // leftright
     // and the difference between the weighted x of the lines and the center
     // the speed at which it turns is proportional to the difference between the
     // angle and
     // vertical line and the constant turnP
-    public void move(Point offset, double angle, int x, int y, boolean selfAlign) {
+    public void move(Point offset, double angle, int x, int y, boolean selfAlign, ArrayList<GripPipeline.Line> lines) {
         if (selfAlign) {
-            robotDrive.driveCartesian(leftRight * (x - offset.x), -1 * properties.joystick.getJoystickY(), turnP * (angle - Math.PI/2));
+            // System.out.println(weightedXY(lines).x + " " + offset.x);
+            if (lines.size() > 0) {
+                robotDrive.driveCartesian(
+                        (SmartDashboard.getBoolean("ReverseTurn", false) ? 1 : -1) * leftRight * (offset.x),
+                        (SmartDashboard.getBoolean("ReverseTurn", false) ? 1 : -1) * properties.joystick.getJoystickY(),
+                        (SmartDashboard.getBoolean("ReverseTurn", false) ? -1 : 1) * turnP * (angle - 90));
+            } else {
+                robotDrive.driveCartesian(0, 0, 0);
+
+            }
         }
     }
 }

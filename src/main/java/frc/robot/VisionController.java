@@ -54,8 +54,8 @@ public class VisionController implements RobotController {
     public VisionController(RobotProperties properties) {
 
         //adds button to smartdashboard
-        SmartDashboard.putBoolean("selfAlign", selfAlign);
-
+        SmartDashboard.putBoolean("selfAlign", false);
+        SmartDashboard.putBoolean("ReverseTurn", false);
         //initializes pipelines
         pipeline = new GripPipeline();
         bwpipeline = new bwGripPipeline();
@@ -101,11 +101,11 @@ public class VisionController implements RobotController {
                     {
                         for(int i=0;i<lines.size();i++)
                         {
-                            //System.out.println(i+"   "+lines.get(i).angle());
+                            //System.out.println(i+"   "+lines.get(i).angle()+" "+lines.get(i).length());
                             Imgproc.line(output, new Point(lines.get(i).x1*0.95,lines.get(i).y1*0.95), 
                                         new Point(lines.get(i).x2*0.95,lines.get(i).y2*0.95), new Scalar(0,100,0));
                         }
-                        System.out.println(linetracker.weightedAngle(lines));
+                        //System.out.println(linetracker.weightedAngle(lines));
                     }
                     output = linetracker.process(output, lines, width, height, selfAlign);
                     cvSource.putFrame(output);
