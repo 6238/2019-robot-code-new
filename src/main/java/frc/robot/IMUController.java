@@ -3,16 +3,18 @@ package frc.robot;
 import com.analog.adis16470.frc.ADIS16470_IMU;
 
 public class IMUController {
-    
+
     public ADIS16470_IMU imu;
 
     public IMUController() {
         this.imu = new ADIS16470_IMU();
     }
-    //TODO: angles -180 to 180?
+
+    // TODO: angles -180 to 180?
     public double getGyro() {
         return imu.getAngle();
     }
+
     public double getGyroX() {
         return imu.getAngleX();
     }
@@ -36,7 +38,7 @@ public class IMUController {
     public double getAccelZ() {
         return imu.getAccelZ();
     }
-    
+
     public double getRate() {
         return imu.getRate();
     }

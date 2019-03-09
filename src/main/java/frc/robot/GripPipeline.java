@@ -262,11 +262,9 @@ public class GripPipeline {
 	 */
 	private void filterLines(List<Line> inputs, double minLength, List<Line> outputs) {
 		outputs.clear();
-		for(int i=0;i<inputs.size();i++)
-		{
+		for (int i = 0; i < inputs.size(); i++) {
 			Line curr = inputs.get(i);
-			if(curr.lengthSquared()>Math.pow(minLength,2))
-			{
+			if (curr.lengthSquared() > Math.pow(minLength, 2)) {
 				outputs.add(curr);
 			}
 		}

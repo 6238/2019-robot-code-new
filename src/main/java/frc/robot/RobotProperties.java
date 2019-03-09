@@ -10,7 +10,7 @@ public class RobotProperties {
     JoystickController joystick;
 
     IMUController imu;
-    
+
     AnalogGyro gyro;
 
     private WPI_TalonSRX frontLeft;
@@ -60,7 +60,7 @@ public class RobotProperties {
     public MecanumDrive getRobotDrive() {
         return robotDrive;
     }
-    
+
     public WPI_TalonSRX getElevator1() {
         return elevator1;
     }
@@ -118,7 +118,7 @@ public class RobotProperties {
         SmartDashboard.putNumber("Gyro X", properties.imu.getGyroX());
         SmartDashboard.putNumber("Gyro Y", properties.imu.getGyroY());
         SmartDashboard.putNumber("Gyro Z", properties.imu.getGyroZ());
-        
+
         SmartDashboard.putNumber("Accel X", properties.imu.getAccelX());
         SmartDashboard.putNumber("Accel Y", properties.imu.getAccelY());
         SmartDashboard.putNumber("Accel Z", properties.imu.getAccelZ());

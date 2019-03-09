@@ -100,10 +100,10 @@ public class VisionController implements RobotController {
     public void drive(RobotProperties properties, ArrayList<GripPipeline.Line> lines) {
         MecanumDrive drive = properties.getRobotDrive();
         if (Math.abs(lines.get(0).angle()) > 0.1) {
-            drive.driveCartesian(0, 0, -0.25*((lines.get(0).angle() + Math.PI/2)%Math.PI));
-        } //else {
-            //drive.driveCartesian(5, 0, 0);
-        //}
+            drive.driveCartesian(0, 0, -0.25 * ((lines.get(0).angle() + Math.PI / 2) % Math.PI));
+        } // else {
+          // drive.driveCartesian(5, 0, 0);
+          // }
     }
 
     @Override
