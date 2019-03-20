@@ -246,12 +246,21 @@ public class GripPipeline {
 		final LineSegmentDetector lsd = Imgproc.createLineSegmentDetector();
 		final Mat lines = new Mat();
 		lineList.clear();
-		if (input.channels() == 1) {
+		/*if (input.channels() == 1) {
 			lsd.detect(input, lines);
 		} else {
 			final Mat tmp = new Mat();
 			Imgproc.cvtColor(input, tmp, Imgproc.COLOR_BGR2GRAY);
 			lsd.detect(tmp, lines);
+		}*/
+		final Mat tmp = new Mat();
+		Imgproc.cvtColor(input, tmp, Imgproc.COLOR_BGR2GRAY);
+		try
+		{
+			lsd.detect(tmp, lines);
+		} catch(AssertionError error)
+		{
+			System.out.println("lsd.dectect failed");
 		}
 		if (!lines.empty()) {
 			for (int i = 0; i < lines.rows(); i++) {
