@@ -87,13 +87,13 @@ public class VisionController implements RobotController {
                 //button on dashboard triggers the LineTrackingAlgo
                 selfAlign = SmartDashboard.getBoolean("selfAlign", false);
 
-                /*if (bwIsRunning) {
+                if (bwIsRunning) {
 
                     //displays b+w video, this is the default setting
                     bwpipeline.process(source);
                     output = bwpipeline.desaturateOutput();
                     cvSource.putFrame(output);
-                } else*/ {
+                } else {
                     //System.out.println("Hello World!");
                     pipeline.process(source);
                     output = pipeline.cvResizeOutput();
@@ -143,7 +143,7 @@ public class VisionController implements RobotController {
         } else if (properties.joystick.getButtonTwo() && prevButton) {
             prevButton = !prevButton;
             bwIsRunning = true;
-            cvSink = CameraServer.getInstance().getVideo(camera1); // camera1
+            cvSink = CameraServer.getInstance().getVideo(camera1); 
         }
         prevButton = properties.joystick.getButtonTwo();
         return true;
