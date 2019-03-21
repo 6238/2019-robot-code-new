@@ -76,19 +76,19 @@ public class RobotProperties {
         this.elevator2 = elevator2;
     }
 
-    public WPI_TalonSRX getMechanism() {
+    public WPI_TalonSRX getIntakeWheels() {
         return intakeWheels;
     }
 
-    public void setMechanism(WPI_TalonSRX mechanism) {
+    public void setIntakeWheels(WPI_TalonSRX mechanism) {
         this.intakeWheels = mechanism;
     }
 
-    public WPI_TalonSRX getMotor8() {
+    public WPI_TalonSRX getCargoPivot() {
         return cargoPivot;
     }
 
-    public void setMotor8(WPI_TalonSRX motor8) {
+    public void setCargoPivot(WPI_TalonSRX motor8) {
         this.cargoPivot = motor8;
     }
 

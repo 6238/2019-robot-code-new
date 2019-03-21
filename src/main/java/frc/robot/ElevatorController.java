@@ -67,7 +67,7 @@ public class ElevatorController implements RobotController {
             m_elevator2.set(0);
         }
 
-        int count;
+        /*int count;
         double distance;
         try (Encoder elevatorEncoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X)) {
             elevatorEncoder.setMaxPeriod(.1);
@@ -79,10 +79,10 @@ public class ElevatorController implements RobotController {
             count = elevatorEncoder.get();
             distance = elevatorEncoder.getDistance();
         }
-        SmartDashboard.putNumber("Encoders", distance);
+        SmartDashboard.putNumber("Encoders", distance);*/
         // TODO: need to fill out the distance thresholds replacing the 0, 5, 10, and 15
         // values with measured values
-        if (level1) {
+        /*if (level1) {
             while (distance < 5) {
                 m_elevator1.set(10);
                 m_elevator2.set(10);
@@ -116,7 +116,7 @@ public class ElevatorController implements RobotController {
         } else {
             m_elevator1.set(0);
             m_elevator2.set(0);
-        }
+        }*/
         return true;
 
     }
