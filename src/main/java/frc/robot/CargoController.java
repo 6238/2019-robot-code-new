@@ -46,7 +46,7 @@ public class CargoController implements RobotController {
 
     public void moveCargoMech(RobotProperties properties) {
         WPI_TalonSRX cargoPivot = properties.getCargoPivot();
-        boolean isCargoButtonPressed = properties.joystick.getButtonEleven();// temporary button number
+        boolean isCargoButtonPressed = properties.joystick.getButtonOne();// temporary button number
 
         // checks for whether the cargo button is pressed
         // this sets isSet to false which is used in the following statement to control

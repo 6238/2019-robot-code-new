@@ -4,6 +4,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,16 +21,19 @@ public class RobotProperties {
 
     private MecanumDrive robotDrive;
 
-    private WPI_TalonSRX elevator1;
-    private WPI_TalonSRX elevator2;
+    private WPI_TalonSRX leftElevator1;
+    private WPI_TalonSRX leftElevator2;
 
     private WPI_TalonSRX intakeWheels;
 
     private WPI_TalonSRX cargoPivot;
-    private WPI_TalonSRX motor9;
-    private WPI_TalonSRX motor10;
+    private WPI_TalonSRX rightElevator1;
+    private WPI_TalonSRX rightElevator2;
 
     private PowerDistributionPanel pdp;
+
+    private SpeedControllerGroup leftElevator;
+    private SpeedControllerGroup rightElevator;
 
     public RobotProperties() {
         joystick = new JoystickController(0);
@@ -47,65 +52,52 @@ public class RobotProperties {
 
         robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-        elevator1 = new WPI_TalonSRX(5);
-        elevator2 = new WPI_TalonSRX(6);
+        leftElevator1 = new WPI_TalonSRX(5);
+        leftElevator2 = new WPI_TalonSRX(6);
         intakeWheels = new WPI_TalonSRX(7);
 
         cargoPivot = new WPI_TalonSRX(8);
-        motor9 = new WPI_TalonSRX(9);
-        motor10 = new WPI_TalonSRX(10);
+        rightElevator1 = new WPI_TalonSRX(9);
+        rightElevator2 = new WPI_TalonSRX(10);
+
+        leftElevator = new SpeedControllerGroup(leftElevator1, leftElevator2);
+        rightElevator = new SpeedControllerGroup(rightElevator1, rightElevator2);
     }
 
     public MecanumDrive getRobotDrive() {
         return robotDrive;
     }
 
-    public WPI_TalonSRX getElevator1() {
-        return elevator1;
+    public SpeedControllerGroup getLeftElevator() {
+        return leftElevator;
     }
 
-    public void setElevator1(WPI_TalonSRX elevator1) {
-        this.elevator1 = elevator1;
+    public void setLeftElevator(SpeedControllerGroup leftElevator) {
+        this.leftElevator = leftElevator;
     }
 
-    public WPI_TalonSRX getElevator2() {
-        return elevator2;
+    public SpeedControllerGroup getRightElevator() {
+        return rightElevator;
     }
 
-    public void setElevator2(WPI_TalonSRX elevator2) {
-        this.elevator2 = elevator2;
+    public void setRightElevator(SpeedControllerGroup rightElevator) {
+        this.rightElevator = rightElevator;
     }
 
     public WPI_TalonSRX getIntakeWheels() {
         return intakeWheels;
     }
 
-    public void setIntakeWheels(WPI_TalonSRX mechanism) {
-        this.intakeWheels = mechanism;
+    public void setIntakeWheels(WPI_TalonSRX intakeWheels) {
+        this.intakeWheels = intakeWheels;
     }
 
     public WPI_TalonSRX getCargoPivot() {
         return cargoPivot;
     }
 
-    public void setCargoPivot(WPI_TalonSRX motor8) {
-        this.cargoPivot = motor8;
-    }
-
-    public WPI_TalonSRX getMotor9() {
-        return motor9;
-    }
-
-    public void setMotor9(WPI_TalonSRX motor9) {
-        this.motor9 = motor9;
-    }
-
-    public WPI_TalonSRX getMotor10() {
-        return motor10;
-    }
-
-    public void setMotor10(WPI_TalonSRX motor10) {
-        this.motor10 = motor10;
+    public void setCargoPivot(WPI_TalonSRX cargoPivot) {
+        this.cargoPivot = cargoPivot;
     }
 
     public void pushData(RobotProperties properties) {
@@ -144,12 +136,12 @@ public class RobotProperties {
         SmartDashboard.putData("talon2", rearLeft);
         SmartDashboard.putData("talon3", frontRight);
         SmartDashboard.putData("talon4", frontLeft);
-        SmartDashboard.putData("talon5", elevator1);
-        SmartDashboard.putData("talon6", elevator2);
+        SmartDashboard.putData("talon5", leftElevator1);
+        SmartDashboard.putData("talon6", leftElevator2);
         SmartDashboard.putData("talon7", intakeWheels);
         SmartDashboard.putData("talon8", cargoPivot);
-        SmartDashboard.putData("talon9", motor9);
-        SmartDashboard.putData("talon10", motor10);
+        SmartDashboard.putData("talon9", rightElevator1);
+        SmartDashboard.putData("talon10", rightElevator2);
         
         SmartDashboard.putData("pdp", pdp);
     }
