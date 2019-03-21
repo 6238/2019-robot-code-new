@@ -36,7 +36,7 @@ public class CargoController implements RobotController {
     public void moveCargoMech(RobotProperties properties) {
         WPI_TalonSRX cargoPivot = properties.getCargoPivot();
         boolean isCargoButtonPressed = properties.joystick.getButtonEleven();// temporary button number
-        if (isCargoButtonPressed) {
+        if (isSet && isCargoButtonPressed) {
             isSet = false;
         }
         if (!isSet) {
@@ -49,6 +49,7 @@ public class CargoController implements RobotController {
                 {
                     isSet = true;
                     cargoPivot.set(0);
+                    isReleased = false;
                 }
             } else {
                 if(cargoMech.getDistance() != turnMax)
@@ -59,6 +60,7 @@ public class CargoController implements RobotController {
                 {
                     isSet = true;
                     cargoPivot.set(0);
+                    isReleased = true;
                 }
             }
         }
