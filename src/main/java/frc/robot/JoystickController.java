@@ -10,7 +10,8 @@ public class JoystickController {
     public JoystickController(int port) {
         this.port = port;
         this.controller = new Joystick(port);
-        // When the Controller is initialized, it will automatically set the controller object and port value
+        // When the Controller is initialized, it will automatically set the controller
+        // object and port value
     }
 
     // Configuration
@@ -19,13 +20,12 @@ public class JoystickController {
     // This is a sensitivity buffer for the joysticks. (Recommended 0.05 or higher)
     // Prevents the robot from going nuts at the slightest movement.
 
-	/*
-	INDEX
-	Joystick Axis - Get the X,Y,Z values for the Joystick
-	Numeral 1-12 Buttons - Get the Pressed status for the numbered buttons (1-12)
-	Slider - Get the value for the +/- Slider
-	DPad - Get the Pressed status for the DPad Up/UpLeft/UpRight/Left/Right/DownLeft/DownRight/Down inputs on the cap head
-	*/
+    /*
+     * INDEX Joystick Axis - Get the X,Y,Z values for the Joystick Numeral 1-12
+     * Buttons - Get the Pressed status for the numbered buttons (1-12) Slider - Get
+     * the value for the +/- Slider DPad - Get the Pressed status for the DPad
+     * Up/UpLeft/UpRight/Left/Right/DownLeft/DownRight/Down inputs on the cap head
+     */
 
     public double correctDeadSpot(double value) {
         if (Math.abs(value) < DEAD_ZONE) {
@@ -57,7 +57,6 @@ public class JoystickController {
         return controller.getThrottle();
     }
 
-
     // Joystick
 
     public double getJoystickX() {
@@ -65,14 +64,13 @@ public class JoystickController {
     }
 
     public double getJoystickY() {
-        //return correctDeadSpotY(getAxis(1));
+        // return correctDeadSpotY(getAxis(1));
         return correctDeadSpot(getAxis(1));
     }
 
     public double getJoystickZ() {
         return correctDeadSpot(getAxis(2));
     }
-
 
     // Numeral Buttons
 
@@ -127,48 +125,48 @@ public class JoystickController {
     // Slider
 
     public double getSlider() {
-        return -1*getThrottle();
+        return -1 * getThrottle();
     }
 
     // DPad
     // The DPad is unique in that it works with a 0-360 degrees POV
 
-    public boolean getDPadUp(){
+    public boolean getDPadUp() {
         int degree = getPOV(0);
         return (degree >= 337 || degree <= 22);
     }
 
-    public boolean getDPadDown(){
+    public boolean getDPadDown() {
         int degree = getPOV(0);
         return (degree <= 202 && degree >= 157);
     }
 
-    public boolean getDPadLeft(){
+    public boolean getDPadLeft() {
         int degree = getPOV(0);
         return (degree <= 292 && degree >= 247);
     }
 
-    public boolean getDPadRight(){
+    public boolean getDPadRight() {
         int degree = getPOV(0);
         return (degree <= 112 && degree >= 67);
     }
 
-    public boolean getDPadUpRight(){
+    public boolean getDPadUpRight() {
         int degree = getPOV(0);
         return (degree <= 67 && degree >= 22);
     }
 
-    public boolean getDPadUpLeft(){
+    public boolean getDPadUpLeft() {
         int degree = getPOV(0);
         return (degree <= 337 && degree >= 292);
     }
 
-    public boolean getDPadDownRight(){
+    public boolean getDPadDownRight() {
         int degree = getPOV(0);
         return (degree <= 157 && degree >= 112);
     }
 
-    public boolean getDPadDownLeft(){
+    public boolean getDPadDownLeft() {
         int degree = getPOV(0);
         return (degree <= 247 && degree >= 207);
     }
