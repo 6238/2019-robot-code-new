@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
   private final List<RobotController> controllers;
 
   public Robot() {
+    properties = new RobotProperties();
     controllers = new ArrayList<RobotController>();
     controllers.add(new DriveTrainController());
     controllers.add(new VisionController(properties));
@@ -41,16 +42,12 @@ public class Robot extends TimedRobot {
    * This function is run when the robot is first started up and should be used
    * for any initialization code.
    */
-  // @Override
+  @Override
   public void robotInit() {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
-    properties = new RobotProperties();
-    // properties.imu.calibrate();
-    // properties.imu.reset();
-    properties.gyro.setSensitivity(0.0128);
-
+    properties.gyro.calibrate();
   }
 
   /**

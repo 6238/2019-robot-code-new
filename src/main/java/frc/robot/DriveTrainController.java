@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -14,10 +16,32 @@ public class DriveTrainController implements RobotController {
     // inverted drive for hatch panel
     boolean reverseDrive = false;
 
+    // joystick drive or no?
+    boolean joyDrive = true;
+
+    // brake mode
+    boolean brakeMode = true;
+
+    // absolute drive
+    boolean absoluteDrive = false;
+
+    // self align
+    boolean selfAlign = false;
+
+    // straight driving
+    boolean straightDrive = false;
+
+    private double kAngleSetpoint = 0.0;
+    private double kP = 0.1;
+
     public DriveTrainController() {
         // send values to dashboard
         SmartDashboard.putNumber("insanityFactor", insanityFactor);
         SmartDashboard.putBoolean("reverseDrive", reverseDrive);
+        SmartDashboard.putBoolean("joyDrive", joyDrive);
+        SmartDashboard.putBoolean("brakeMode", brakeMode);
+        SmartDashboard.putBoolean("absoluteDrive", absoluteDrive);
+        SmartDashboard.putBoolean("selfAlign", selfAlign);
     }
 
     // name function for initial testing
@@ -25,47 +49,80 @@ public class DriveTrainController implements RobotController {
     public String getName() {
         return "DriveTrainController";
     }
-
-    double correctAngle; // What the robot should be doing (angle after joyZ stopped changing)
-    double actualAngle; // What the gyro currently measures
-    double angleError; // diff btwn actual & correct
-    double kError = 1 / 180; // constant for sending error to actual drivecartesian function
-    boolean checkNextCycle; // check for error next cycle
-
+    
     @Override
     public boolean performAction(RobotProperties properties) {
 
         MecanumDrive robotDrive = properties.getRobotDrive();
 
-        insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
+        selfAlign = SmartDashboard.getBoolean("selfAlign", selfAlign);
 
+        insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
+        
         reverseDrive = SmartDashboard.getBoolean("reverseDrive", reverseDrive);
 
-        // TODO: Calculate what correctAngle is, angleError = correctAngle - actualAngle, subtract angleError from joyZ (demonstrated)
+        joyDrive = SmartDashboard.getBoolean("joyDrive", joyDrive);
 
-        // actualAngle = properties.imu.getGyro();
+        brakeMode = SmartDashboard.getBoolean("brakeMode", brakeMode);
 
-        /*
-         * if (properties.joystick.getJoystickZ() == 0 && checkNextCycle) {
-         * correctAngle = actualAngle; checkNextCycle = false; 
-         * } else if (properties.joystick.getJoystickZ() != 0) {
-         * checkNextCycle = true;
-         * }
-         */
+        absoluteDrive = SmartDashboard.getBoolean("absoluteDrive", absoluteDrive);
 
-        // angleError = correctAngle - actualAngle;
+        if (selfAlign) {
+            
+        } else if (joyDrive) {
+            if (properties.joystick.getJoystickZ() == 0) {
+                straightDrive = true;
 
-        if (SmartDashboard.getBoolean("Joystick Control", true)) {
-            if (properties.joystick.getButtonOne()) {
-                // trigger => absolute drive
-                robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ(), actualAngle);
-            } else if (reverseDrive) {
-                // reverseDrive switch
-                robotDrive.driveCartesian(-insanityFactor * properties.joystick.getJoystickX(), insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ()/* + (angleError * kError) */);
+                double turningValue = (kAngleSetpoint - properties.gyro.getAngle()) * kP;
+
+                if (turningValue > 0.5) {
+                    turningValue = 0.5;
+                } else if (turningValue < -0.5) {
+                    turningValue = -0.5;
+                }
+                
+                if (reverseDrive) {
+                    // reverseDrive switch
+                    // robotDrive.arcadeDrive(insanityFactor * properties.joystick.getJoystickY(), turningValue, false);
+                    robotDrive.driveCartesian(-insanityFactor * properties.joystick.getJoystickX(), insanityFactor * properties.joystick.getJoystickY(), turningValue);
+                } else if (absoluteDrive) {
+                    // absolute driving
+                    robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), turningValue, kAngleSetpoint);
+                } else {
+                    // normal driving
+                    robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), turningValue);
+                }
+
+                // System.out.println(turningValue);
             } else {
-                // normal driving
-                robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ()/* + (angleError * kError) */);
+                kAngleSetpoint = properties.gyro.getAngle();
+                straightDrive = false;
+                if (reverseDrive) {
+                    // reverse driving
+                    robotDrive.driveCartesian(-insanityFactor * properties.joystick.getJoystickX(), insanityFactor * properties.joystick.getJoystickY(), properties.joystick.getJoystickZ());
+                } else if (absoluteDrive) {
+                    // absolute driving
+                    robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), properties.joystick.getJoystickZ(), kAngleSetpoint);
+                } else {
+                    // normal driving
+                    robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), properties.joystick.getJoystickZ());
+                }
             }
+
+            SmartDashboard.putBoolean("absoluteDrive", absoluteDrive);
+            
+        }
+
+        if (brakeMode) {
+            properties.frontLeft.setNeutralMode(NeutralMode.Brake);
+            properties.frontRight.setNeutralMode(NeutralMode.Brake);
+            properties.rearLeft.setNeutralMode(NeutralMode.Brake);
+            properties.rearRight.setNeutralMode(NeutralMode.Brake);
+        } else {
+            properties.frontLeft.setNeutralMode(NeutralMode.Coast);
+            properties.frontRight.setNeutralMode(NeutralMode.Coast);
+            properties.rearLeft.setNeutralMode(NeutralMode.Coast);
+            properties.rearRight.setNeutralMode(NeutralMode.Coast);
         }
 
         return true;
