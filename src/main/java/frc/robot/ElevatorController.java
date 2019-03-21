@@ -36,7 +36,7 @@ public class ElevatorController implements RobotController {
         boolean isUpElevatorButtonPressed;
         isDownElevatorButtonPressed = properties.joystick.getButtonFour();
         isUpElevatorButtonPressed = properties.joystick.getButtonSix();
-        boolean level1;
+        /*boolean level1;
         boolean level2;
         boolean level3;
         boolean level4;
@@ -47,7 +47,7 @@ public class ElevatorController implements RobotController {
         level3 = properties.joystick.getButtonNine();
         level4 = properties.joystick.getButtonTen();
         level5 = properties.joystick.getButtonEleven();
-        level6 = properties.joystick.getButtonTwelve();
+        level6 = properties.joystick.getButtonTwelve(); */
 
         WPI_TalonSRX m_elevator1 = properties.getElevator1();
         WPI_TalonSRX m_elevator2 = properties.getElevator2();
