@@ -83,7 +83,6 @@ public class DriveTrainController implements RobotController {
                 
                 if (reverseDrive) {
                     // reverseDrive switch
-                    // robotDrive.arcadeDrive(insanityFactor * properties.joystick.getJoystickY(), turningValue, false);
                     robotDrive.driveCartesian(-insanityFactor * properties.joystick.getJoystickX(), insanityFactor * properties.joystick.getJoystickY(), turningValue);
                 } else if (absoluteDrive) {
                     // absolute driving
@@ -93,7 +92,6 @@ public class DriveTrainController implements RobotController {
                     robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), turningValue);
                 }
 
-                // System.out.println(turningValue);
             } else {
                 kAngleSetpoint = properties.gyro.getAngle();
                 straightDrive = false;
