@@ -17,6 +17,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ElevatorController implements RobotController {
     public ElevatorController() {
@@ -78,6 +79,7 @@ public class ElevatorController implements RobotController {
             count = elevatorEncoder.get();
             distance = elevatorEncoder.getDistance();
         }
+        SmartDashboard.putNumber("Encoders", distance);
         // TODO: need to fill out the distance thresholds replacing the 0, 5, 10, and 15
         // values with measured values
         if (level1) {

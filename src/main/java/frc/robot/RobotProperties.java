@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
@@ -28,10 +29,15 @@ public class RobotProperties {
     private WPI_TalonSRX motor9;
     private WPI_TalonSRX motor10;
 
+    //private Encoder m_encoder;
+
     private PowerDistributionPanel pdp;
 
     public RobotProperties() {
         joystick = new JoystickController(0);
+
+
+        //m_encoder = new Encoder(0, 1); //digitalPorts
 
         gyro = new ADXRS450_Gyro();
 
