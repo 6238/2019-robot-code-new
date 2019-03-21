@@ -122,7 +122,6 @@ public class DriveTrainController implements RobotController {
             properties.rearLeft.setNeutralMode(NeutralMode.Coast);
             properties.rearRight.setNeutralMode(NeutralMode.Coast);
         }
-
         return true;
     }
 }
