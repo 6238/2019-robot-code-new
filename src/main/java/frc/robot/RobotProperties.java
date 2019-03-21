@@ -22,9 +22,9 @@ public class RobotProperties {
     private WPI_TalonSRX elevator1;
     private WPI_TalonSRX elevator2;
 
-    private WPI_TalonSRX mechanism;
+    private WPI_TalonSRX intakeWheels;
 
-    private WPI_TalonSRX motor8;
+    private WPI_TalonSRX cargoPivot;
     private WPI_TalonSRX motor9;
     private WPI_TalonSRX motor10;
 
@@ -49,9 +49,9 @@ public class RobotProperties {
 
         elevator1 = new WPI_TalonSRX(5);
         elevator2 = new WPI_TalonSRX(6);
-        mechanism = new WPI_TalonSRX(7);
+        intakeWheels = new WPI_TalonSRX(7);
 
-        motor8 = new WPI_TalonSRX(8);
+        cargoPivot = new WPI_TalonSRX(8);
         motor9 = new WPI_TalonSRX(9);
         motor10 = new WPI_TalonSRX(10);
     }
@@ -77,19 +77,19 @@ public class RobotProperties {
     }
 
     public WPI_TalonSRX getMechanism() {
-        return mechanism;
+        return intakeWheels;
     }
 
     public void setMechanism(WPI_TalonSRX mechanism) {
-        this.mechanism = mechanism;
+        this.intakeWheels = mechanism;
     }
 
     public WPI_TalonSRX getMotor8() {
-        return motor8;
+        return cargoPivot;
     }
 
     public void setMotor8(WPI_TalonSRX motor8) {
-        this.motor8 = motor8;
+        this.cargoPivot = motor8;
     }
 
     public WPI_TalonSRX getMotor9() {
@@ -146,8 +146,8 @@ public class RobotProperties {
         SmartDashboard.putData("talon4", frontLeft);
         SmartDashboard.putData("talon5", elevator1);
         SmartDashboard.putData("talon6", elevator2);
-        SmartDashboard.putData("talon7", mechanism);
-        SmartDashboard.putData("talon8", motor8);
+        SmartDashboard.putData("talon7", intakeWheels);
+        SmartDashboard.putData("talon8", cargoPivot);
         SmartDashboard.putData("talon9", motor9);
         SmartDashboard.putData("talon10", motor10);
         
