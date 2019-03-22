@@ -72,8 +72,6 @@ public class VisionController implements RobotController {
         // initializes the source and sink
         cvSink = CameraServer.getInstance().getVideo(camera1);// camera1
         cvSource = CameraServer.getInstance().putVideo("vision", width, height);
-        SmartDashboard.putNumber("autoTurnSpeed", 0.0035);
-        SmartDashboard.putNumber("autoDriveSpeed", 0.025);
         visionThread = new Thread(() -> {
             pipeline = new GripPipeline();
             bwpipeline = new bwGripPipeline();
