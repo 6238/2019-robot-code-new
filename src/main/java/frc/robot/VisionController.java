@@ -52,12 +52,31 @@ public class VisionController implements RobotController {
     boolean selfAlign = false;
 
     public VisionController(RobotProperties properties) {
-
-        //adds button to smartdashboard
+        //moved to robotproperties
+        /*//adds button to smartdashboard
         SmartDashboard.putBoolean("selfAlign", false);
-        SmartDashboard.putBoolean("ReverseTurn", false);
+        SmartDashboard.putBoolean("ReverseTurn", false);*/
         //initializes pipelines
-        pipeline = new GripPipeline();
+        /*pipeline = new GripPipeline();
+        bwpipeline = new bwGripPipeline();
+        LineTrackingAlgo linetracker = new LineTrackingAlgo(properties); 
+        
+        //moved inside the thread
+        //initializes both cameras
+        camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+        camera1.setResolution(width, height);
+        camera1.setFPS(fps);
+        //camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+        //camera2.setResolution(width, height);
+        //camera2.setFPS(fps);*/
+
+        //initializes the source and sink
+        cvSink = CameraServer.getInstance().getVideo(camera1);// camera1
+        cvSource = CameraServer.getInstance().putVideo("vision", width, height);
+        SmartDashboard.putNumber("autoTurnSpeed", 0.0035);
+        SmartDashboard.putNumber("autoDriveSpeed", 0.025);
+        visionThread = new Thread(() -> {
+            pipeline = new GripPipeline();
         bwpipeline = new bwGripPipeline();
         LineTrackingAlgo linetracker = new LineTrackingAlgo(properties); 
         //initializes both cameras
@@ -67,13 +86,6 @@ public class VisionController implements RobotController {
         //camera2 = CameraServer.getInstance().startAutomaticCapture(1);
         //camera2.setResolution(width, height);
         //camera2.setFPS(fps);
-
-        //initializes the source and sink
-        cvSink = CameraServer.getInstance().getVideo(camera1);// camera1
-        cvSource = CameraServer.getInstance().putVideo("vision", width, height);
-        SmartDashboard.putNumber("autoTurnSpeed", 0.0035);
-        SmartDashboard.putNumber("autoDriveSpeed", 0.025);
-        visionThread = new Thread(() -> {
             Mat source = new Mat();
             Mat output = new Mat();
             while (!Thread.interrupted()) {
@@ -130,13 +142,14 @@ public class VisionController implements RobotController {
         
         //restarts thread if it unexpectedly crashes. The program has been 
         //tested to eliminated errors with memory so this is likely never run
-        if (!visionThread.isAlive()) {
+       /* if (!visionThread.isAlive()) {
             visionThread.start();
-        }
+        }*/
 
         //switches view to camera2 and begins line tracing whenever button 2 is pressed
         //automatically reverts to camera1
-        if (properties.joystick.getButtonTwo() && !prevButton) {
+       
+        /*if (properties.joystick.getButtonTwo() && !prevButton) {
             prevButton = !prevButton;
             bwIsRunning = false;
             cvSink = CameraServer.getInstance().getVideo(camera2);
@@ -146,7 +159,7 @@ public class VisionController implements RobotController {
             bwIsRunning = true;
             cvSink = CameraServer.getInstance().getVideo(camera1); 
         }
-        prevButton = properties.joystick.getButtonTwo();
+        prevButton = properties.joystick.getButtonTwo();*/
         return true;
     }
 }
