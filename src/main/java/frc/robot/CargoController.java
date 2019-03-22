@@ -28,7 +28,9 @@ public class CargoController implements RobotController {
         // purposes, it isn't necessary for competition
         count = cargoMech.get();
         distance = cargoMech.getDistance();
+        System.out.println("Encoders " + distance);
         SmartDashboard.putNumber("Encoders", distance);
+        SmartDashboard.putNumber("wristSpeed", wristSpeed);
 
     }
 
@@ -43,15 +45,32 @@ public class CargoController implements RobotController {
     // these variables help control whether the arm is released or retracted
     private boolean isSet = true;
     private boolean isReleased = false;
+    private boolean wristIn = true;
+    private double wristSpeed = 0.01;
+
 
     public void moveCargoMech(RobotProperties properties) {
         WPI_TalonSRX cargoPivot = properties.getCargoPivot();
         boolean isCargoButtonPressed = properties.joystick.getButtonOne();// temporary button number
 
+        wristSpeed = SmartDashboard.getNumber("wristSpeed", wristSpeed);
+
+        if (isCargoButtonPressed) {
+            if (wristIn) {
+                cargoPivot.set(-wristSpeed);
+                wristIn = false;
+            } else {
+                cargoPivot.set(wristSpeed);
+                wristIn = true;
+            }
+        } else {
+            cargoPivot.set(0);
+        }
+        
         // checks for whether the cargo button is pressed
         // this sets isSet to false which is used in the following statement to control
         // the arm
-        if (isSet && isCargoButtonPressed) {
+        /* if (isSet && isCargoButtonPressed) {
             isSet = false;
         }
 
@@ -86,30 +105,30 @@ public class CargoController implements RobotController {
                     isReleased = true;
                 }
             }
-        }
+        } */
 
     }
 
     public boolean performAction(RobotProperties properties) {
 
-        boolean isMechinButtonPressed = properties.joystick.getButtonFive();
-        boolean isMechoutButtonPressed = properties.joystick.getButtonThree();
+        boolean isMechInButtonPressed = properties.joystick.getButtonFive();
+        boolean isMechOutButtonPressed = properties.joystick.getButtonThree();
         WPI_TalonSRX intakeWheels = properties.getIntakeWheels();
 
         // intakeWheels don't move by default, buttons 3 and 5 control whether they spin
         // inside or outside
         intakeWheels.set(0);
-        if (isMechinButtonPressed && isMechoutButtonPressed) {
+        if (isMechInButtonPressed && isMechOutButtonPressed) {
             intakeWheels.set(0);
-        } else if (isMechinButtonPressed) { // check sign
+        } else if (isMechInButtonPressed) { // check sign
             intakeWheels.set(-5);
-        } else if (isMechoutButtonPressed) {
+        } else if (isMechOutButtonPressed) {
             intakeWheels.set(5);
         } /*
-           * else if (isMechinButtonPressed && isMechoutButtonPressed) {
+           * else if (isMechInButtonPressed && isMechOutButtonPressed) {
            * intakeWheels.set(5); } else { intakeWheels.set(0); }
            */
-        // moveCargoMech();
+        moveCargoMech(properties);
         return true;
     }
 }

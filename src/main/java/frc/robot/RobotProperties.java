@@ -66,6 +66,8 @@ public class RobotProperties {
         rightElevator1 = new WPI_TalonSRX(9);
         rightElevator2 = new WPI_TalonSRX(10);
 
+        rightElevator.setInverted(true);
+
         leftElevator = new SpeedControllerGroup(leftElevator1, leftElevator2);
         rightElevator = new SpeedControllerGroup(rightElevator1, rightElevator2);
     }
