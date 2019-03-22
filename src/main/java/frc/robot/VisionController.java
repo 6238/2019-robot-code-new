@@ -68,12 +68,13 @@ public class VisionController implements RobotController {
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(width, height);
         camera1.setFPS(fps);
-        /*
-         * camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-         * camera2.setResolution(width, height); camera2.setFPS(fps);
-         * 
-         * // initializes the source and sink cvSink =
-         */ 
+        
+        camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+        camera2.setResolution(width, height);
+        camera2.setFPS(fps);
+        
+        // initializes the source and sink cvSink =
+         
         CameraServer.getInstance().getVideo(camera1);// camera1 cvSource =
         CameraServer.getInstance().putVideo("vision", width, height);
         /*

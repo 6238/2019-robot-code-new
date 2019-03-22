@@ -97,13 +97,13 @@ public class DriveTrainController implements RobotController {
                 straightDrive = false;
                 if (reverseDrive) {
                     // reverse driving
-                    robotDrive.driveCartesian(-insanityFactor * properties.joystick.getJoystickX(), insanityFactor * properties.joystick.getJoystickY(), properties.joystick.getJoystickZ());
+                    robotDrive.driveCartesian(-insanityFactor * properties.joystick.getJoystickX(), insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ());
                 } else if (absoluteDrive) {
                     // absolute driving
-                    robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), properties.joystick.getJoystickZ(), kAngleSetpoint);
+                    robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ(), kAngleSetpoint);
                 } else {
                     // normal driving
-                    robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), properties.joystick.getJoystickZ());
+                    robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ());
                 }
             }
 

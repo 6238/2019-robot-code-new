@@ -39,7 +39,7 @@ public class RobotProperties {
 
         gyro = new ADXRS450_Gyro();
 
-        // pdp = new PowerDistributionPanel();
+        pdp = new PowerDistributionPanel();
 
         frontLeft = new WPI_TalonSRX(4);
         frontRight = new WPI_TalonSRX(3);
@@ -58,7 +58,7 @@ public class RobotProperties {
 
         robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-        /*leftElevator1 = new WPI_TalonSRX(5);
+        leftElevator1 = new WPI_TalonSRX(5);
         leftElevator2 = new WPI_TalonSRX(6);
         intakeWheels = new WPI_TalonSRX(7);
 
@@ -67,7 +67,7 @@ public class RobotProperties {
         rightElevator2 = new WPI_TalonSRX(10);
 
         leftElevator = new SpeedControllerGroup(leftElevator1, leftElevator2);
-        rightElevator = new SpeedControllerGroup(rightElevator1, rightElevator2);*/
+        rightElevator = new SpeedControllerGroup(rightElevator1, rightElevator2);
     }
 
     public MecanumDrive getRobotDrive() {
@@ -144,17 +144,17 @@ public class RobotProperties {
 
         SmartDashboard.putData("Gyro", gyro);
 
-        // SmartDashboard.putData("talon1", rearRight);
-        // SmartDashboard.putData("talon2", rearLeft);
-        // SmartDashboard.putData("talon3", frontRight);
-        // SmartDashboard.putData("talon4", frontLeft);
-        // SmartDashboard.putData("talon5", leftElevator1);
-        // SmartDashboard.putData("talon6", leftElevator2);
-        // SmartDashboard.putData("talon7", intakeWheels);
-        // SmartDashboard.putData("talon8", cargoPivot);
-        // SmartDashboard.putData("talon9", rightElevator1);
-        // SmartDashboard.putData("talon10", rightElevator2);
+        SmartDashboard.putData("talon1", rearRight);
+        SmartDashboard.putData("talon2", rearLeft);
+        SmartDashboard.putData("talon3", frontRight);
+        SmartDashboard.putData("talon4", frontLeft);
+        SmartDashboard.putData("talon5", leftElevator1);
+        SmartDashboard.putData("talon6", leftElevator2);
+        SmartDashboard.putData("talon7", intakeWheels);
+        SmartDashboard.putData("talon8", cargoPivot);
+        SmartDashboard.putData("talon9", rightElevator1);
+        SmartDashboard.putData("talon10", rightElevator2);
         
-        // SmartDashboard.putData("pdp", pdp);
+         SmartDashboard.putData("pdp", pdp);
     }
 }
