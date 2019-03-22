@@ -94,7 +94,6 @@ public class VisionController implements RobotController {
                     output = bwpipeline.desaturateOutput();
                     cvSource.putFrame(output);
                 } else {
-                    //System.out.println("Hello World!");
                     pipeline.process(source);
                     output = pipeline.cvResizeOutput();
                     ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
