@@ -64,9 +64,9 @@ public class VisionController implements RobotController {
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(width, height);
         camera1.setFPS(fps);
-        camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-        camera2.setResolution(width, height);
-        camera2.setFPS(fps);
+        //camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+        //camera2.setResolution(width, height);
+        //camera2.setFPS(fps);
 
         //initializes the source and sink
         cvSink = CameraServer.getInstance().getVideo(camera1);// camera1
@@ -87,13 +87,13 @@ public class VisionController implements RobotController {
                 //button on dashboard triggers the LineTrackingAlgo
                 selfAlign = SmartDashboard.getBoolean("selfAlign", false);
 
-                if (bwIsRunning) {
+                /*if (bwIsRunning) {
 
                     //displays b+w video, this is the default setting
                     bwpipeline.process(source);
                     output = bwpipeline.desaturateOutput();
                     cvSource.putFrame(output);
-                } else {
+                } else*/ {
                     pipeline.process(source);
                     output = pipeline.cvResizeOutput();
                     ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
@@ -108,6 +108,8 @@ public class VisionController implements RobotController {
                         //System.out.println(linetracker.weightedAngle(lines));
                     }
                     output = linetracker.process(output, lines, width, height, selfAlign);
+                    /*bwpipeline.process(source);
+                    output = bwpipeline.desaturateOutput();*/
                     cvSource.putFrame(output);
                 }
             }

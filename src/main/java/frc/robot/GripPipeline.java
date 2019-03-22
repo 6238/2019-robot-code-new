@@ -230,6 +230,7 @@ public class GripPipeline {
 		public double length() {
 			return Math.sqrt(lengthSquared());
 		}
+
 		public double angle() {
 			double angle = Math.toDegrees(Math.atan2(y2 - y1, x2 - x1));
 			return (angle > 0) ? angle : angle + 180;
@@ -246,20 +247,15 @@ public class GripPipeline {
 		final LineSegmentDetector lsd = Imgproc.createLineSegmentDetector();
 		final Mat lines = new Mat();
 		lineList.clear();
-		/*if (input.channels() == 1) {
-			lsd.detect(input, lines);
-		} else {
-			final Mat tmp = new Mat();
-			Imgproc.cvtColor(input, tmp, Imgproc.COLOR_BGR2GRAY);
-			lsd.detect(tmp, lines);
-		}*/
-		final Mat tmp = new Mat();
-		Imgproc.cvtColor(input, tmp, Imgproc.COLOR_BGR2GRAY);
-		try
-		{
-			lsd.detect(tmp, lines);
-		} catch(AssertionError error)
-		{
+		try {
+			if (input.channels() == 1) {
+				lsd.detect(input, lines);
+			} else {
+				final Mat tmp = new Mat();
+				Imgproc.cvtColor(input, tmp, Imgproc.COLOR_BGR2GRAY);
+				lsd.detect(tmp, lines);
+			}
+		} catch (AssertionError error) {
 			System.out.println("lsd.dectect failed");
 		}
 		if (!lines.empty()) {
