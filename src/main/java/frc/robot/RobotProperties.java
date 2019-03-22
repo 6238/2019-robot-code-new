@@ -135,6 +135,9 @@ public class RobotProperties {
         SmartDashboard.putBoolean("DPadUpLeft", properties.joystick.getDPadUpLeft());
         SmartDashboard.putNumber("Shutoff", properties.joystick.getSlider());
 
+        SmartDashboard.putNumber("autoTurnSpeed", 0.0035);
+        SmartDashboard.putNumber("autoDriveSpeed", 0.025);
+
         SmartDashboard.putData(properties.getRobotDrive());
 
         SmartDashboard.putData("Gyro", gyro);
