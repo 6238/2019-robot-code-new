@@ -40,12 +40,17 @@ public class RobotProperties {
 
         gyro = new ADXRS450_Gyro();
 
-        // pdp = new PowerDistributionPanel();
+        pdp = new PowerDistributionPanel();
 
         frontLeft = new WPI_TalonSRX(4);
         frontRight = new WPI_TalonSRX(3);
         rearLeft = new WPI_TalonSRX(2);
         rearRight = new WPI_TalonSRX(1);
+
+
+        
+        SmartDashboard.putBoolean("selfAlign", false);
+        SmartDashboard.putBoolean("ReverseTurn", false);
 
         frontLeft.setInverted(true);
         frontRight.setInverted(true);
@@ -54,7 +59,7 @@ public class RobotProperties {
 
         robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-        leftElevator1 = new WPI_TalonSRX(5);
+        /*leftElevator1 = new WPI_TalonSRX(5);
         leftElevator2 = new WPI_TalonSRX(6);
         intakeWheels = new WPI_TalonSRX(7);
 
@@ -63,7 +68,7 @@ public class RobotProperties {
         rightElevator2 = new WPI_TalonSRX(10);
 
         leftElevator = new SpeedControllerGroup(leftElevator1, leftElevator2);
-        rightElevator = new SpeedControllerGroup(rightElevator1, rightElevator2);
+        rightElevator = new SpeedControllerGroup(rightElevator1, rightElevator2);*/
     }
 
     public MecanumDrive getRobotDrive() {
@@ -105,8 +110,6 @@ public class RobotProperties {
     public void pushData(RobotProperties properties) {
         
         //adds button to smartdashboard
-        SmartDashboard.putBoolean("selfAlign", false);
-        SmartDashboard.putBoolean("ReverseTurn", false);
         
         SmartDashboard.putNumber("Joystick X", properties.joystick.getJoystickX());
         SmartDashboard.putNumber("Joystick Y", properties.joystick.getJoystickY());

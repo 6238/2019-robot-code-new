@@ -33,7 +33,8 @@ public class VisionController implements RobotController {
     private UsbCamera camera2;
 
     // sink determines which camer is used, source displays the video
-    private CvSink cvSink;
+    private CvSink cvSinkFront;
+    private CvSink cvSinkBack;
     private CvSource cvSource;
 
     // vision code is carried out in the thread
@@ -61,68 +62,92 @@ public class VisionController implements RobotController {
         /*
          * pipeline = new GripPipeline(); bwpipeline = new bwGripPipeline();
          * LineTrackingAlgo linetracker = new LineTrackingAlgo(properties);
-         * 
-         * //moved inside the thread //initializes both cameras camera1 =
-         * CameraServer.getInstance().startAutomaticCapture(0);
-         * camera1.setResolution(width, height); camera1.setFPS(fps); //camera2 =
+         */
+        // moved inside the thread //initializes both cameras
+        /*
+         * camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+         * camera1.setResolution(width, height); camera1.setFPS(fps); camera2 =
          * CameraServer.getInstance().startAutomaticCapture(1);
-         * //camera2.setResolution(width, height); //camera2.setFPS(fps);
-         *
+         * camera2.setResolution(width, height); camera2.setFPS(fps);
+         * 
+         * // initializes the source and sink cvSink =
+         * CameraServer.getInstance().getVideo(camera1);// camera1 cvSource =
+         * CameraServer.getInstance().putVideo("visionFront", width, height);
+         * 
+         * cvSink = CameraServer.getInstance().getVideo(camera2);// camera2 cvSource =
+         * CameraServer.getInstance().putVideo("visionDown", width, height);
+         */
 
-        // initializes the source and sink
-        cvSink = CameraServer.getInstance().getVideo(camera1);// camera1
-        cvSource = CameraServer.getInstance().putVideo("vision", width, height);*/
         visionThread = new Thread(() -> {
+            camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+            camera1.setResolution(width, height);
+            camera1.setFPS(fps);
+            camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+            camera2.setResolution(width, height);
+            camera2.setFPS(fps);
+
+            // initializes the source and sink
+            cvSinkFront = CameraServer.getInstance().getVideo(camera1);// camera1
+            cvSource = CameraServer.getInstance().putVideo("visionFront", width, height);
+
+            cvSinkBack = CameraServer.getInstance().getVideo(camera2);// camera2
+            cvSource = CameraServer.getInstance().putVideo("visionDown", width, height);
             pipeline = new GripPipeline();
             bwpipeline = new bwGripPipeline();
             LineTrackingAlgo linetracker = new LineTrackingAlgo(properties);
             // initializes both cameras
-            camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-            camera1.setResolution(width, height);
-            camera1.setFPS(fps);
+            // camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+            // camera1.setResolution(width, height);
+            // camera1.setFPS(fps);
             // camera2 = CameraServer.getInstance().startAutomaticCapture(1);
             // camera2.setResolution(width, height);
             // camera2.setFPS(fps);
 
-            cvSink = CameraServer.getInstance().getVideo(camera1);// camera1
-            cvSource = CameraServer.getInstance().putVideo("vision", width, height);
-            Mat source = new Mat();
-            Mat output = new Mat();
+            // cvSink = CameraServer.getInstance().getVideo(camera1);// camera1
+            // cvSource = CameraServer.getInstance().putVideo("vision", width, height);
+
+            Mat sourceFront = new Mat();
+            Mat outputFront = new Mat();
+            
+            Mat sourceBack = new Mat();
+            Mat outputBack = new Mat();
             while (!Thread.interrupted()) {
 
                 // grabs current frame from cvSink
-                if (cvSink.grabFrame(source) == 0) {
-                    cvSource.notifyError(cvSink.getError());
+                if (cvSinkFront.grabFrame(sourceFront) == 0) {
+                    cvSource.notifyError(cvSinkFront.getError());
                     continue;
                 }
-
-                // button on dashboard triggers the LineTrackingAlgo
-                selfAlign = SmartDashboard.getBoolean("selfAlign", false);
-
-                /*
-                 * if (bwIsRunning) {
-                 * 
-                 * //displays b+w video, this is the default setting bwpipeline.process(source);
-                 * output = bwpipeline.desaturateOutput(); cvSource.putFrame(output); } else
-                 */ {
-                    pipeline.process(source);
-                    output = pipeline.cvResizeOutput();
-                    ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
-                    if (!lines.isEmpty()) {
-                        for (int i = 0; i < lines.size(); i++) {
-                            // System.out.println(i+" "+lines.get(i).angle()+" "+lines.get(i).length());
-                            Imgproc.line(output, new Point(lines.get(i).x1 * 0.95, lines.get(i).y1 * 0.95),
-                                    new Point(lines.get(i).x2 * 0.95, lines.get(i).y2 * 0.95), new Scalar(0, 100, 0));
-                        }
-                        // System.out.println(linetracker.weightedAngle(lines));
-                    }
-                    output = linetracker.process(output, lines, width, height, selfAlign);
-                    /*
-                     * bwpipeline.process(source); output = bwpipeline.desaturateOutput();
-                     */
-                    cvSource.putFrame(output);
+                if (cvSinkBack.grabFrame(sourceBack) == 0) {
+                    cvSource.notifyError(cvSinkFront.getError());
+                    continue;
                 }
-            }
+                // button on dashboard triggers the LineTrackingAlgo
+                //selfAlign = SmartDashboard.getBoolean("selfAlign", false);
+
+                //if (bwIsRunning) {
+
+                    // displays b+w video, this is the default setting bwpipeline.process(source);
+                  //  output = bwpipeline.desaturateOutput();
+                  //  cvSource.putFrame(output);
+                //} else {
+                    /*
+                     * pipeline.process(source); output = pipeline.cvResizeOutput();
+                     * ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput(); if
+                     * (!lines.isEmpty()) { for (int i = 0; i < lines.size(); i++) { //
+                     * System.out.println(i+" "+lines.get(i).angle()+" "+lines.get(i).length());
+                     * Imgproc.line(output, new Point(lines.get(i).x1 * 0.95, lines.get(i).y1 *
+                     * 0.95), new Point(lines.get(i).x2 * 0.95, lines.get(i).y2 * 0.95), new
+                     * Scalar(0, 100, 0)); } //
+                     * System.out.println(linetracker.weightedAngle(lines)); } output =
+                     * linetracker.process(output, lines, width, height, selfAlign);
+                     */
+
+                  //  bwpipeline.process(source);
+                    //output = bwpipeline.desaturateOutput();
+                    //cvSource.putFrame(output);
+                //}
+            //}
         });
 
         // automatically starts thread
@@ -157,6 +182,7 @@ public class VisionController implements RobotController {
          * CameraServer.getInstance().getVideo(camera1); } prevButton =
          * properties.joystick.getButtonTwo();
          */
+
         return true;
     }
 }
