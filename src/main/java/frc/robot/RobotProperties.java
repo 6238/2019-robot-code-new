@@ -40,6 +40,8 @@ public class RobotProperties {
 
         gyro = new ADXRS450_Gyro();
 
+        pdp = new PowerDistributionPanel();
+
         frontLeft = new WPI_TalonSRX(4);
         frontRight = new WPI_TalonSRX(3);
         rearLeft = new WPI_TalonSRX(2);
