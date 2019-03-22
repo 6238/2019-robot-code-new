@@ -46,6 +46,11 @@ public class RobotProperties {
         rearLeft = new WPI_TalonSRX(2);
         rearRight = new WPI_TalonSRX(1);
 
+
+        
+        SmartDashboard.putBoolean("selfAlign", false);
+        SmartDashboard.putBoolean("ReverseTurn", false);
+
         frontLeft.setInverted(true);
         frontRight.setInverted(true);
         rearLeft.setInverted(true);
@@ -53,7 +58,7 @@ public class RobotProperties {
 
         robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-        leftElevator1 = new WPI_TalonSRX(5);
+        /*leftElevator1 = new WPI_TalonSRX(5);
         leftElevator2 = new WPI_TalonSRX(6);
         intakeWheels = new WPI_TalonSRX(7);
 
@@ -62,7 +67,7 @@ public class RobotProperties {
         rightElevator2 = new WPI_TalonSRX(10);
 
         leftElevator = new SpeedControllerGroup(leftElevator1, leftElevator2);
-        rightElevator = new SpeedControllerGroup(rightElevator1, rightElevator2);
+        rightElevator = new SpeedControllerGroup(rightElevator1, rightElevator2);*/
     }
 
     public MecanumDrive getRobotDrive() {
@@ -102,6 +107,9 @@ public class RobotProperties {
     }
 
     public void pushData(RobotProperties properties) {
+        
+        //adds button to smartdashboard
+        
         SmartDashboard.putNumber("Joystick X", properties.joystick.getJoystickX());
         SmartDashboard.putNumber("Joystick Y", properties.joystick.getJoystickY());
         SmartDashboard.putNumber("Joystick Z", properties.joystick.getJoystickZ());
@@ -129,21 +137,24 @@ public class RobotProperties {
         SmartDashboard.putBoolean("DPadUpLeft", properties.joystick.getDPadUpLeft());
         SmartDashboard.putNumber("Shutoff", properties.joystick.getSlider());
 
+        SmartDashboard.putNumber("autoTurnSpeed", 0.0035);
+        SmartDashboard.putNumber("autoDriveSpeed", 0.025);
+
         SmartDashboard.putData(properties.getRobotDrive());
 
         SmartDashboard.putData("Gyro", gyro);
 
-        SmartDashboard.putData("talon1", rearRight);
-        SmartDashboard.putData("talon2", rearLeft);
-        SmartDashboard.putData("talon3", frontRight);
-        SmartDashboard.putData("talon4", frontLeft);
-        SmartDashboard.putData("talon5", leftElevator1);
-        SmartDashboard.putData("talon6", leftElevator2);
-        SmartDashboard.putData("talon7", intakeWheels);
-        SmartDashboard.putData("talon8", cargoPivot);
-        SmartDashboard.putData("talon9", rightElevator1);
-        SmartDashboard.putData("talon10", rightElevator2);
+        // SmartDashboard.putData("talon1", rearRight);
+        // SmartDashboard.putData("talon2", rearLeft);
+        // SmartDashboard.putData("talon3", frontRight);
+        // SmartDashboard.putData("talon4", frontLeft);
+        // SmartDashboard.putData("talon5", leftElevator1);
+        // SmartDashboard.putData("talon6", leftElevator2);
+        // SmartDashboard.putData("talon7", intakeWheels);
+        // SmartDashboard.putData("talon8", cargoPivot);
+        // SmartDashboard.putData("talon9", rightElevator1);
+        // SmartDashboard.putData("talon10", rightElevator2);
         
-        SmartDashboard.putData("pdp", pdp);
+        // SmartDashboard.putData("pdp", pdp);
     }
 }

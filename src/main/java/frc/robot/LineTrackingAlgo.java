@@ -104,9 +104,11 @@ public class LineTrackingAlgo {
                         (SmartDashboard.getBoolean("reverseDrive", false) ? 1 : -1) * properties.joystick.getJoystickY(),
                         (SmartDashboard.getBoolean("reverseDrive", false) ? -1 : 1) * SmartDashboard.getNumber("autoTurnSpeed",0.0035) * (angle - 90));
             } else {
-                robotDrive.driveCartesian(SmartDashboard.getNumber("insanityFactor", 0.5) * properties.joystick.getJoystickX(),
+                
+                SmartDashboard.putBoolean("selfAlign", false);
+                /*robotDrive.driveCartesian(SmartDashboard.getNumber("insanityFactor", 0.5) * properties.joystick.getJoystickX(),
                             -0.1 * properties.joystick.getJoystickY(),
-                            0.1 * properties.joystick.getJoystickZ());
+                            0.1 * properties.joystick.getJoystickZ());*/
             }
         }
     }

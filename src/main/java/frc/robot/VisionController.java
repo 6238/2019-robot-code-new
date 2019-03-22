@@ -15,109 +15,143 @@ import org.opencv.imgproc.Imgproc;
 import java.util.*;
 
 public class VisionController implements RobotController {
-    
-    //finds and filters lines in an image
+
+    // finds and filters lines in an image
     private GripPipeline pipeline;
 
-    //converts an image to black and white
+    // converts an image to black and white
     private bwGripPipeline bwpipeline;
 
-    //line tracking algorithm
-    private LineTrackingAlgo linetracker; 
-        
-    //stores the results of pipeline
+    // line tracking algorithm
+    private LineTrackingAlgo linetracker;
+
+    // stores the results of pipeline
     private ArrayList<GripPipeline.Line> filteredLines;
 
-    //camera1 is for sandstorm, camera2 is for alignment
+    // camera1 is for sandstorm, camera2 is for alignment
     private UsbCamera camera1;
     private UsbCamera camera2;
 
-    //sink determines which camer is used, source displays the video
+    // sink determines which camer is used, source displays the video
     private CvSink cvSink;
+    // private CvSink cvSinkBack;
     private CvSource cvSource;
 
-    //vision code is carried out in the thread
+    // vision code is carried out in the thread
     private Thread visionThread;
 
-    //determines which camera is used and what parts of the threads are running
+    // determines which camera is used and what parts of the threads are running
     private Boolean prevButton = false;
     private Boolean bwIsRunning = true;
 
-    //dimensions of the video
+    // dimensions of the video
     private final int width = 160;
     private final int height = 120;
     private final int fps = 120;
 
-    //determines when the robot should begin aligning
+    // determines when the robot should begin aligning
     boolean selfAlign = false;
 
     public VisionController(RobotProperties properties) {
+        // moved to robotproperties
+        /*
+         * //adds button to smartdashboard SmartDashboard.putBoolean("selfAlign",
+         * false); SmartDashboard.putBoolean("ReverseTurn", false);
+         */
+        // initializes pipelines
+        /*
+         * pipeline = new GripPipeline(); bwpipeline = new bwGripPipeline();
+         * LineTrackingAlgo linetracker = new LineTrackingAlgo(properties);
+         */
+        // moved inside the thread //initializes both cameras
 
-        //adds button to smartdashboard
-        SmartDashboard.putBoolean("selfAlign", false);
-        SmartDashboard.putBoolean("ReverseTurn", false);
-        //initializes pipelines
-        pipeline = new GripPipeline();
-        bwpipeline = new bwGripPipeline();
-        LineTrackingAlgo linetracker = new LineTrackingAlgo(properties); 
-        //initializes both cameras
         camera1 = CameraServer.getInstance().startAutomaticCapture(0);
         camera1.setResolution(width, height);
         camera1.setFPS(fps);
-        camera2 = CameraServer.getInstance().startAutomaticCapture(1);
-        camera2.setResolution(width, height);
-        camera2.setFPS(fps);
+        /*
+         * camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+         * camera2.setResolution(width, height); camera2.setFPS(fps);
+         * 
+         * // initializes the source and sink cvSink =
+         */ 
+        CameraServer.getInstance().getVideo(camera1);// camera1 cvSource =
+        CameraServer.getInstance().putVideo("vision", width, height);
+        /*
+         * cvSink = CameraServer.getInstance().getVideo(camera2);// camera2 cvSource =
+         * CameraServer.getInstance().putVideo("visionDown", width, height);
+         */
 
-        //initializes the source and sink
-        cvSink = CameraServer.getInstance().getVideo(camera1);// camera1
-        cvSource = CameraServer.getInstance().putVideo("vision", width, height);
-        SmartDashboard.putNumber("autoTurnSpeed", 0.0035);
-        SmartDashboard.putNumber("autoDriveSpeed", 0.025);
         visionThread = new Thread(() -> {
+
+            // cvSinkBack = CameraServer.getInstance().getVideo(camera2);// camera2
+            // cvSource = CameraServer.getInstance().putVideo("visionDown", width, height);
+            pipeline = new GripPipeline();
+            bwpipeline = new bwGripPipeline();
+            // LineTrackingAlgo linetracker = new LineTrackingAlgo(properties);
+            // initializes both cameras
+            // camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+            // camera1.setResolution(width, height);
+            // camera1.setFPS(fps);
+            // camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+            // camera2.setResolution(width, height);
+            // camera2.setFPS(fps);
+
+            // cvSink = CameraServer.getInstance().getVideo(camera1);// camera1
+            // cvSource = CameraServer.getInstance().putVideo("vision", width, height);
+
             Mat source = new Mat();
             Mat output = new Mat();
+
+            // Mat sourceBack = new Mat();
+            // Mat outputBack = new Mat();
             while (!Thread.interrupted()) {
 
-                //grabs current frame from cvSink
+                // grabs current frame from cvSink
                 if (cvSink.grabFrame(source) == 0) {
                     cvSource.notifyError(cvSink.getError());
                     continue;
                 }
 
-                //button on dashboard triggers the LineTrackingAlgo
-                selfAlign = SmartDashboard.getBoolean("selfAlign", false);
+                bwpipeline.process(source);
+                output = bwpipeline.desaturateOutput();
+                cvSource.putFrame(output);
+                /*
+                 * if (cvSinkBack.grabFrame(sourceBack) == 0) {
+                 * cvSource.notifyError(cvSinkFront.getError()); continue; }
+                 */
+                // button on dashboard triggers the LineTrackingAlgo
+                // selfAlign = SmartDashboard.getBoolean("selfAlign", false);
 
-                if (bwIsRunning) {
+                // if (bwIsRunning) {
 
-                    //displays b+w video, this is the default setting
-                    bwpipeline.process(source);
-                    output = bwpipeline.desaturateOutput();
-                    cvSource.putFrame(output);
-                } else {
-                    pipeline.process(source);
-                    output = pipeline.cvResizeOutput();
-                    ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
-                    if(!lines.isEmpty())
-                    {
-                        for(int i=0;i<lines.size();i++)
-                        {
-                            //System.out.println(i+"   "+lines.get(i).angle()+" "+lines.get(i).length());
-                            Imgproc.line(output, new Point(lines.get(i).x1*0.95,lines.get(i).y1*0.95), 
-                                        new Point(lines.get(i).x2*0.95,lines.get(i).y2*0.95), new Scalar(0,100,0));
-                        }
-                        //System.out.println(linetracker.weightedAngle(lines));
-                    }
-                    output = linetracker.process(output, lines, width, height, selfAlign);
-                    cvSource.putFrame(output);
-                }
+                // displays b+w video, this is the default setting bwpipeline.process(source);
+                // output = bwpipeline.desaturateOutput();
+                // cvSource.putFrame(output);
+                // } else {
+                /*
+                 * pipeline.process(source); output = pipeline.cvResizeOutput();
+                 * ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput(); if
+                 * (!lines.isEmpty()) { for (int i = 0; i < lines.size(); i++) { //
+                 * System.out.println(i+" "+lines.get(i).angle()+" "+lines.get(i).length());
+                 * Imgproc.line(output, new Point(lines.get(i).x1 * 0.95, lines.get(i).y1 *
+                 * 0.95), new Point(lines.get(i).x2 * 0.95, lines.get(i).y2 * 0.95), new
+                 * Scalar(0, 100, 0)); } //
+                 * System.out.println(linetracker.weightedAngle(lines)); } output =
+                 * linetracker.process(output, lines, width, height, selfAlign);
+                 */
+
+                // bwpipeline.process(source);
+                // output = bwpipeline.desaturateOutput();
+                // cvSource.putFrame(output);
+                // }
             }
         });
 
-        //automatically starts thread
+        // automatically starts thread
         visionThread.start();
     }
 
-    //for troubleshooting
+    // for troubleshooting
     @Override
     public String getName() {
         return "VisionController";
@@ -125,15 +159,16 @@ public class VisionController implements RobotController {
 
     @Override
     public boolean performAction(RobotProperties properties) {
-        
-        //restarts thread if it unexpectedly crashes. The program has been 
-        //tested to eliminated errors with memory so this is likely never run
-        if (!visionThread.isAlive()) {
-            visionThread.start();
-        }
 
-        //switches view to camera2 and begins line tracing whenever button 2 is pressed
-        //automatically reverts to camera1
+        // restarts thread if it unexpectedly crashes. The program has been
+        // tested to eliminated errors with memory so this is likely never run
+        /*
+         * if (!visionThread.isAlive()) { visionThread.start(); }
+         */
+
+        // switches view to camera2 and begins line tracing whenever button 2 is pressed
+        // automatically reverts to camera1
+
         if (properties.joystick.getButtonTwo() && !prevButton) {
             prevButton = !prevButton;
             bwIsRunning = false;
@@ -142,9 +177,10 @@ public class VisionController implements RobotController {
         } else if (properties.joystick.getButtonTwo() && prevButton) {
             prevButton = !prevButton;
             bwIsRunning = true;
-            cvSink = CameraServer.getInstance().getVideo(camera1); 
+            cvSink = CameraServer.getInstance().getVideo(camera1);
         }
         prevButton = properties.joystick.getButtonTwo();
+
         return true;
     }
 }
