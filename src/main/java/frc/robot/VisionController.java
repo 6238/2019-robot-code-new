@@ -102,7 +102,7 @@ public class VisionController implements RobotController {
 
             Mat source = new Mat();
             Mat output = new Mat();
-            System.out.println("thread is running");
+            System.out.println("thread is r");
             // Mat sourceBack = new Mat();
             // Mat outputBack = new Mat();
             while (!Thread.interrupted()) {
