@@ -3,6 +3,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
@@ -116,27 +117,6 @@ public class RobotProperties {
         SmartDashboard.putNumber("Joystick Y", properties.joystick.getJoystickY());
         SmartDashboard.putNumber("Joystick Z", properties.joystick.getJoystickZ());
 
-        SmartDashboard.putBoolean("Trigger", properties.joystick.getButtonOne());
-        SmartDashboard.putBoolean("SideButton", properties.joystick.getButtonTwo());
-        SmartDashboard.putBoolean("ThumbDownLeft", properties.joystick.getButtonThree());
-        SmartDashboard.putBoolean("ThumbDownRight", properties.joystick.getButtonFour());
-        SmartDashboard.putBoolean("ThumbUpLeft", properties.joystick.getButtonFive());
-        SmartDashboard.putBoolean("ThumbUpRight", properties.joystick.getButtonSix());
-        SmartDashboard.putBoolean("BaseBackLeft", properties.joystick.getButtonSeven());
-        SmartDashboard.putBoolean("BaseBackRight", properties.joystick.getButtonEight());
-        SmartDashboard.putBoolean("BaseMiddleLeft", properties.joystick.getButtonNine());
-        SmartDashboard.putBoolean("BaseMiddleRight", properties.joystick.getButtonTen());
-        SmartDashboard.putBoolean("BaseFrontLeft", properties.joystick.getButtonEleven());
-        SmartDashboard.putBoolean("BaseFrontRight", properties.joystick.getButtonTwelve());
-
-        SmartDashboard.putBoolean("DPadUp", properties.joystick.getDPadUp());
-        SmartDashboard.putBoolean("DPadUpRight", properties.joystick.getDPadUpRight());
-        SmartDashboard.putBoolean("DPadRight", properties.joystick.getDPadRight());
-        SmartDashboard.putBoolean("DPadDownRight", properties.joystick.getDPadDownRight());
-        SmartDashboard.putBoolean("DPadDown", properties.joystick.getDPadDown());
-        SmartDashboard.putBoolean("DPadDownLeft", properties.joystick.getDPadDownLeft());
-        SmartDashboard.putBoolean("DPadLeft", properties.joystick.getDPadLeft());
-        SmartDashboard.putBoolean("DPadUpLeft", properties.joystick.getDPadUpLeft());
         SmartDashboard.putNumber("Shutoff", properties.joystick.getSlider());
 
         SmartDashboard.putNumber("autoTurnSpeed", 0.0035);
@@ -145,18 +125,7 @@ public class RobotProperties {
         SmartDashboard.putData(properties.getRobotDrive());
 
         SmartDashboard.putData("Gyro", gyro);
-
-        SmartDashboard.putData("talon1", rearRight);
-        SmartDashboard.putData("talon2", rearLeft);
-        SmartDashboard.putData("talon3", frontRight);
-        SmartDashboard.putData("talon4", frontLeft);
-        /* SmartDashboard.putData("talon5", leftElevator1);
-        SmartDashboard.putData("talon6", leftElevator2);
-        SmartDashboard.putData("talon7", intakeWheels);
-        SmartDashboard.putData("talon8", cargoPivot);
-        SmartDashboard.putData("talon9", rightElevator1);
-        SmartDashboard.putData("talon10", rightElevator2); */
         
-         SmartDashboard.putData("pdp", pdp);
+        SmartDashboard.putData("pdp", pdp);
     }
 }
