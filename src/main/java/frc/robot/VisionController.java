@@ -102,7 +102,7 @@ public class VisionController implements RobotController {
 
             Mat source = new Mat();
             Mat output = new Mat();
-
+            System.out.println("thread is running");
             // Mat sourceBack = new Mat();
             // Mat outputBack = new Mat();
             while (!Thread.interrupted()) {
@@ -165,9 +165,10 @@ public class VisionController implements RobotController {
 
         // restarts thread if it unexpectedly crashes. The program has been
         // tested to eliminated errors with memory so this is likely never run
-        /*
-         * if (!visionThread.isAlive()) { visionThread.start(); }
-         */
+
+        if (!visionThread.isAlive()) {
+            visionThread.start();
+        }
 
         // switches view to camera2 and begins line tracing whenever button 2 is pressed
         // automatically reverts to camera1

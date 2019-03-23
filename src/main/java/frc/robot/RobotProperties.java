@@ -39,7 +39,7 @@ public class RobotProperties {
 
         gyro = new ADXRS450_Gyro();
 
-        pdp = new PowerDistributionPanel();
+        //pdp = new PowerDistributionPanel();
 
         frontLeft = new WPI_TalonSRX(4);
         frontRight = new WPI_TalonSRX(3);
@@ -155,6 +155,6 @@ public class RobotProperties {
         SmartDashboard.putData("talon9", rightElevator1);
         SmartDashboard.putData("talon10", rightElevator2);
         
-         SmartDashboard.putData("pdp", pdp);
+        //SmartDashboard.putData("pdp", pdp);
     }
 }
