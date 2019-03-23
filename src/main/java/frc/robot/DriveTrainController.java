@@ -55,7 +55,7 @@ public class DriveTrainController implements RobotController {
 
         MecanumDrive robotDrive = properties.getRobotDrive();
 
-        selfAlign = SmartDashboard.getBoolean("selfAlign", selfAlign);
+        selfAlign = SmartDashboard.getBoolean("selfAlign", false);
 
         insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
         
