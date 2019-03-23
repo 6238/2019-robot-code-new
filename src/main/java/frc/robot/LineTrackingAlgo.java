@@ -108,7 +108,7 @@ public class LineTrackingAlgo {
         if (Math.abs(displace) < 5) {
             return 0.0;
         } else if (Math.abs(displace) < 30) {
-            return SmartDashboard.getNumber("autoTurnSpeed", turnP) * displace 
+            return SmartDashboard.getNumber("autoTurnSpeed", turnP) * displace;
         }
         return ((displace < 90) ? -1 : 1) * maxTurnSpeed;
     }
@@ -117,11 +117,7 @@ public class LineTrackingAlgo {
         if (selfAlign) {
             // System.out.println(weightedXY(lines).x + " " + offset.x);
             if (lines.size() > 0) {
-                robotDrive.driveCartesian(
-                        (0,(SmartDashboard.getBoolean("reverseDrive", false) ? 1 : -1)
-                                * properties.joystick.getJoystickY(),
-                        (SmartDashboard.getBoolean("reverseDrive", false) ? -1 : 1)
-                                 * (getAngularVelocity(angle)));
+                robotDrive.driveCartesian(0,(SmartDashboard.getBoolean("reverseDrive", false) ? 1 : -1) * properties.joystick.getJoystickY(), (SmartDashboard.getBoolean("reverseDrive", false) ? -1 : 1) * (getAngularVelocity(angle)));
             } else {
 
                 SmartDashboard.putBoolean("selfAlign", false);
