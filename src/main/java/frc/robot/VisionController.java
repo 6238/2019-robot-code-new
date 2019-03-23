@@ -115,50 +115,55 @@ public class VisionController implements RobotController {
             } else {
                 isLongPress = false;
             }
-            while (!Thread.interrupted()) {
-                // grabs current frame from cvSink
-                if (cvSink.grabFrame(source) == 0) {
-                    cvSource.notifyError(cvSink.getError());
-                    continue;
-                }
-                output = source;
-                if (lineIsOn) {
-                    // bwpipeline.process(source);
-                    // output = bwpipeline.desaturateOutput();
-                    // cvSource.putFrame(output);
-                    /*
-                     * if (cvSinkBack.grabFrame(sourceBack) == 0) {
-                     * cvSource.notifyError(cvSinkFront.getError()); continue; }
-                     */
-                    // button on dashboard triggers the LineTrackingAlgo
-                    selfAlign = SmartDashboard.getBoolean("selfAlign", false);
-
-                    /*
-                     * if (bwIsRunning) { // displays b+w video, this is the default setting
-                     * bwpipeline.process(source); output = bwpipeline.desaturateOutput();
-                     * cvSource.putFrame(output); } else {
-                     */
-
-                    pipeline.process(source);
-                    output = pipeline.cvResizeOutput();
-                    ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
-                    if (!lines.isEmpty()) {
-                        for (int i = 0; i < lines.size(); i++) { //
-                            // System.out.println(i + " " + lines.get(i).angle() + " " +
-                            // lines.get(i).length());
-                            Imgproc.line(output, new Point(lines.get(i).x1 * 0.95, lines.get(i).y1 * 0.95),
-                                    new Point(lines.get(i).x2 * 0.95, lines.get(i).y2 * 0.95), new Scalar(0, 100, 0));
-                        } //
-                          // System.out.println(linetracker.weightedAngle(lines));
+            try {
+                while (!Thread.interrupted()) {
+                    // grabs current frame from cvSink
+                    if (cvSink.grabFrame(source) == 0) {
+                        cvSource.notifyError(cvSink.getError());
+                        continue;
                     }
-                    output = linetracker.process(output, lines, width, height, selfAlign);
+                    output = source;
+                    if (lineIsOn) {
+                        // bwpipeline.process(source);
+                        // output = bwpipeline.desaturateOutput();
+                        // cvSource.putFrame(output);
+                        /*
+                         * if (cvSinkBack.grabFrame(sourceBack) == 0) {
+                         * cvSource.notifyError(cvSinkFront.getError()); continue; }
+                         */
+                        // button on dashboard triggers the LineTrackingAlgo
+                        selfAlign = SmartDashboard.getBoolean("selfAlign", false);
 
-                    // bwpipeline.process(source);
-                    // output = bwpipeline.desaturateOutput();
+                        /*
+                         * if (bwIsRunning) { // displays b+w video, this is the default setting
+                         * bwpipeline.process(source); output = bwpipeline.desaturateOutput();
+                         * cvSource.putFrame(output); } else {
+                         */
+
+                        pipeline.process(source);
+                        output = pipeline.cvResizeOutput();
+                        ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
+                        if (!lines.isEmpty()) {
+                            for (int i = 0; i < lines.size(); i++) { //
+                                // System.out.println(i + " " + lines.get(i).angle() + " " +
+                                // lines.get(i).length());
+                                Imgproc.line(output, new Point(lines.get(i).x1 * 0.95, lines.get(i).y1 * 0.95),
+                                        new Point(lines.get(i).x2 * 0.95, lines.get(i).y2 * 0.95),
+                                        new Scalar(0, 100, 0));
+                            } //
+                              // System.out.println(linetracker.weightedAngle(lines));
+                        }
+                        output = linetracker.process(output, lines, width, height, selfAlign);
+
+                        // bwpipeline.process(source);
+                        // output = bwpipeline.desaturateOutput();
+                    }
+                    cvSource.putFrame(output);
                 }
-                cvSource.putFrame(output);
-                // }
+            } catch (Exception e) {
+                System.out.println("VisionProblem");
             }
+
         });
 
         // automatically starts thread
