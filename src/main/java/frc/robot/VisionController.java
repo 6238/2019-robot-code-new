@@ -93,9 +93,9 @@ public class VisionController implements RobotController {
             bwpipeline = new bwGripPipeline();
             LineTrackingAlgo linetracker = new LineTrackingAlgo(properties);
             // initializes both cameras
-            camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+            /*camera1 = CameraServer.getInstance().startAutomaticCapture(0);
             camera1.setResolution(width, height);
-            camera1.setFPS(fps);
+            camera1.setFPS(fps);*/
             camera2 = CameraServer.getInstance().startAutomaticCapture(1);
             camera2.setResolution(width, height);
             camera2.setFPS(fps);
