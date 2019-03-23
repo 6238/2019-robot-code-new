@@ -255,7 +255,7 @@ public class GripPipeline {
 				Imgproc.cvtColor(input, tmp, Imgproc.COLOR_BGR2GRAY);
 				lsd.detect(tmp, lines);
 			}
-		} catch (Throwable error) {
+		} catch (Exception error) {
 			System.out.println("lsd.dectect failed");
 		}
 		if (!lines.empty()) {

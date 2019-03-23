@@ -6,6 +6,7 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.vision.VisionThread;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
@@ -40,9 +41,12 @@ public class VisionController implements RobotController {
     // vision code is carried out in the thread
     private Thread visionThread;
 
-    // determines which camera is used and what parts of the threads are running
-    private Boolean prevButton = false;
-    private Boolean bwIsRunning = true;
+    // determines if line processing should be run
+    private boolean isLongPress = false;
+    private boolean lineIsOn = false;
+
+    // private Boolean prevButton = false;
+    // private Boolean bwIsRunning = true;
 
     // dimensions of the video
     private final int width = 160;
@@ -83,7 +87,6 @@ public class VisionController implements RobotController {
          */
 
         visionThread = new Thread(() -> {
-
             // cvSinkBack = CameraServer.getInstance().getVideo(camera2);// camera2
             // cvSource = CameraServer.getInstance().putVideo("visionDown", width, height);
             pipeline = new GripPipeline();
@@ -102,55 +105,64 @@ public class VisionController implements RobotController {
 
             Mat source = new Mat();
             Mat output = new Mat();
-            System.out.println("thread is r");
             // Mat sourceBack = new Mat();
             // Mat outputBack = new Mat();
+            if (properties.joystick.getButtonTwo()) {
+                if (!isLongPress) {
+                    lineIsOn = !lineIsOn;
+                    isLongPress = true;
+                }
+            } else {
+                isLongPress = false;
+            }
             while (!Thread.interrupted()) {
-
                 // grabs current frame from cvSink
                 if (cvSink.grabFrame(source) == 0) {
                     cvSource.notifyError(cvSink.getError());
                     continue;
                 }
+                output = source;
+                if (lineIsOn) {
+                    // bwpipeline.process(source);
+                    // output = bwpipeline.desaturateOutput();
+                    // cvSource.putFrame(output);
+                    /*
+                     * if (cvSinkBack.grabFrame(sourceBack) == 0) {
+                     * cvSource.notifyError(cvSinkFront.getError()); continue; }
+                     */
+                    // button on dashboard triggers the LineTrackingAlgo
+                    selfAlign = SmartDashboard.getBoolean("selfAlign", false);
 
-                // bwpipeline.process(source);
-                // output = bwpipeline.desaturateOutput();
-                // cvSource.putFrame(output);
-                /*
-                 * if (cvSinkBack.grabFrame(sourceBack) == 0) {
-                 * cvSource.notifyError(cvSinkFront.getError()); continue; }
-                 */
-                // button on dashboard triggers the LineTrackingAlgo
-                selfAlign = SmartDashboard.getBoolean("selfAlign", false);
+                    /*
+                     * if (bwIsRunning) { // displays b+w video, this is the default setting
+                     * bwpipeline.process(source); output = bwpipeline.desaturateOutput();
+                     * cvSource.putFrame(output); } else {
+                     */
 
-                /*
-                 * if (bwIsRunning) { // displays b+w video, this is the default setting
-                 * bwpipeline.process(source); output = bwpipeline.desaturateOutput();
-                 * cvSource.putFrame(output); } else {
-                 */
+                    pipeline.process(source);
+                    output = pipeline.cvResizeOutput();
+                    ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
+                    if (!lines.isEmpty()) {
+                        for (int i = 0; i < lines.size(); i++) { //
+                            // System.out.println(i + " " + lines.get(i).angle() + " " +
+                            // lines.get(i).length());
+                            Imgproc.line(output, new Point(lines.get(i).x1 * 0.95, lines.get(i).y1 * 0.95),
+                                    new Point(lines.get(i).x2 * 0.95, lines.get(i).y2 * 0.95), new Scalar(0, 100, 0));
+                        } //
+                          // System.out.println(linetracker.weightedAngle(lines));
+                    }
+                    output = linetracker.process(output, lines, width, height, selfAlign);
 
-                pipeline.process(source);
-                output = pipeline.cvResizeOutput();
-                ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
-                if (!lines.isEmpty()) {
-                    for (int i = 0; i < lines.size(); i++) { //
-                        // System.out.println(i + " " + lines.get(i).angle() + " " +
-                        // lines.get(i).length());
-                        Imgproc.line(output, new Point(lines.get(i).x1 * 0.95, lines.get(i).y1 * 0.95),
-                                new Point(lines.get(i).x2 * 0.95, lines.get(i).y2 * 0.95), new Scalar(0, 100, 0));
-                    } //
-                      // System.out.println(linetracker.weightedAngle(lines));
+                    // bwpipeline.process(source);
+                    // output = bwpipeline.desaturateOutput();
                 }
-                output = linetracker.process(output, lines, width, height, selfAlign);
-
-                // bwpipeline.process(source);
-                // output = bwpipeline.desaturateOutput();
                 cvSource.putFrame(output);
                 // }
             }
         });
 
         // automatically starts thread
+        visionThread.setDaemon(true);
         visionThread.start();
     }
 
@@ -166,9 +178,9 @@ public class VisionController implements RobotController {
         // restarts thread if it unexpectedly crashes. The program has been
         // tested to eliminated errors with memory so this is likely never run
 
-        if (!visionThread.isAlive()) {
-            visionThread.start();
-        }
+        /*
+         * if (!visionThread.isAlive()) { visionThread.start(); }
+         */
 
         // switches view to camera2 and begins line tracing whenever button 2 is pressed
         // automatically reverts to camera1
