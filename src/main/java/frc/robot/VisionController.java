@@ -93,10 +93,11 @@ public class VisionController implements RobotController {
             bwpipeline = new bwGripPipeline();
             LineTrackingAlgo linetracker = new LineTrackingAlgo(properties);
             // initializes both cameras
-            camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-            camera1.setResolution(width, height);
-            camera1.setFPS(fps);
-            camera2 = CameraServer.getInstance().startAutomaticCapture(1);
+            /*
+             * camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+             * camera1.setResolution(width, height); camera1.setFPS(fps);
+             */
+            camera2 = CameraServer.getInstance().startAutomaticCapture();
             camera2.setResolution(width, height);
             camera2.setFPS(fps);
 
@@ -107,16 +108,18 @@ public class VisionController implements RobotController {
             Mat output = new Mat();
             // Mat sourceBack = new Mat();
             // Mat outputBack = new Mat();
-            if (properties.joystick.getButtonTwo()) {
-                if (!isLongPress) {
-                    lineIsOn = !lineIsOn;
-                    isLongPress = true;
-                }
-            } else {
-                isLongPress = false;
-            }
+
             try {
                 while (!Thread.interrupted()) {
+                    if (properties.joystick.getButtonTwo()) {
+                        if (!isLongPress) {
+                            lineIsOn = !lineIsOn;
+                            isLongPress = true;
+                        }
+                        //System.out.println("lineIsOn" + lineIsOn);
+                    } else {
+                        isLongPress = false;
+                    }
                     // grabs current frame from cvSink
                     if (cvSink.grabFrame(source) == 0) {
                         cvSource.notifyError(cvSink.getError());
