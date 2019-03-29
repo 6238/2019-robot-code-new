@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -31,6 +32,8 @@ public class DriveTrainController implements RobotController {
     // straight driving
     boolean straightDrive = false;
 
+    boolean diffDrive = false;
+
     private double kAngleSetpoint = 0.0;
     private double kP = 0.1;
 
@@ -42,6 +45,7 @@ public class DriveTrainController implements RobotController {
         SmartDashboard.putBoolean("brakeMode", brakeMode);
         SmartDashboard.putBoolean("absoluteDrive", absoluteDrive);
         SmartDashboard.putBoolean("selfAlign", selfAlign);
+        SmartDashboard.putBoolean("diffDrive", diffDrive);
     }
 
     // name function for initial testing
@@ -55,6 +59,8 @@ public class DriveTrainController implements RobotController {
 
         MecanumDrive robotDrive = properties.getRobotDrive();
 
+        DifferentialDrive robotDrive2 = properties.getRobotDrive2();
+
         selfAlign = SmartDashboard.getBoolean("selfAlign", selfAlign);
 
         insanityFactor = SmartDashboard.getNumber("insanityFactor", insanityFactor);
@@ -67,47 +73,80 @@ public class DriveTrainController implements RobotController {
 
         absoluteDrive = SmartDashboard.getBoolean("absoluteDrive", absoluteDrive);
 
+        diffDrive = SmartDashboard.getBoolean("diffDrive", diffDrive);
+
         if (selfAlign) {
             
         } else if (joyDrive) {
-            if (properties.joystick.getJoystickZ() == 0) {
-                straightDrive = true;
-
-                double turningValue = (kAngleSetpoint - properties.gyro.getAngle()) * kP;
-
-                if (turningValue > 0.5) {
-                    turningValue = 0.5;
-                } else if (turningValue < -0.5) {
-                    turningValue = -0.5;
-                }
-                
-                if (reverseDrive) {
-                    // reverseDrive switch
-                    robotDrive.driveCartesian(-insanityFactor * properties.joystick.getJoystickX(), insanityFactor * properties.joystick.getJoystickY(), turningValue);
-                } else if (absoluteDrive) {
-                    // absolute driving
-                    robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), turningValue, kAngleSetpoint);
+            if (diffDrive) {
+                if (properties.joystick.getJoystickZ() == 0) {
+                    straightDrive = true;
+    
+                    double turningValue = (kAngleSetpoint - properties.gyro.getAngle()) * kP;
+    
+                    if (turningValue > 0.5) {
+                        turningValue = 0.5;
+                    } else if (turningValue < -0.5) {
+                        turningValue = -0.5;
+                    }
+                    
+                    if (reverseDrive) {
+                        // reverseDrive switch
+                        robotDrive2.arcadeDrive(insanityFactor * properties.joystick.getJoystickY(), turningValue, false);
+                    } else {
+                        // normal driving
+                        robotDrive2.arcadeDrive(-insanityFactor * properties.joystick.getJoystickY(), turningValue, false);
+                    }
+    
                 } else {
-                    // normal driving
-                    robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), turningValue);
+                    kAngleSetpoint = properties.gyro.getAngle();
+                    straightDrive = false;
+                    if (reverseDrive) {
+                        // reverse driving
+                        robotDrive2.arcadeDrive(insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ(), false);
+                    } else {
+                        // normal driving
+                        robotDrive2.arcadeDrive(-insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ(), false);
+                    }
                 }
-
             } else {
-                kAngleSetpoint = properties.gyro.getAngle();
-                straightDrive = false;
-                if (reverseDrive) {
-                    // reverse driving
-                    robotDrive.driveCartesian(-insanityFactor * properties.joystick.getJoystickX(), insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ());
-                } else if (absoluteDrive) {
-                    // absolute driving
-                    robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ(), kAngleSetpoint);
+                if (properties.joystick.getJoystickZ() == 0) {
+                    straightDrive = true;
+    
+                    double turningValue = (kAngleSetpoint - properties.gyro.getAngle()) * kP;
+    
+                    if (turningValue > 0.5) {
+                        turningValue = 0.5;
+                    } else if (turningValue < -0.5) {
+                        turningValue = -0.5;
+                    }
+                    
+                    if (reverseDrive) {
+                        // reverseDrive switch
+                        robotDrive.driveCartesian(-insanityFactor * properties.joystick.getJoystickX(), insanityFactor * properties.joystick.getJoystickY(), turningValue);
+                    } else if (absoluteDrive) {
+                        // absolute driving
+                        robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), turningValue, kAngleSetpoint);
+                    } else {
+                        // normal driving
+                        robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), turningValue);
+                    }
+    
                 } else {
-                    // normal driving
-                    robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ());
+                    kAngleSetpoint = properties.gyro.getAngle();
+                    straightDrive = false;
+                    if (reverseDrive) {
+                        // reverse driving
+                        robotDrive.driveCartesian(-insanityFactor * properties.joystick.getJoystickX(), insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ());
+                    } else if (absoluteDrive) {
+                        // absolute driving
+                        robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ(), kAngleSetpoint);
+                    } else {
+                        // normal driving
+                        robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ());
+                    }
                 }
             }
-
-            SmartDashboard.putBoolean("absoluteDrive", absoluteDrive);
             
         }
 
