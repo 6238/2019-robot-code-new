@@ -106,8 +106,6 @@ public class DriveTrainController implements RobotController {
                     robotDrive.driveCartesian(insanityFactor * properties.joystick.getJoystickX(), -insanityFactor * properties.joystick.getJoystickY(), insanityFactor * properties.joystick.getJoystickZ());
                 }
             }
-
-            SmartDashboard.putBoolean("absoluteDrive", absoluteDrive);
             
         }
 
