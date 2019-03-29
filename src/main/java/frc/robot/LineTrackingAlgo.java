@@ -13,6 +13,9 @@ Algorithm:
 package frc.robot;
 
 import java.util.ArrayList;
+
+import javax.lang.model.util.ElementScanner6;
+
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
@@ -22,13 +25,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.lang.Boolean;
 
 public class LineTrackingAlgo {
-    
+
     private ArrayList<GripPipeline.Line> currLines;
     private MecanumDrive robotDrive;
 
     // these constants control how much the robot turns/moves based off the image
     private final double turnP = 0.0035;
     private final double leftRight = 0.025;
+    private final double maxTurnSpeed = 0.1;
     private RobotProperties properties;
 
     // constructor
@@ -95,36 +99,40 @@ public class LineTrackingAlgo {
     // the speed at which it turns is proportional to the difference between the
     // angle and
     // vertical line and the constant turnP
+
+    // piecewise linear function that returns how fast the robot should turn based
+    // on its current angle
+    public double getAngularVelocity(double weightedAngle) {
+        // shows how offset the robot's angle is with respects to the line
+        double turnConstant = SmartDashboard.getNumber("autoTurnSpeed", turnP);
+        double displace = (weightedAngle - 90);
+
+        if (Math.abs(displace) < 10) {
+            return 0.0;
+        } else if (Math.abs(displace) * turnConstant < maxTurnSpeed) {
+
+            return turnConstant * displace;
+
+        }
+        return ((weightedAngle < 90) ? -1 : 1) * maxTurnSpeed;
+    }
+
     public void move(Point offset, double angle, int x, int y, boolean selfAlign, ArrayList<GripPipeline.Line> lines) {
         if (selfAlign) {
             // System.out.println(weightedXY(lines).x + " " + offset.x);
             if (lines.size() > 0) {
-                robotDrive.driveCartesian(
-                        (SmartDashboard.getBoolean("reverseDrive", false) ? 1 : -1) * SmartDashboard.getNumber("autoDriveSpeed",0.025) * (offset.x),
-                        (SmartDashboard.getBoolean("reverseDrive", false) ? 1 : -1) * properties.joystick.getJoystickY(),
-                        (SmartDashboard.getBoolean("reverseDrive", false) ? -1 : 1) * SmartDashboard.getNumber("autoTurnSpeed",0.0035) * (angle - 90));
+                robotDrive.driveCartesian((0.0),
+                        (SmartDashboard.getBoolean("reverseDrive", false) ? 1 : -1)
+                                * properties.joystick.getJoystickY(),
+                        (SmartDashboard.getBoolean("reverseDrive", false) ? -1 : 1) * (getAngularVelocity(angle)));
             } else {
-                
                 SmartDashboard.putBoolean("selfAlign", false);
-                /*robotDrive.driveCartesian(SmartDashboard.getNumber("insanityFactor", 0.5) * properties.joystick.getJoystickX(),
-                            -0.1 * properties.joystick.getJoystickY(),
-                            0.1 * properties.joystick.getJoystickZ());*/
-            }
-        }
-    }
-
-    public void arcadeDriveAuto(Point offset, double angle, int x, int y, boolean selfAlign, ArrayList<GripPipeline.Line> lines) {
-        if (selfAlign) {
-            // System.out.println(weightedXY(lines).x + " " + offset.x);
-            if (lines.size() > 0) {
-                robotDrive.driveCartesian(
-                        (SmartDashboard.getBoolean("reverseDrive", false) ? 1 : -1) * SmartDashboard.getNumber("autoDriveSpeed",0.025) * (offset.x),
-                        (SmartDashboard.getBoolean("reverseDrive", false) ? 1 : -1) * properties.joystick.getJoystickY(),
-                        (SmartDashboard.getBoolean("reverseDrive", false) ? -1 : 1) * SmartDashboard.getNumber("autoTurnSpeed",0.0035) * (angle - 90));
-            } else {
-                robotDrive.driveCartesian(SmartDashboard.getNumber("insanityFactor", 0.5) * properties.joystick.getJoystickX(),
-                            -0.1 * properties.joystick.getJoystickY(),
-                            0.1 * properties.joystick.getJoystickZ());
+                /*
+                 * robotDrive.driveCartesian(SmartDashboard.getNumber("insanityFactor", 0.5) *
+                 * properties.joystick.getJoystickX(), -0.1 *
+                 * properties.joystick.getJoystickY(), 0.1 *
+                 * properties.joystick.getJoystickZ());
+                 */
             }
         }
     }
