@@ -3,7 +3,6 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
@@ -21,7 +20,7 @@ public class RobotProperties {
 
     private MecanumDrive robotDrive;
 
-    /* private WPI_TalonSRX leftElevator1;
+    private WPI_TalonSRX leftElevator1;
     private WPI_TalonSRX leftElevator2;
 
     private WPI_TalonSRX intakeWheels;
@@ -31,7 +30,7 @@ public class RobotProperties {
     private WPI_TalonSRX rightElevator2;
 
     private SpeedControllerGroup leftElevator;
-    private SpeedControllerGroup rightElevator; */
+    private SpeedControllerGroup rightElevator;
 
     private PowerDistributionPanel pdp;
 
@@ -58,7 +57,7 @@ public class RobotProperties {
         rearRight.setInverted(true);
 
         robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
-/* 
+
         leftElevator1 = new WPI_TalonSRX(5);
         leftElevator2 = new WPI_TalonSRX(6);
         intakeWheels = new WPI_TalonSRX(7);
@@ -68,16 +67,16 @@ public class RobotProperties {
         rightElevator2 = new WPI_TalonSRX(10);
 
         leftElevator = new SpeedControllerGroup(leftElevator1, leftElevator2);
-        rightElevator = new SpeedControllerGroup(rightElevator1, rightElevator2); */
+        rightElevator = new SpeedControllerGroup(rightElevator1, rightElevator2);
         
-        //rightElevator.setInverted(true);
+        rightElevator.setInverted(true);
     }
 
     public MecanumDrive getRobotDrive() {
         return robotDrive;
     }
 
-    /* public SpeedControllerGroup getLeftElevator() {
+    public SpeedControllerGroup getLeftElevator() {
         return leftElevator;
     }
 
@@ -107,7 +106,7 @@ public class RobotProperties {
 
     public void setCargoPivot(WPI_TalonSRX cargoPivot) {
         this.cargoPivot = cargoPivot;
-    } */
+    }
 
     public void pushData(RobotProperties properties) {
         
