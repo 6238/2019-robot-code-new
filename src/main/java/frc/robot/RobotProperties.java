@@ -5,7 +5,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,12 +18,7 @@ public class RobotProperties {
     public WPI_TalonSRX rearLeft;
     public WPI_TalonSRX rearRight;
 
-    private SpeedControllerGroup leftDrive;
-    private SpeedControllerGroup rightDrive;
-
     private MecanumDrive robotDrive;
-
-    private DifferentialDrive robotDrive2;
 
     private WPI_TalonSRX leftElevator1;
     private WPI_TalonSRX leftElevator2;
@@ -51,6 +45,8 @@ public class RobotProperties {
         frontRight = new WPI_TalonSRX(3);
         rearLeft = new WPI_TalonSRX(2);
         rearRight = new WPI_TalonSRX(1);
+
+
         
         SmartDashboard.putBoolean("selfAlign", false);
         SmartDashboard.putBoolean("ReverseTurn", false);
@@ -60,12 +56,7 @@ public class RobotProperties {
         rearLeft.setInverted(true);
         rearRight.setInverted(true);
 
-        leftDrive = new SpeedControllerGroup(frontLeft, rearLeft);
-        rightDrive = new SpeedControllerGroup(frontRight, rearRight);
-
         robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
-
-        robotDrive2 = new DifferentialDrive(leftDrive, rightDrive);
 
         leftElevator1 = new WPI_TalonSRX(5);
         leftElevator2 = new WPI_TalonSRX(6);
@@ -81,10 +72,6 @@ public class RobotProperties {
 
     public MecanumDrive getRobotDrive() {
         return robotDrive;
-    }
-
-    public DifferentialDrive getRobotDrive2() {
-        return robotDrive2;
     }
 
     public SpeedControllerGroup getLeftElevator() {
