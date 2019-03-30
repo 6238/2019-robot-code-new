@@ -56,18 +56,25 @@ public class RobotProperties {
 
         robotDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
  
-        leftElevator1 = new WPI_TalonSRX(5);
-        leftElevator2 = new WPI_TalonSRX(6);
-        intakeWheels = new WPI_TalonSRX(7);
+        leftElevator1 = new WPI_TalonSRX(6);
+        leftElevator2 = new WPI_TalonSRX(7);
+        intakeWheels = new WPI_TalonSRX(10);
 
-        cargoPivot = new WPI_TalonSRX(8);
-        rightElevator1 = new WPI_TalonSRX(9);
-        rightElevator2 = new WPI_TalonSRX(10);
+        cargoPivot = new WPI_TalonSRX(5);
+        rightElevator1 = new WPI_TalonSRX(8);
+        rightElevator2 = new WPI_TalonSRX(9);
 
         leftElevator = new SpeedControllerGroup(leftElevator1, leftElevator2);
         rightElevator = new SpeedControllerGroup(rightElevator1, rightElevator2);
+
+        leftElevator1.setInverted(true);
+        leftElevator2.setInverted(false);
+
+        rightElevator1.setInverted(true);
+        rightElevator2.setInverted(false);
         
-        rightElevator.setInverted(true);
+        leftElevator.setInverted(false);
+        rightElevator.setInverted(false);
     }
 
     public MecanumDrive getRobotDrive() {
