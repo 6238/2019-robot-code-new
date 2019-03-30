@@ -93,11 +93,12 @@ public class VisionController implements RobotController {
             bwpipeline = new bwGripPipeline();
             LineTrackingAlgo linetracker = new LineTrackingAlgo(properties);
             // initializes both cameras
-            /*
-             * camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-             * camera1.setResolution(width, height); camera1.setFPS(fps);
-             */
-            camera2 = CameraServer.getInstance().startAutomaticCapture();
+
+            camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+            camera1.setResolution(width, height);
+            camera1.setFPS(fps);
+
+            camera2 = CameraServer.getInstance().startAutomaticCapture(1);
             camera2.setResolution(width, height);
             camera2.setFPS(fps);
 
@@ -109,63 +110,63 @@ public class VisionController implements RobotController {
             // Mat sourceBack = new Mat();
             // Mat outputBack = new Mat();
 
-            try {
-                while (!Thread.interrupted()) {
-                    if (properties.joystick.getButtonTwo()) {
-                        if (!isLongPress) {
-                            lineIsOn = !lineIsOn;
-                            isLongPress = true;
-                        }
-                        //System.out.println("lineIsOn" + lineIsOn);
-                    } else {
-                        isLongPress = false;
-                    }
-                    // grabs current frame from cvSink
-                    if (cvSink.grabFrame(source) == 0) {
-                        cvSource.notifyError(cvSink.getError());
-                        continue;
-                    }
-                    output = source;
-                    if (lineIsOn) {
-                        // bwpipeline.process(source);
-                        // output = bwpipeline.desaturateOutput();
-                        // cvSource.putFrame(output);
-                        /*
-                         * if (cvSinkBack.grabFrame(sourceBack) == 0) {
-                         * cvSource.notifyError(cvSinkFront.getError()); continue; }
-                         */
-                        // button on dashboard triggers the LineTrackingAlgo
-                        selfAlign = SmartDashboard.getBoolean("selfAlign", false);
+            // try {
+            //     while (!Thread.interrupted()) {
+            //         if (properties.joystick.getButtonTwo()) {
+            //             if (!isLongPress) {
+            //                 lineIsOn = !lineIsOn;
+            //                 isLongPress = true;
+            //             }
+            //             // System.out.println("lineIsOn" + lineIsOn);
+            //         } else {
+            //             isLongPress = false;
+            //         }
+            //         // grabs current frame from cvSink
+            //         if (cvSink.grabFrame(source) == 0) {
+            //             cvSource.notifyError(cvSink.getError());
+            //             continue;
+            //         }
+            //         output = source;
+            //         if (lineIsOn) {
+            //             // bwpipeline.process(source);
+            //             // output = bwpipeline.desaturateOutput();
+            //             // cvSource.putFrame(output);
+            //             /*
+            //              * if (cvSinkBack.grabFrame(sourceBack) == 0) {
+            //              * cvSource.notifyError(cvSinkFront.getError()); continue; }
+            //              */
+            //             // button on dashboard triggers the LineTrackingAlgo
+            //             selfAlign = SmartDashboard.getBoolean("selfAlign", false);
 
-                        /*
-                         * if (bwIsRunning) { // displays b+w video, this is the default setting
-                         * bwpipeline.process(source); output = bwpipeline.desaturateOutput();
-                         * cvSource.putFrame(output); } else {
-                         */
+            //             /*
+            //              * if (bwIsRunning) { // displays b+w video, this is the default setting
+            //              * bwpipeline.process(source); output = bwpipeline.desaturateOutput();
+            //              * cvSource.putFrame(output); } else {
+            //              */
 
-                        pipeline.process(source);
-                        output = pipeline.cvResizeOutput();
-                        ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
-                        if (!lines.isEmpty()) {
-                            for (int i = 0; i < lines.size(); i++) { //
-                                // System.out.println(i + " " + lines.get(i).angle() + " " +
-                                // lines.get(i).length());
-                                Imgproc.line(output, new Point(lines.get(i).x1 * 0.95, lines.get(i).y1 * 0.95),
-                                        new Point(lines.get(i).x2 * 0.95, lines.get(i).y2 * 0.95),
-                                        new Scalar(0, 100, 0));
-                            } //
-                              // System.out.println(linetracker.weightedAngle(lines));
-                        }
-                        output = linetracker.process(output, lines, width, height, selfAlign);
+            //             pipeline.process(source);
+            //             output = pipeline.cvResizeOutput();
+            //             ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
+            //             if (!lines.isEmpty()) {
+            //                 for (int i = 0; i < lines.size(); i++) { //
+            //                     // System.out.println(i + " " + lines.get(i).angle() + " " +
+            //                     // lines.get(i).length());
+            //                     Imgproc.line(output, new Point(lines.get(i).x1 * 0.95, lines.get(i).y1 * 0.95),
+            //                             new Point(lines.get(i).x2 * 0.95, lines.get(i).y2 * 0.95),
+            //                             new Scalar(0, 100, 0));
+            //                 } //
+            //                   // System.out.println(linetracker.weightedAngle(lines));
+            //             }
+            //             output = linetracker.process(output, lines, width, height, selfAlign);
 
-                        // bwpipeline.process(source);
-                        // output = bwpipeline.desaturateOutput();
-                    }
-                    cvSource.putFrame(output);
-                }
-            } catch (Exception e) {
-                System.out.println("VisionProblem");
-            }
+            //             // bwpipeline.process(source);
+            //             // output = bwpipeline.desaturateOutput();
+            //         }
+            //         cvSource.putFrame(output);
+            //     }
+            // } catch (Exception e) {
+            //     System.out.println("VisionProblem");
+            // }
 
         });
 
