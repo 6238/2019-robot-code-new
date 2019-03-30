@@ -45,7 +45,7 @@ public class CargoController implements RobotController {
     private boolean isSet = true;
     private boolean isReleased = false;
     private boolean wristIn = true;
-    private double wristSpeed = 1.0;
+    private double wristSpeed = 0.3;
 
     private int restingPos = 20;
     private int extendedPos = 600;
@@ -53,8 +53,8 @@ public class CargoController implements RobotController {
     public void moveCargoMech(RobotProperties properties) {
         WPI_TalonSRX cargoPivot = properties.getCargoPivot();
         // cargoPivot.SetFeedbackDevice(CTRE.TalonSrx.FeedbackDevice.CtreMagEncoder_Relative);
-        boolean isCargoUp = properties.joystick.getButtonTen();// temporary button number
-        boolean isCargoDown = properties.joystick.getButtonTwelve();
+        boolean isCargoUp = properties.joystick.getDPadLeft();// temporary button number
+        boolean isCargoDown = properties.joystick.getDPadRight();
         // wristSpeed = SmartDashboard.getNumber("wristSpeed", wristSpeed);
         SmartDashboard.putNumber("cargoMech", cargoPivot.getSelectedSensorPosition());
 
@@ -113,9 +113,9 @@ public class CargoController implements RobotController {
         if (isMechInButtonPressed && isMechOutButtonPressed) {
             intakeWheels.set(0);
         } else if (isMechInButtonPressed) { // check sign
-            intakeWheels.set(-5);
+            intakeWheels.set(-10);
         } else if (isMechOutButtonPressed) {
-            intakeWheels.set(5);
+            intakeWheels.set(10);
         } /*
            * else if (isMechInButtonPressed && isMechOutButtonPressed) {
            * intakeWheels.set(5); } else { intakeWheels.set(0); }
