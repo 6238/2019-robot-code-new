@@ -138,26 +138,26 @@ public class VisionController implements RobotController {
                         // button on dashboard triggers the LineTrackingAlgo
                         selfAlign = SmartDashboard.getBoolean("selfAlign", false);
 
-                        /*
-                         * if (bwIsRunning) { // displays b+w video, this is the default setting
-                         * bwpipeline.process(source); output = bwpipeline.desaturateOutput();
-                         * cvSource.putFrame(output); } else {
-                         */
+            //             /*
+            //              * if (bwIsRunning) { // displays b+w video, this is the default setting
+            //              * bwpipeline.process(source); output = bwpipeline.desaturateOutput();
+            //              * cvSource.putFrame(output); } else {
+            //              */
 
-                        pipeline.process(source);
-                        output = pipeline.cvResizeOutput();
-                        ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
-                        if (!lines.isEmpty()) {
-                            for (int i = 0; i < lines.size(); i++) { //
-                                // System.out.println(i + " " + lines.get(i).angle() + " " +
-                                // lines.get(i).length());
-                                Imgproc.line(output, new Point(lines.get(i).x1 * 0.95, lines.get(i).y1 * 0.95),
-                                        new Point(lines.get(i).x2 * 0.95, lines.get(i).y2 * 0.95),
-                                        new Scalar(0, 100, 0));
-                            } //
-                              // System.out.println(linetracker.weightedAngle(lines));
-                        }
-                        output = linetracker.process(output, lines, width, height, selfAlign);
+            //             pipeline.process(source);
+            //             output = pipeline.cvResizeOutput();
+            //             ArrayList<GripPipeline.Line> lines = pipeline.filterLinesOutput();
+            //             if (!lines.isEmpty()) {
+            //                 for (int i = 0; i < lines.size(); i++) { //
+            //                     // System.out.println(i + " " + lines.get(i).angle() + " " +
+            //                     // lines.get(i).length());
+            //                     Imgproc.line(output, new Point(lines.get(i).x1 * 0.95, lines.get(i).y1 * 0.95),
+            //                             new Point(lines.get(i).x2 * 0.95, lines.get(i).y2 * 0.95),
+            //                             new Scalar(0, 100, 0));
+            //                 } //
+            //                   // System.out.println(linetracker.weightedAngle(lines));
+            //             }
+            //             output = linetracker.process(output, lines, width, height, selfAlign);
 
                         // bwpipeline.process(source);
                         // output = bwpipeline.desaturateOutput();

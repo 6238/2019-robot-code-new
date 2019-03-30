@@ -56,11 +56,11 @@ public class ElevatorController implements RobotController {
             leftElevator.set(0);
             rightElevator.set(0);
         } else if (isDownElevatorButtonPressed) {
-            leftElevator.set(-1);
-            rightElevator.set(-1);
-        } else if (isUpElevatorButtonPressed) {
             leftElevator.set(1);
             rightElevator.set(1);
+        } else if (isUpElevatorButtonPressed) {
+            leftElevator.set(-1);
+            rightElevator.set(-1);
         } else {
             leftElevator.set(0);
             rightElevator.set(0);
