@@ -93,11 +93,12 @@ public class VisionController implements RobotController {
             bwpipeline = new bwGripPipeline();
             LineTrackingAlgo linetracker = new LineTrackingAlgo(properties);
             // initializes both cameras
-            /*
-             * camera1 = CameraServer.getInstance().startAutomaticCapture(0);
-             * camera1.setResolution(width, height); camera1.setFPS(fps);
-             */
-            camera2 = CameraServer.getInstance().startAutomaticCapture();
+
+            camera1 = CameraServer.getInstance().startAutomaticCapture(0);
+            camera1.setResolution(width, height);
+            camera1.setFPS(fps);
+
+            camera2 = CameraServer.getInstance().startAutomaticCapture(1);
             camera2.setResolution(width, height);
             camera2.setFPS(fps);
 
@@ -116,7 +117,7 @@ public class VisionController implements RobotController {
                             lineIsOn = !lineIsOn;
                             isLongPress = true;
                         }
-                        //System.out.println("lineIsOn" + lineIsOn);
+                        // System.out.println("lineIsOn" + lineIsOn);
                     } else {
                         isLongPress = false;
                     }
@@ -164,6 +165,7 @@ public class VisionController implements RobotController {
                     cvSource.putFrame(output);
                 }
             } catch (Exception e) {
+                e.printStackTrace(System.out);
                 System.out.println("VisionProblem");
             }
 

@@ -32,7 +32,7 @@ public class LineTrackingAlgo {
     // these constants control how much the robot turns/moves based off the image
     private final double turnP = 0.0035;
     private final double leftRight = 0.025;
-    private final double maxTurnSpeed = 0.1;
+    private final double maxTurnSpeed = 0.75;
     private RobotProperties properties;
 
     // constructor

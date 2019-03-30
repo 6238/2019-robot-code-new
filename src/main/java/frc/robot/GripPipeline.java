@@ -23,7 +23,7 @@ public class GripPipeline {
 	private Mat cvErodeOutput = new Mat();
 	private ArrayList<Line> findLinesOutput = new ArrayList<Line>();
 	private ArrayList<Line> filterLinesOutput = new ArrayList<Line>();
-
+	private LineSegmentDetector lsd;
 	static {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	}
@@ -32,6 +32,9 @@ public class GripPipeline {
 	 * This is the primary method that runs the entire pipeline and updates the
 	 * outputs.
 	 */
+	public GripPipeline(){
+		lsd = Imgproc.createLineSegmentDetector();
+	}
 	public void process(Mat source0) {
 		// Step CV_resize0:
 		Mat cvResizeSrc = source0;
@@ -244,18 +247,18 @@ public class GripPipeline {
 	 * @param lineList The output where the lines are stored.
 	 */
 	private void findLines(Mat input, ArrayList<Line> lineList) {
-		final LineSegmentDetector lsd = Imgproc.createLineSegmentDetector();
 		final Mat lines = new Mat();
 		lineList.clear();
 		try {
 			if (input.channels() == 1) {
-				lsd.detect(input, lines);
+				this.lsd.detect(input, lines);
 			} else {
 				final Mat tmp = new Mat();
 				Imgproc.cvtColor(input, tmp, Imgproc.COLOR_BGR2GRAY);
-				lsd.detect(tmp, lines);
+				this.lsd.detect(tmp, lines);
 			}
 		} catch (Exception error) {
+			error.printStackTrace(System.out);
 			System.out.println("lsd.dectect failed");
 		}
 		if (!lines.empty()) {
