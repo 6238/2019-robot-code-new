@@ -2,6 +2,8 @@
 FRC 2019 Project Code on VSCode System
 
 ## Install FRC VSCode 2019
+https://wpilib.screenstepslive.com/s/currentCS/m/getting_started/l/999999-installing-c-and-java-development-tools-for-frc
+
 Download FRC VSCode installer:
 https://github.com/wpilibsuite/allwpilib/releases
 
