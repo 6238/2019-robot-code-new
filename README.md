@@ -19,7 +19,7 @@ https://www.oracle.com/technetwork/java/javase/downloads/index.html
 2) Open the tar.gz file, move the WPILib_Mac folder to the home directory and rename it "frc2019". 
 3) Open Terminal (/Applications/Utilities/Terminal.app), type "cd frc2019/tools" and hit enter.
 4) Type "python ToolsUpdater.py" and hit enter.
-5) Download and install Visual Studio Code from visualstudio.microsoft.com, then open it.
+5) Download and install Visual Studio Code from [code.visualstudio.com], then open it.
 6) In Visual Studio, open the command palette (Cmd + Shift + P) and click on/search for "Extensions: Install from VSIX...".
 7) Navigate to the "frc2019" folder, and go to the "vsCodeExtensions" folder inside.
 8) Select "Cpp.vsix" and open it.
