@@ -49,7 +49,7 @@ Optional: Download only the Phoenix Tuner installer and not the rest of the CTRE
 5) Check the box next to "CTRE Phoenix" and click "OK".
 
 #### The following program install instructions are Windows-only. Unfortunately, there is no Mac version of LabView 2018 or the FRC Suite as of now.
-## Installing LabView 2018 or NI Vision Software (Optional):
+## Installing LabView 2018 and NI Vision Software (Optional, Not Recommended):
 1) Download the LabView 2018 installer (~5-6 GB) here: http://www.ni.com/download/labview-for-frc-18.0/7841/en/. You will have to create or use an existing National Instruments account.
 2) Extract all the files inside the zip file into a new folder. This may take a while.
 3) Run autorun.exe, found inside the folder with the extracted files.
@@ -73,6 +73,7 @@ Optional: Download only the Phoenix Tuner installer and not the rest of the CTRE
 21) **Do not install any updates you are prompted to by the NI Update Service unless directed to do so by FRC.**
 
 ## Installing the FRC 2019 Update Suite:
+https://wpilib.screenstepslive.com/s/currentCS/m/labview/l/1027502-installing-the-frc-update-suite-all-languages
 1) Download the FRC 2019 installer (~700-800 MB) here: http://www.ni.com/download/first-robotics-software-2017/7904/en/. You will have to create or use an existing National Instruments account. Enter the decryption key *$Robots&in#SPACE!!* if prompted to do so.
 2) Extract all the files inside the zip file into a new folder.
 3) Run setup.exe, found inside the folder with the extracted files.
